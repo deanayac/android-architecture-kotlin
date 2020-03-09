@@ -2,15 +2,13 @@ package com.bootcamp.kotlin
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.http.Query
 
 class MainActivity : AppCompatActivity() {
@@ -26,37 +24,13 @@ class MainActivity : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        val token = retrofit.create(Authorization::class.java)
-        val call = token.requestToken("5de961ca47ac20a3689205becc3c3b20")
-
-        call.enqueue(object : Callback<Token> {
-            override fun onFailure(call: Call<Token>?, t: Throwable?) {
-            }
-
-            override fun onResponse(call: Call<Token>?, response: Response<Token>?) {
-                val movies = retrofit.create(Movies::class.java)
-                val call = movies.popularMovies("5de961ca47ac20a3689205becc3c3b20","1","en-US")
-
-                updateTextView("Primer Callback")
-
-                call.enqueue(object : Callback<MoviesBase> {
-                        override fun onFailure(call: Call<MoviesBase>, t: Throwable) {
-                            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                        }
-
-                        override fun onResponse(
-                            call: Call<MoviesBase>,
-                            response: Response<MoviesBase>
-                        ) {
-                            Log.d("Movies", "Total de peliculas ${response.body()!!.results.size}")
-                            updateTextView("Ultimo Callback")
-
-                        }
-                    })
-            }
-        })
-
-
+        GlobalScope.launch(Dispatchers.Main) {
+            val token = retrofit.create(Authorization::class.java)
+            val call = async(Dispatchers.IO){token.requestToken("5de961ca47ac20a3689205becc3c3b20").execute()}
+            val movies = retrofit.create(Movies::class.java)
+            val call2 = async(Dispatchers.IO){movies.popularMovies("5de961ca47ac20a3689205becc3c3b20","1","en-US").execute()}
+            updateTextView("${call.await().body()!!.request_token} Total de peliculas ${call2.await().body()!!.results.size}")
+        }
     }
     private fun updateTextView(message:String) {
         txtHello.text = message
