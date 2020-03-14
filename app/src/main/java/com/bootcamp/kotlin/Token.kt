@@ -1,7 +1,9 @@
 package com.bootcamp.kotlin
 
+import com.google.gson.annotations.SerializedName
+
 data class Token(
-    var success:Boolean,
-    var expires_at : String,
-    var request_token :String
+    var success: Boolean,
+    @SerializedName("expires_at") var expiresAt: String,
+    @SerializedName("request_token") var requestToken: String
 )
