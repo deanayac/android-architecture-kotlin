@@ -1,6 +1,8 @@
 package com.bootcamp.kotlin
 
+import android.content.Context
 import android.content.SharedPreferences
+import android.widget.Toast
 
 /**
  * Created by jhon on 14/03/2020
@@ -38,4 +40,8 @@ inline fun <reified T> SharedPreferences.put(key: String, value: T): T {
     }
     editor.apply()
     return value
+}
+
+fun Context.showMessage(message: String) {
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }

@@ -4,14 +4,16 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_splash.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class SplashActivity : AppCompatActivity() {
 
-    lateinit var sharedPreferences: SharedPreferences
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,38 +21,40 @@ class SplashActivity : AppCompatActivity() {
 
         sharedPreferences = getSharedPreferences(Constants.PREF_NAME, Constants.PRIVATE_MODE)
 
-        sleepScreen()
+        GlobalScope.launch(Dispatchers.Main) {
+            sleepScreen()
+        }
     }
 
-    private fun checkIfUserExists() : String {
-        val userExists = ""
-        return when {
-            sharedPreferences.getString("user_name", "").isNullOrEmpty() -> userExists
-            else -> {userExists}
-        }
+    private fun checkIfUserExists() : String? {
+        return sharedPreferences.getString(Constants.USER_NAME, Constants.DEFAULT_STRING)
     }
 
     private fun sleepScreen() {
         /****** Create Thread that will sleep for 2 seconds */
         Handler().postDelayed({
-            if (checkIfUserExists().isEmpty()) {
-                showMessage("user not exists")
-                loadFragment(RegisterFragment())
+            if (checkIfUserExists()?.isEmpty()!!) {
+                showMessage("No hay usuarios registrados")
+                loadFragment(RegisterFragment(), R.id.registerFragment)
             } else {
-                showMessage("users exists")
-                loadFragment(WelcomeFragment())
+                loadFragment(WelcomeFragment(), R.id.welcomeFragment)
             }
         }, 2 * 1000)
     }
 
-    private fun loadFragment(fragment: Fragment) {
-        activity_container.visibility = View.GONE
+    private fun loadFragment(fragment: Fragment, fragmentId: Int) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.add(R.id.fragmentContainer, fragment)
+        when (fragmentId) {
+            R.id.registerFragment -> {
+                fragmentTransaction.add(fragmentId, fragment)
+                containerRegister.visibility = View.VISIBLE
+            }
+            R.id.welcomeFragment -> {
+                fragmentTransaction.add(fragmentId, fragment)
+                containerWelcome.visibility = View.VISIBLE
+            }
+        }
         fragmentTransaction.commit()
-    }
-
-    private fun showMessage(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        containerSplash.visibility = View.GONE
     }
 }
