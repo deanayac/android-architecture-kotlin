@@ -2,10 +2,12 @@ package com.bootcamp.kotlin
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
+import android.os.Handler
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import kotlinx.android.synthetic.main.activity_splash.*
 
 class SplashActivity : AppCompatActivity() {
 
@@ -17,11 +19,7 @@ class SplashActivity : AppCompatActivity() {
 
         sharedPreferences = getSharedPreferences(Constants.PREF_NAME, Constants.PRIVATE_MODE)
 
-        if (checkIfUserExists().isEmpty()) {
-            showMessage("No se encontro ningún usuario!")
-        } else {
-            sleepScreen()
-        }
+        sleepScreen()
     }
 
     private fun checkIfUserExists() : String {
@@ -33,28 +31,20 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun sleepScreen() {
-        /****** Create Thread that will sleep for 5 seconds */
-        val background: Thread = object : Thread() {
-            override fun run() {
-                try {
-                    // Thread will sleep for 2 seconds
-                    sleep(2 * 1000.toLong())
-
-                    // After 2 seconds redirect to another intent
-                    loadFragment(WelcomeFragment())
-
-                    //Remove activity
-                    finish()
-                } catch (e: Exception) {
-                    Log.d("", e.message!!)
-                }
+        /****** Create Thread that will sleep for 2 seconds */
+        Handler().postDelayed({
+            if (checkIfUserExists().isEmpty()) {
+                showMessage("user not exists")
+                loadFragment(RegisterFragment())
+            } else {
+                showMessage("users exists")
+                loadFragment(WelcomeFragment())
             }
-        }
-        // start thread
-        background.start()
+        }, 2 * 1000)
     }
 
     private fun loadFragment(fragment: Fragment) {
+        activity_container.visibility = View.GONE
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.add(R.id.fragmentContainer, fragment)
         fragmentTransaction.commit()
