@@ -1,7 +1,6 @@
 package com.bootcamp.kotlin
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
@@ -31,10 +30,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateTextView(message: String) {
         txtHello.text = message
-    }
-
-    fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
     private suspend fun moviesAsync(retrofit: Retrofit) = CoroutineScope(Dispatchers.IO).async {
