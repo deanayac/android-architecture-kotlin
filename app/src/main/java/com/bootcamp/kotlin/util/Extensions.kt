@@ -1,4 +1,4 @@
-package com.bootcamp.kotlin
+package com.bootcamp.kotlin.util
 
 import android.content.Context
 import android.content.SharedPreferences

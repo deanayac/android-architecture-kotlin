@@ -1,4 +1,4 @@
-package com.bootcamp.kotlin
+package com.bootcamp.kotlin.welcome
 
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -6,6 +6,9 @@ import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.bootcamp.kotlin.R
+import com.bootcamp.kotlin.base.Constants
+import com.bootcamp.kotlin.util.showMessage
 import kotlinx.android.synthetic.main.activity_splash.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -35,9 +38,15 @@ class SplashActivity : AppCompatActivity() {
         Handler().postDelayed({
             if (checkIfUserExists()?.isEmpty()!!) {
                 showMessage("No hay usuarios registrados")
-                loadFragment(RegisterFragment(), R.id.registerFragment)
+                loadFragment(
+                    RegisterFragment(),
+                    R.id.registerFragment
+                )
             } else {
-                loadFragment(WelcomeFragment(), R.id.welcomeFragment)
+                loadFragment(
+                    WelcomeFragment(),
+                    R.id.welcomeFragment
+                )
             }
         }, 2 * 1000)
     }

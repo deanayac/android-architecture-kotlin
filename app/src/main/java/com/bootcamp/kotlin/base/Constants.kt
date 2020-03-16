@@ -1,4 +1,4 @@
-package com.bootcamp.kotlin
+package com.bootcamp.kotlin.base
 
 /**
  * Created by jhon on 14/03/2020

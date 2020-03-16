@@ -1,7 +1,9 @@
-package com.bootcamp.kotlin
+package com.bootcamp.kotlin.welcome
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.bootcamp.kotlin.R
+import com.bootcamp.kotlin.movies.Movies
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 import retrofit2.Retrofit

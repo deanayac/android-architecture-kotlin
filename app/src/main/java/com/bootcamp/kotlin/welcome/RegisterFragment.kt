@@ -1,4 +1,4 @@
-package com.bootcamp.kotlin
+package com.bootcamp.kotlin.welcome
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -7,6 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bootcamp.kotlin.R
+import com.bootcamp.kotlin.base.Constants
+import com.bootcamp.kotlin.util.put
+import com.bootcamp.kotlin.util.showMessage
 import kotlinx.android.synthetic.main.fragment_register.view.*
 import kotlinx.android.synthetic.main.fragment_register.view.nameUserEditText
 
