@@ -27,7 +27,9 @@ class WelcomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedPreferences = context!!.getSharedPreferences(Constants.PREF_NAME, Constants.PRIVATE_MODE)
+        context?.let {
+            sharedPreferences = it.getSharedPreferences(Constants.PREF_NAME,Constants.PRIVATE_MODE)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

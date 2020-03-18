@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateTextView(message: String) {
-        txtHello.text = message
+//        txtHello.text = message
     }
 
     private suspend fun moviesAsync(retrofit: Retrofit) = CoroutineScope(Dispatchers.IO).async {

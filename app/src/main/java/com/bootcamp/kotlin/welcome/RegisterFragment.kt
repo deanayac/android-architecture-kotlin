@@ -28,22 +28,28 @@ class RegisterFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedPreferences = context!!.getSharedPreferences(Constants.PREF_NAME, Constants.PRIVATE_MODE)
+        context?.let {
+            sharedPreferences = it.getSharedPreferences(Constants.PREF_NAME,Constants.PRIVATE_MODE)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         view.saveUserButton.setOnClickListener {
-            when (view.nameUserEditText.text.toString().isEmpty()) {
-                true -> context?.showMessage("Ingresa un nombre de Usuario")
-                false -> {
-                    val intent = Intent(context, MainActivity::class.java)
-                    startActivity(intent).let {
-                        sharedPreferences.put(Constants.USER_NAME, view.nameUserEditText.text.toString())
-                    }
+            if(validateInput(view)){
+                val intent = Intent(activity,MainActivity::class.java)
+                startActivity(intent).let {
+                    sharedPreferences.put(Constants.USER_NAME,view.nameUserEditText.text.toString())
                 }
+            }else{
+                activity?.showMessage(Constants.validateNameUser)
             }
+
         }
+    }
+
+    private fun validateInput(view: View):Boolean{
+        return view.nameUserEditText.text!=null && view.nameUserEditText.text.toString()!=""
     }
 }

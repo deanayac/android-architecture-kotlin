@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/registerFragment"
-                android:name="com.bootcamp.kotlin.RegisterFragment"/>
+                android:name="com.bootcamp.kotlin.welcome.RegisterFragment"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -50,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/welcomeFragment"
-                android:name="com.bootcamp.kotlin.WelcomeFragment"/>
+                android:name="com.bootcamp.kotlin.welcome.WelcomeFragment"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

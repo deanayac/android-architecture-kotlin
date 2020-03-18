@@ -29,41 +29,39 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkIfUserExists() : String? {
+    private fun checkIfUserExists(): String? {
         return sharedPreferences.getString(Constants.USER_NAME, Constants.DEFAULT_STRING)
     }
 
     private fun sleepScreen() {
         /****** Create Thread that will sleep for 2 seconds */
         Handler().postDelayed({
-            if (checkIfUserExists()?.isEmpty()!!) {
-                showMessage("No hay usuarios registrados")
-                loadFragment(
-                    RegisterFragment(),
-                    R.id.registerFragment
-                )
-            } else {
-                loadFragment(
-                    WelcomeFragment(),
-                    R.id.welcomeFragment
-                )
+            checkIfUserExists()?.let {
+                if (it.isEmpty()) {
+                    showMessage("No hay usuarios registrados")
+                    loadFragment(RegisterFragment(), R.id.registerFragment)
+                } else {
+                    loadFragment(WelcomeFragment(), R.id.welcomeFragment)
+                }
             }
         }, 2 * 1000)
     }
 
     private fun loadFragment(fragment: Fragment, fragmentId: Int) {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        when (fragmentId) {
-            R.id.registerFragment -> {
-                fragmentTransaction.add(fragmentId, fragment)
-                containerRegister.visibility = View.VISIBLE
-            }
-            R.id.welcomeFragment -> {
-                fragmentTransaction.add(fragmentId, fragment)
-                containerWelcome.visibility = View.VISIBLE
-            }
-        }
-        fragmentTransaction.commit()
+        supportFragmentManager.beginTransaction()
+            .apply {
+                when (fragmentId) {
+                    R.id.registerFragment -> {
+                        add(fragmentId, fragment)
+                        containerRegister.visibility = View.VISIBLE
+                    }
+                    R.id.welcomeFragment -> {
+                        add(fragmentId, fragment)
+                        containerWelcome.visibility = View.VISIBLE
+                    }
+                }
+            }.commit()
+
         containerSplash.visibility = View.GONE
     }
 }
