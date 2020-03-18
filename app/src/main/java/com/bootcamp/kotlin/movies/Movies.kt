@@ -1,5 +1,6 @@
-package com.bootcamp.kotlin
+package com.bootcamp.kotlin.movies
 
+import com.bootcamp.kotlin.movies.MoviesBase
 import retrofit2.http.GET
 import retrofit2.http.Query
 

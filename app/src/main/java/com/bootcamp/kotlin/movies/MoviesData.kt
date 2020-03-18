@@ -1,4 +1,4 @@
-package com.bootcamp.kotlin
+package com.bootcamp.kotlin.movies
 
 import com.google.gson.annotations.SerializedName
 

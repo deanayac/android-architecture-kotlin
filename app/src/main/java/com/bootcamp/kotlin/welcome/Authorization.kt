@@ -1,4 +1,4 @@
-package com.bootcamp.kotlin
+package com.bootcamp.kotlin.welcome
 
 import retrofit2.http.GET
 import retrofit2.http.Query

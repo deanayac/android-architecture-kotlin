@@ -1,4 +1,4 @@
-package com.bootcamp.kotlin
+package com.bootcamp.kotlin.welcome
 
 import com.google.gson.annotations.SerializedName
 
