@@ -38,6 +38,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun events() {
+
+        /**
+         * MODIFICADO POR EDMUNDO
+         * 18/03/2020
+         * Sería bueno IMPLEMENTAR EL PATRÓN DE COMANDO PARA EVITAR EL CÓDIGO REPETITIVO DE SetOnclickListener por cada item dentro del Menú
+         * Usar WHEN, no sería recomendable según PRINCIPLES SOLID.
+         * 
+         */
         ll_initHome.setOnClickListener {
             changeFragment(HomeFragment.newInstance())
         }
