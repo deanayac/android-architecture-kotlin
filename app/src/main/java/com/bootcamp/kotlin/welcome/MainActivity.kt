@@ -38,7 +38,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun events() {
-
         /**
          * MODIFICADO POR EDMUNDO
          * 18/03/2020
