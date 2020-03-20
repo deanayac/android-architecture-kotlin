@@ -7,18 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bootcamp.kotlin.R
-import com.bootcamp.kotlin.common.Scope
-import com.bootcamp.kotlin.movies.Movie
-import com.bootcamp.kotlin.movies.Movies
+import com.bootcamp.kotlin.movies.*
 import com.bootcamp.kotlin.movies.adapter.MoviesAdapter
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import kotlinx.android.synthetic.main.view_progress_bar.*
 
-class HomeFragment : Fragment(), Scope by Scope.Impl() {
+class HomeFragment : Fragment(), MoviesContract.View {
 
     private var listener: Listener? = null
+    private var presenter: MoviesContract.Presenter? = null
+    private lateinit var repository: MoviesRepository
 
     companion object {
         @JvmStatic
@@ -41,25 +39,18 @@ class HomeFragment : Fragment(), Scope by Scope.Impl() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initScope()
-
-        launch {
-            val api = Retrofit.Builder()
-                .baseUrl("https://api.themoviedb.org")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .run { create(Movies::class.java) }
-
-            val movies = api.popularMovies(
-                apiKey = "5de961ca47ac20a3689205becc3c3b20",
-                page = "1",
-                language = "en-US"
-            )
-
-            adapter.movies = movies.results
-        }
-
         moviesRecyclerView.adapter = adapter
+        repository = MoviesRepositoryImpl()
+        presenter = MoviesPresenter(view = this, repository = repository)
+        presenter?.onCreate()
+    }
+
+    override fun showMovies(movies: List<Movie>) {
+        adapter.movies = movies
+    }
+
+    override fun showProgress(isVisible: Boolean) {
+        progress.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 
     override fun onAttach(context: Context) {
@@ -72,7 +63,7 @@ class HomeFragment : Fragment(), Scope by Scope.Impl() {
 
     override fun onDestroyView() {
         listener = null
-        destroyScope()
+        presenter?.onDestroy()
         super.onDestroyView()
     }
 }
