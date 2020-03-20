@@ -13,21 +13,17 @@ import kotlin.properties.Delegates
 
 class MoviesAdapter(private val listener: (Movie) -> Unit): RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
 
-    var movies: List<Movie> by Delegates.observable(emptyList(), { _, old, new ->
+    var movies: List<Movie> by Delegates.observable(emptyList()) { _, old, new ->
         DiffUtil.calculateDiff(object: DiffUtil.Callback() {
-            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                return movies[oldItemPosition].id == movies[newItemPosition].id
-            }
+            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean = old[oldItemPosition].id == new[newItemPosition].id
 
-            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                return movies[oldItemPosition] == movies[newItemPosition]
-            }
+            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean = old[oldItemPosition] == new[newItemPosition]
 
             override fun getOldListSize(): Int = old.size
 
             override fun getNewListSize(): Int = new.size
-        })
-    })
+        }).dispatchUpdatesTo(this)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.view_movie, parent, false)
