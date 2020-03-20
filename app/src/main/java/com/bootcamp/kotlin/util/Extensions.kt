@@ -45,3 +45,4 @@ inline fun <reified T> SharedPreferences.put(key: String, value: T): T {
 fun Context.showMessage(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
+
