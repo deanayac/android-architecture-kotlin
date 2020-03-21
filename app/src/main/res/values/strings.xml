@@ -16,4 +16,8 @@
     <string name="string_home">INICIO</string>
     <string name="string_favorits">FAVORITOS</string>
     <string name="string_extrs">EXTRA</string>
+
+    <string name="txt_item_home">Inicio</string>
+    <string name="txt_item_extra">Extra</string>
+    <string name="txt_item_favorites">Favoritos</string>
 </resources>

@@ -10,7 +10,7 @@ object OrdersCommandProcessor {
 
     fun init() {
         queue[R.id.itemHome] = HomeCommand(HomeFragment.newInstance())
-        queue[R.id.itemFavorite] = FavoriteCommand(FavoriteFragment.newInstance())
+        queue[R.id.itemFavorites] = FavoriteCommand(FavoriteFragment.newInstance())
         queue[R.id.itemExtra] = ExtraCommand(FavoriteFragment.newInstance())
     }
 
