@@ -1,8 +1,11 @@
 package com.bootcamp.kotlin.movies
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
-data class MoviesData(
+@Parcelize
+data class Movie(
     val popularity: Double,
     @SerializedName("vote_count") val voteCount: Int,
     val video: Boolean,
@@ -17,4 +20,4 @@ data class MoviesData(
     @SerializedName("vote_average") val voteAverage: Double,
     val overview: String,
     @SerializedName("release_date") val releaseDate: String
-)
+) : Parcelable
