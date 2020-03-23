@@ -32,6 +32,10 @@ android {
         sourceCompatibility = "8"
     }
 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
     dataBinding {
         enabled = true
     }
@@ -50,6 +54,9 @@ dependencies {
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.7.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.7.2'
+
+    //Coil
+    implementation 'io.coil-kt:coil:0.9.5'
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'

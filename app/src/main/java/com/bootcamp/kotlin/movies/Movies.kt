@@ -10,5 +10,4 @@ interface Movies{
         @Query("page") page: String,
         @Query("language") language: String
     ): MoviesBase
-
 }
