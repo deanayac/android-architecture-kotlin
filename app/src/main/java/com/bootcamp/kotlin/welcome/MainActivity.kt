@@ -7,23 +7,24 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.bootcamp.kotlin.R
+import com.bootcamp.kotlin.base.showToast
 import com.bootcamp.kotlin.favorites.FavoriteFragment
 import com.bootcamp.kotlin.home.HomeFragment
 import com.bootcamp.kotlin.movies.Movies
+import com.bootcamp.kotlin.util.showMessage
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.custom_bottom_navigation.*
 import kotlinx.coroutines.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         events()
         updateTextView("Hola Kotlin")
-
         val retrofit = Retrofit.Builder()
             .baseUrl("https://api.themoviedb.org")
             .addConverterFactory(GsonConverterFactory.create())
