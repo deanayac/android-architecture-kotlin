@@ -3,6 +3,7 @@ package com.bootcamp.kotlin.util
 import android.content.Context
 import android.content.SharedPreferences
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 
 /**
  * Created by jhon on 14/03/2020
@@ -45,4 +46,3 @@ inline fun <reified T> SharedPreferences.put(key: String, value: T): T {
 fun Context.showMessage(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
-

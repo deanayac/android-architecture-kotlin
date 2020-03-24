@@ -36,9 +36,10 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8
     }
 
-    dataBinding {
+    viewBinding {
         enabled = true
     }
+ 
 }
 
 dependencies {

@@ -10,11 +10,10 @@ import com.bootcamp.kotlin.R
 import com.bootcamp.kotlin.base.Constants
 import com.bootcamp.kotlin.util.showMessage
 import kotlinx.android.synthetic.main.activity_splash.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class SplashActivity : AppCompatActivity() {
+
+    private val handler = Handler()
 
     private lateinit var sharedPreferences: SharedPreferences
 
@@ -24,9 +23,7 @@ class SplashActivity : AppCompatActivity() {
 
         sharedPreferences = getSharedPreferences(Constants.PREF_NAME, Constants.PRIVATE_MODE)
 
-        GlobalScope.launch(Dispatchers.Main) {
-            sleepScreen()
-        }
+        sleepScreen()
     }
 
     private fun checkIfUserExists(): String? {
@@ -35,33 +32,42 @@ class SplashActivity : AppCompatActivity() {
 
     private fun sleepScreen() {
         /****** Create Thread that will sleep for 2 seconds */
-        Handler().postDelayed({
+        handler.postDelayed({
             checkIfUserExists()?.let {
                 if (it.isEmpty()) {
                     showMessage("No hay usuarios registrados")
-                    loadFragment(RegisterFragment(), R.id.registerFragment)
+                    R.id.splashContainer.attachFragment(
+                        RegisterFragment(),
+                        getString(R.string.tag_register_fragment)
+                    )
+                    hideSplash()
                 } else {
-                    loadFragment(WelcomeFragment(), R.id.welcomeFragment)
+                    R.id.splashContainer.attachFragment(
+                        WelcomeFragment(),
+                        getString(R.string.tag_welcome_fragment)
+                    )
+                    hideSplash()
                 }
             }
-        }, 2 * 1000)
+        }, Constants.SPLASH_DELAY)
     }
 
-    private fun loadFragment(fragment: Fragment, fragmentId: Int) {
-        supportFragmentManager.beginTransaction()
-            .apply {
-                when (fragmentId) {
-                    R.id.registerFragment -> {
-                        add(fragmentId, fragment)
-                        containerRegister.visibility = View.VISIBLE
-                    }
-                    R.id.welcomeFragment -> {
-                        add(fragmentId, fragment)
-                        containerWelcome.visibility = View.VISIBLE
-                    }
-                }
-            }.commit()
+    override fun onDestroy() {
+        handler.removeCallbacksAndMessages(null)
+        super.onDestroy()
+    }
 
+    private fun Int.attachFragment(
+        view: Fragment,
+        tag: String
+    ) {
+        supportFragmentManager.beginTransaction()
+            .replace(this, view, tag)
+            .addToBackStack(getString(R.string.tag_register_fragment))
+            .commit()
+    }
+
+    private fun hideSplash() {
         containerSplash.visibility = View.GONE
     }
 }

@@ -16,4 +16,8 @@
     <string name="string_home">INICIO</string>
     <string name="string_favorits">FAVORITOS</string>
     <string name="string_extrs">EXTRA</string>
+
+    <!-- Fragment Tags -->
+    <string name="tag_welcome_fragment">welcomeFragment</string>
+    <string name="tag_register_fragment">registerFragment</string>
 </resources>
