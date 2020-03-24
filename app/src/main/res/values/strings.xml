@@ -13,9 +13,6 @@
     <string name="registrar_usuario">Registrar Usuario</string>
     <string name="digits">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890</string>
     <string name="guardar_usuario">Guardar Usuario</string>
-    <string name="string_home">INICIO</string>
-    <string name="string_favorits">FAVORITOS</string>
-    <string name="string_extrs">EXTRA</string>
 
     <string name="txt_item_home">Inicio</string>
     <string name="txt_item_extra">Extra</string>
