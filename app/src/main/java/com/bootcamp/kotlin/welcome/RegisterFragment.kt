@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.bootcamp.kotlin.R
 import com.bootcamp.kotlin.base.Constants
+import com.bootcamp.kotlin.main.MainActivity
 import com.bootcamp.kotlin.util.put
 import com.bootcamp.kotlin.util.showMessage
 import kotlinx.android.synthetic.main.fragment_register.view.*
@@ -22,7 +23,6 @@ class RegisterFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_register, container, false)
     }
 
@@ -38,7 +38,7 @@ class RegisterFragment : Fragment() {
 
         view.saveUserButton.setOnClickListener {
             if(validateInput(view)){
-                val intent = Intent(activity,MainActivity::class.java)
+                val intent = Intent(activity, MainActivity::class.java)
                 startActivity(intent).let {
                     sharedPreferences.put(Constants.USER_NAME,view.nameUserEditText.text.toString())
                 }
