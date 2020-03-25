@@ -23,7 +23,7 @@ object Singletons {
             .writeTimeout(Constants.writeTimeout, TimeUnit.SECONDS)
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("BASE_URL")
+            .baseUrl("https://api.themoviedb.org")
             .client(httpClient.build())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
