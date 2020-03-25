@@ -1,6 +1,8 @@
 package com.bootcamp.kotlin.movies
 
+import android.util.Log
 import com.bootcamp.kotlin.common.Scope
+import com.bootcamp.kotlin.networking.Status
 import kotlinx.coroutines.launch
 
 class MoviesPresenter(private val view: MoviesContract.View,
@@ -11,9 +13,12 @@ class MoviesPresenter(private val view: MoviesContract.View,
         launch {
             view.showProgress(isVisible = true)
             val movies = repository.popularMovies()
-            view.showMovies(movies)
-            view.showProgress(isVisible = false)
-        }
+            when(movies.status){
+                Status.SUCCESS -> view.showMovies(movies.data!!)
+                Status.ERROR -> Log.d("error",movies.message)
+                }
+                 view.showProgress(isVisible = false)
+            }
     }
 
     override fun onCreate() {
