@@ -20,6 +20,8 @@ class MainActivity : AppCompatActivity(), HomeFragment.Listener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupBottomNavigationView()
+
         if (savedInstanceState != null) {
             val menuSelected = savedInstanceState.getInt(MENU_ITEM, 0)
 
@@ -41,11 +43,6 @@ class MainActivity : AppCompatActivity(), HomeFragment.Listener {
             return@setOnNavigationItemSelectedListener true
         }
         binding.bottomNavigationView.selectedItemId = R.id.itemHome
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        setupBottomNavigationView()
-        return true
     }
 
     override fun onDestroy() {
