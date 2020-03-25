@@ -1,6 +1,7 @@
 package com.bootcamp.kotlin.di
 
 import com.bootcamp.kotlin.base.Constants
+import com.bootcamp.kotlin.favorites.FavoriteNetwork
 import com.bootcamp.kotlin.movies.Movies
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -21,13 +22,19 @@ object Singletons {
             .connectTimeout(Constants.connectTimeout, TimeUnit.MINUTES)
             .readTimeout(Constants.readTimeOut, TimeUnit.SECONDS)
             .writeTimeout(Constants.writeTimeout, TimeUnit.SECONDS)
+            .build()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.themoviedb.org")
-            .client(httpClient.build())
+            .baseUrl(Constants.BASE_URL)
+            .client(httpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         return retrofit.create(Movies::class.java)
+    }
+
+    // return Singleton of FavoriteNetwork
+    fun providerFavoriteRepository():FavoriteNetwork{
+        return FavoriteNetwork()
     }
 
 }

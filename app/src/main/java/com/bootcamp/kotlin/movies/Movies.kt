@@ -15,7 +15,7 @@ interface Movies {
 
     @GET("3/account/{account_id}/favorite/movies")
     suspend fun getFavoriteMovies(
-        @Path("account_id") accountId: String?,
+        @Path("account_id") accountId: Int?,
         @Query("api_key") apiKey: String,
         @Query("session_id") sessionId: String
     ): FavoriteMoviesResponse

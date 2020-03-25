@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.Listener {
             OrdersCommandProcessor.invoke(it.itemId)
             return@setOnNavigationItemSelectedListener true
         }
-        binding.bottomNavigationView.selectedItemId = R.id.itemHome
+        binding.bottomNavigationView.selectedItemId = R.id.itemFavorites
     }
 
     override fun onDestroy() {

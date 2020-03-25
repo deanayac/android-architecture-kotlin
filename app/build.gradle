@@ -28,8 +28,8 @@ android {
     }
 
     compileOptions {
-        targetCompatibility = "8"
-        sourceCompatibility = "8"
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
     }
 
     kotlinOptions {
@@ -53,8 +53,8 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.2.1'
 
     //Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.8.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.8.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.7.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.7.2'
     implementation 'com.squareup.okhttp3:okhttp:4.4.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.4.0'
 

@@ -21,4 +21,3 @@ data class ResultFavoriteResponse(
     @SerializedName("poster_path")
     val background:String?)
 
-// path para imagen de portada -> https://image.tmdb.org/t/p/w533_and_h300_bestv2/xBHvZcjRiWyobQ9kxBhO6B2dtRI.jpg

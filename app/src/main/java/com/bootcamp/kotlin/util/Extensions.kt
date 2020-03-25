@@ -2,8 +2,15 @@ package com.bootcamp.kotlin.util
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.fragment.app.Fragment
+import androidx.annotation.LayoutRes
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
+import kotlin.properties.Delegates
 
 /**
  * Created by jhon on 14/03/2020
@@ -27,7 +34,7 @@ inline fun <reified T> SharedPreferences.get(key: String, defaultValue: T): T {
 inline fun <reified T> SharedPreferences.put(key: String, value: T): T {
     val editor = this.edit()
 
-    when(T::class) {
+    when (T::class) {
         Boolean::class -> editor.putBoolean(key, value as Boolean)
         Float::class -> editor.putFloat(key, value as Float)
         Int::class -> editor.putInt(key, value as Int)
@@ -43,6 +50,39 @@ inline fun <reified T> SharedPreferences.put(key: String, value: T): T {
     return value
 }
 
-fun Context.showMessage(message: String) {
+fun Context.showMessage(message: String?) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
+
+/**
+ * Edmundo
+ * 25/03/2020
+ * Se copió y pegó el código del proyecto de Antonio
+ */
+inline fun <VH : RecyclerView.ViewHolder, T> RecyclerView.Adapter<VH>.basicDiffUtil(
+    initialValue: List<T>,
+    crossinline areItemsTheSame: (T, T) -> Boolean = { old, new -> old == new },
+    crossinline areContentsTheSame: (T, T) -> Boolean = { old, new -> old == new }
+) =
+    Delegates.observable(initialValue) { _, old, new ->
+        DiffUtil.calculateDiff(object : DiffUtil.Callback() {
+            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
+                areItemsTheSame(old[oldItemPosition], new[newItemPosition])
+
+            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
+                areContentsTheSame(old[oldItemPosition], new[newItemPosition])
+
+            override fun getOldListSize(): Int = old.size
+
+            override fun getNewListSize(): Int = new.size
+        }).dispatchUpdatesTo(this@basicDiffUtil)
+    }
+
+
+/**
+ * Edmundo
+ * 25/03/2020
+ * Se copió y pegó el código del proyecto de Antonio
+ */
+fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = true): View =
+    LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
