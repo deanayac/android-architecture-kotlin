@@ -21,4 +21,5 @@
     <!-- Fragment Tags -->
     <string name="tag_welcome_fragment">welcomeFragment</string>
     <string name="tag_register_fragment">registerFragment</string>
+    <string name="nameMovie_string">[NOMBRE DE LA PELICULA]</string>
 </resources>

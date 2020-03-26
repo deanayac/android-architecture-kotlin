@@ -11,4 +11,13 @@ object Constants {
 
     const val USER_NAME = "user_name"
     const val DEFAULT_STRING = ""
+
+    /**
+     * Modificated by Edmundo
+     * Add timeouts for Retrofit
+     */
+    const val connectTimeout = 1L
+    const val readTimeOut = 30L
+    const val writeTimeout = 15L
+    const val BASE_URL = "https://api.themoviedb.org"
 }
