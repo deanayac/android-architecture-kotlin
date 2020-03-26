@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.DiffUtil
@@ -50,15 +49,10 @@ inline fun <reified T> SharedPreferences.put(key: String, value: T): T {
     return value
 }
 
-fun Context.showMessage(message: String?) {
+fun Context.showMessage(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
 
-/**
- * Edmundo
- * 25/03/2020
- * Se copió y pegó el código del proyecto de Antonio
- */
 inline fun <VH : RecyclerView.ViewHolder, T> RecyclerView.Adapter<VH>.basicDiffUtil(
     initialValue: List<T>,
     crossinline areItemsTheSame: (T, T) -> Boolean = { old, new -> old == new },
@@ -78,11 +72,5 @@ inline fun <VH : RecyclerView.ViewHolder, T> RecyclerView.Adapter<VH>.basicDiffU
         }).dispatchUpdatesTo(this@basicDiffUtil)
     }
 
-
-/**
- * Edmundo
- * 25/03/2020
- * Se copió y pegó el código del proyecto de Antonio
- */
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = true): View =
     LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)

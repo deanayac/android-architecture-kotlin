@@ -8,15 +8,12 @@ class FavoritePresenter(
     private val favoriteContract: FavoriteContract.View,
     private val repository: FavoriteRepository
 ) : FavoriteContract.Presenter, Scope by Scope.Impl() {
-    private var view: FavoriteContract.View? = null
 
-    override fun initContract(view: FavoriteContract.View) {
+    override fun initContract() {
         initScope()
-        this.view = view
     }
 
     override fun cancelContract() {
-        this.view = null
         destroyScope()
     }
 
@@ -24,6 +21,7 @@ class FavoritePresenter(
         favoriteContract.showProgress()
         launch {
             val response = repository.getFavoriteMovies(request)
+
             if (response != null) {
                 favoriteContract.hideProgress()
                 favoriteContract.updateData(response)
@@ -32,6 +30,5 @@ class FavoritePresenter(
                 favoriteContract.showError("Error al obtener los Datos")
             }
         }
-
     }
 }

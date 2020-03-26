@@ -9,7 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-object Singletons {
+object ApiClient {
 
     private fun addInterceptor(): HttpLoggingInterceptor {
         val interceptor = HttpLoggingInterceptor()
@@ -32,9 +32,7 @@ object Singletons {
         return retrofit.create(Movies::class.java)
     }
 
-    // return Singleton of FavoriteNetwork
-    fun providerFavoriteRepository():FavoriteNetwork{
+    fun providerFavoriteRepository(): FavoriteNetwork {
         return FavoriteNetwork()
     }
-
 }

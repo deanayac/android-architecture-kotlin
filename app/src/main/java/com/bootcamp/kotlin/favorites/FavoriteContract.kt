@@ -5,18 +5,17 @@ import com.bootcamp.kotlin.models.network.favoriteMovies.FavoriteMoviesResponse
 
 interface FavoriteContract {
 
-    interface View{
+    interface View {
         fun showProgress()
         fun hideProgress()
-        fun showError(message:String?)
+        fun showError(message: String?)
         fun updateData(request: FavoriteMoviesResponse?)
     }
 
-    interface Presenter{
-        fun initContract(view:View)
+    interface Presenter {
+        fun initContract()
         fun cancelContract()
         fun getFavoriteMovies(request: FavoriteMoviesRequest)
-
     }
 
 }
