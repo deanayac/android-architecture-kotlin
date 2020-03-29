@@ -13,12 +13,12 @@ class MoviesPresenter(private val view: MoviesContract.View,
         launch {
             view.showProgress(isVisible = true)
             val movies = repository.popularMovies()
-            when(movies.status){
-                Status.SUCCESS -> view.showMovies(movies.data!!)
-                Status.ERROR -> Log.d("error",movies.message)
+                when (movies.status) {
+                    Status.SUCCESS -> view.showMovies(movies.data?: fail("Fail List Movies "))
+                    Status.ERROR -> Log.d("error",movies.message)
                 }
-                 view.showProgress(isVisible = false)
-            }
+            view.showProgress(isVisible = false)
+                }
     }
 
     override fun onCreate() {
@@ -29,4 +29,9 @@ class MoviesPresenter(private val view: MoviesContract.View,
     override fun onDestroy() {
         destroyScope()
     }
+
+    private fun fail(message: String): Nothing {
+        throw IllegalArgumentException(message)
+    }
+
 }
