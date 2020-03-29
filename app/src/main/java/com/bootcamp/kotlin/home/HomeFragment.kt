@@ -1,5 +1,4 @@
 package com.bootcamp.kotlin.home
-
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bootcamp.kotlin.databinding.FragmentHomeBinding
-import com.bootcamp.kotlin.movies.*
+import com.bootcamp.kotlin.movies.MoviesContract
+import com.bootcamp.kotlin.movies.MoviesPresenter
+import com.bootcamp.kotlin.movies.MoviesRepository
+import com.bootcamp.kotlin.movies.MoviesRepositoryImpl
+import com.bootcamp.kotlin.movies.Movie
 import com.bootcamp.kotlin.movies.adapter.MoviesAdapter
 import kotlinx.android.synthetic.main.view_progress_bar.*
 

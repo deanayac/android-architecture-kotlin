@@ -53,3 +53,4 @@ class RegisterFragment : Fragment() {
         return view.nameUserEditText.text!=null && view.nameUserEditText.text.toString()!=""
     }
 }
+
