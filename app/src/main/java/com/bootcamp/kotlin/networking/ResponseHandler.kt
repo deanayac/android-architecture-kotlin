@@ -4,7 +4,17 @@ import retrofit2.HttpException
 import java.net.SocketTimeoutException
 
 enum class ErrorCodes(val code: Int) {
-    SocketTimeOut(-1)
+    SocketTimeOut(-1),
+}
+object Error{
+    const val unauthorized = "Unauthorized"
+    const val notFound = "Not found"
+    const val timeOut = "Time Out"
+    const val generic = "Something went wrong"
+}
+object CodError{
+    const val UNAUTHORIZED = 401
+    const val NOT_FOUND = 404
 }
 
 open class ResponseHandler {
@@ -22,10 +32,10 @@ open class ResponseHandler {
 
     private fun getErrorMessage(code: Int): String {
         return when (code) {
-            ErrorCodes.SocketTimeOut.code -> "Timeout"
-            401 -> "Unauthorized"
-            404 -> "Not found"
-            else -> "Something went wrong"
+            ErrorCodes.SocketTimeOut.code -> Error.timeOut
+            CodError.UNAUTHORIZED -> Error.unauthorized
+            CodError.NOT_FOUND -> Error.notFound
+            else -> Error.generic
         }
     }
 }

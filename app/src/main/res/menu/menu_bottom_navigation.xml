@@ -3,16 +3,16 @@
     <item
         android:id="@+id/itemHome"
         android:icon="@drawable/ic_home"
-        android:title="@string/txt_item_home"
+        android:title=""
         android:checked="true"/>
 
     <item
         android:id="@+id/itemFavorites"
         android:icon="@drawable/ic_home"
-        android:title="@string/txt_item_favorites" />
+        android:title="" />
 
     <item
         android:id="@+id/itemExtra"
         android:icon="@drawable/ic_home"
-        android:title="@string/txt_item_extra" />
+        android:title="" />
 </menu>

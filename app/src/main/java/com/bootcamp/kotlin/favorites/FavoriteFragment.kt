@@ -31,3 +31,4 @@ class FavoriteFragment : Fragment() {
             FavoriteFragment()
     }
 }
+

@@ -33,5 +33,4 @@ class MoviesPresenter(private val view: MoviesContract.View,
     private fun fail(message: String): Nothing {
         throw IllegalArgumentException(message)
     }
-
 }

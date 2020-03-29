@@ -21,7 +21,7 @@ class MoviesRepositoryImpl : MoviesRepository {
                 language = "en-US"
             )
             ResponseHandler().handleSuccess(movies.results)
-        } catch (e: Exception) {
+        } catch (e: IllegalArgumentException) {
             ResponseHandler().handleException(e)
         }
     }

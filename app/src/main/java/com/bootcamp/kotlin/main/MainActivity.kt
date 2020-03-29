@@ -34,10 +34,10 @@ class MainActivity : AppCompatActivity(), HomeFragment.Listener {
     }
 
     private fun setupBottomNavigationView() {
-        OrdersCommandProcessor.init(this)
+        `OrdersCommandProcessor`.init(this)
         binding.bottomNavigationView.inflateMenu(R.menu.menu_bottom_navigation)
         binding.bottomNavigationView.setOnNavigationItemSelectedListener {
-            OrdersCommandProcessor.invoke(it.itemId)
+            `OrdersCommandProcessor`.invoke(it.itemId)
             return@setOnNavigationItemSelectedListener true
         }
         binding.bottomNavigationView.selectedItemId = R.id.itemHome
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.Listener {
     }
 
     override fun onDestroy() {
-        OrdersCommandProcessor.clear()
+        `OrdersCommandProcessor`.clear()
         super.onDestroy()
     }
 
