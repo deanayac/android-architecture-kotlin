@@ -49,10 +49,6 @@ inline fun <reified T> SharedPreferences.put(key: String, value: T): T {
     return value
 }
 
-fun Context.showMessage(message: String) {
-    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-}
-
 inline fun <VH : RecyclerView.ViewHolder, T> RecyclerView.Adapter<VH>.basicDiffUtil(
     initialValue: List<T>,
     crossinline areItemsTheSame: (T, T) -> Boolean = { old, new -> old == new },
@@ -74,3 +70,5 @@ inline fun <VH : RecyclerView.ViewHolder, T> RecyclerView.Adapter<VH>.basicDiffU
 
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = true): View =
     LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
+
+fun Context.showMessage(message: String)=Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
