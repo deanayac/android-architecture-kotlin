@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bootcamp.kotlin.databinding.FragmentFavoriteBinding
 import com.bootcamp.kotlin.di.ApiClient
 import com.bootcamp.kotlin.models.network.favoriteMovies.FavoriteMoviesRequest
@@ -45,6 +47,7 @@ class FavoriteFragment : Fragment(), FavoriteContract.View {
                 "878539e32c923af4c422e5c0b1fa015ba4aa2dfe"
             )
         )
+        binding.favoriteMoviesRecyclerView.layoutManager = LinearLayoutManager(activity)
         binding.favoriteMoviesRecyclerView.adapter = adapter
     }
 
