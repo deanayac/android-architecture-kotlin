@@ -19,4 +19,12 @@ interface Movies {
         @Query("api_key") apiKey: String,
         @Query("session_id") sessionId: String
     ): FavoriteMoviesResponse
+
+    @GET("3/search/mmmovie")
+    suspend fun searchMovies(
+        @Query("api_key") apiKey: String,
+        @Query("page") page: String,
+        @Query("language") language: String,
+        @Query("query") query: String):MoviesBase
+
 }
