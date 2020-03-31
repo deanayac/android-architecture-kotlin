@@ -13,7 +13,6 @@ object Constants {
     const val connectTimeout = 1L
     const val readTimeOut = 30L
     const val writeTimeout = 15L
-    const val BASE_URL = "https://api.themoviedb.org"
 
     const val PATH_MOVIE = "https://image.tmdb.org/t/p/w533_and_h300_bestv2/"
 
