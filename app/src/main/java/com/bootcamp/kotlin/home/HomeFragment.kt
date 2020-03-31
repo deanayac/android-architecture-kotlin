@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import com.bootcamp.kotlin.databinding.FragmentHomeBinding
 import com.bootcamp.kotlin.movies.MoviesContract
 import com.bootcamp.kotlin.movies.MoviesPresenter
-import com.bootcamp.kotlin.movies.MoviesRepository
 import com.bootcamp.kotlin.movies.MoviesRepositoryImpl
 import com.bootcamp.kotlin.movies.Movie
 import com.bootcamp.kotlin.movies.adapter.MoviesAdapter
@@ -43,7 +42,6 @@ class HomeFragment : Fragment(), MoviesContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.moviesRecyclerView.adapter = adapter
         presenter = MoviesPresenter(view = this, repository = MoviesRepositoryImpl())
         presenter?.onCreate()

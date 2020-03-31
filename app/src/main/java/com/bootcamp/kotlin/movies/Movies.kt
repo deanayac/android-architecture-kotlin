@@ -20,7 +20,7 @@ interface Movies {
         @Query("session_id") sessionId: String
     ): FavoriteMoviesResponse
 
-    @GET("3/search/mmmovie")
+    @GET("3/search/movie")
     suspend fun searchMovies(
         @Query("api_key") apiKey: String,
         @Query("page") page: String,
