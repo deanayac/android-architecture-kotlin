@@ -5,6 +5,7 @@ import com.bootcamp.kotlin.networking.ResponseHandler
 import com.bootcamp.kotlin.networking.ResultType
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.Exception
 
 class MoviesRepositoryImpl : MoviesRepository {
     override suspend fun popularMovies(): Resource<List<Movie>> {
@@ -21,7 +22,7 @@ class MoviesRepositoryImpl : MoviesRepository {
                 language = "en-US"
             )
             ResponseHandler().handleSuccess(movies.results)
-        } catch (e: IllegalArgumentException) {
+        } catch (e: Exception) {
             ResponseHandler().handleException(e)
         }
     }

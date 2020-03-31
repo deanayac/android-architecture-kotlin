@@ -1,6 +1,7 @@
 package com.bootcamp.kotlin.networking
 
 import retrofit2.HttpException
+import java.lang.Exception
 import java.net.SocketTimeoutException
 
 enum class ErrorCodes(val code: Int) {

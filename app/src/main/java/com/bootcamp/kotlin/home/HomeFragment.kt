@@ -1,37 +1,26 @@
 package com.bootcamp.kotlin.home
-import android.content.Context
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bootcamp.kotlin.databinding.FragmentHomeBinding
-import com.bootcamp.kotlin.movies.MoviesContract
-import com.bootcamp.kotlin.movies.MoviesPresenter
-import com.bootcamp.kotlin.movies.MoviesRepository
-import com.bootcamp.kotlin.movies.MoviesRepositoryImpl
-import com.bootcamp.kotlin.movies.Movie
+import com.bootcamp.kotlin.main.MainActivity
+import com.bootcamp.kotlin.movies.*
 import com.bootcamp.kotlin.movies.adapter.MoviesAdapter
 import kotlinx.android.synthetic.main.view_progress_bar.*
 
 class HomeFragment : Fragment(), MoviesContract.View {
 
-    private var listener: Listener? = null
     private var presenter: MoviesContract.Presenter? = null
     private lateinit var repository: MoviesRepository
     private lateinit var binding: FragmentHomeBinding
+    private var adapter = MoviesAdapter(selectedItem())
 
     companion object {
         @JvmStatic
         fun newInstance() = HomeFragment()
-    }
-
-    interface Listener {
-        fun navigateTo(movie: Movie)
-    }
-
-    private val adapter = MoviesAdapter {
-        listener?.navigateTo(it)
     }
 
     override fun onCreateView(
@@ -44,7 +33,6 @@ class HomeFragment : Fragment(), MoviesContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.moviesRecyclerView.adapter = adapter
         repository = MoviesRepositoryImpl()
         presenter = MoviesPresenter(view = this, repository = repository)
@@ -59,17 +47,14 @@ class HomeFragment : Fragment(), MoviesContract.View {
         progress.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        if (context is Listener) {
-            listener = context
-        }
-    }
-
     override fun onDestroyView() {
-        listener = null
         presenter?.onDestroy()
         super.onDestroyView()
+    }
+
+    private fun selectedItem(): (Movie) -> Unit {
+        return {
+            ((activity as MainActivity).navigateTo(it))
+        }
     }
 }
