@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/itemHome"
-        android:icon="@drawable/ic_home"
-        android:title=""
-        android:checked="true"/>
+        android:checked="true"
+        android:icon="@drawable/ic_movie"
+        android:title="@string/txt_item_movie" />
 
     <item
         android:id="@+id/itemFavorites"
-        android:icon="@drawable/ic_home"
-        android:title="" />
+        android:icon="@drawable/ic_favorite"
+        android:title="@string/txt_item_favorites" />
 
     <item
         android:id="@+id/itemExtra"
-        android:icon="@drawable/ic_home"
-        android:title="" />
+        android:icon="@drawable/ic_search"
+        android:title="@string/txt_item_extra" />
 </menu>
