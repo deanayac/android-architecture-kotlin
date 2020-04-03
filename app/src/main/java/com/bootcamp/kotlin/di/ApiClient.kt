@@ -3,7 +3,6 @@ package com.bootcamp.kotlin.di
 import com.bootcamp.kotlin.BuildConfig
 import com.bootcamp.kotlin.base.Constants
 import com.bootcamp.kotlin.favorites.FavoriteNetwork
-import com.bootcamp.kotlin.movies.Movies
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -18,19 +17,18 @@ object ApiClient {
         return interceptor
     }
 
-    fun buildService(): Movies? {
+    fun buildService(): Retrofit {
         val httpClient = OkHttpClient.Builder().addInterceptor(addInterceptor())
             .connectTimeout(Constants.connectTimeout, TimeUnit.MINUTES)
             .readTimeout(Constants.readTimeOut, TimeUnit.SECONDS)
             .writeTimeout(Constants.writeTimeout, TimeUnit.SECONDS)
             .build()
 
-        val retrofit = Retrofit.Builder()
+        return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
             .client(httpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-        return retrofit.create(Movies::class.java)
     }
 
     fun providerFavoriteRepository(): FavoriteNetwork {
