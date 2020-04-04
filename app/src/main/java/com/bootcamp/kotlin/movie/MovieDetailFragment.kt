@@ -8,13 +8,13 @@ import android.view.ViewGroup
 
 import com.bootcamp.kotlin.R
 import com.bootcamp.kotlin.movies.Movie
+import kotlinx.android.synthetic.main.fragment_movie_detail.*
 
 class MovieDetailFragment : Fragment() {
-
+    private var movie: Movie? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val movie: Movie? = arguments?.getParcelable(MovieDetailActivity.ARG_MOVIE)
+        movie = arguments?.getParcelable(MovieDetailActivity.ARG_MOVIE)
     }
 
     override fun onCreateView(
@@ -22,6 +22,13 @@ class MovieDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_movie_detail, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        movie?.let {
+            movieHeaderView.setData(it)
+        }
     }
 
     companion object {
