@@ -10,6 +10,7 @@ import com.bootcamp.kotlin.movies.MoviesContract
 import com.bootcamp.kotlin.movies.MoviesPresenter
 import com.bootcamp.kotlin.movies.MoviesRepositoryImpl
 import com.bootcamp.kotlin.movies.Movie
+import com.bootcamp.kotlin.di.ApiClient
 import com.bootcamp.kotlin.movies.adapter.MoviesAdapter
 import kotlinx.android.synthetic.main.view_progress_bar.*
 
@@ -43,7 +44,11 @@ class HomeFragment : Fragment(), MoviesContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.moviesRecyclerView.adapter = adapter
-        presenter = MoviesPresenter(view = this, repository = MoviesRepositoryImpl())
+        presenter = MoviesPresenter(
+            view = this,
+            repository = MoviesRepositoryImpl(ApiClient.buildService())
+        )
+
         presenter?.onCreate()
     }
 

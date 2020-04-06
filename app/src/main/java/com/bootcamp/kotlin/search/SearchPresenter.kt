@@ -10,6 +10,10 @@ class SearchPresenter(private val view: SearchContract.View,
                       private val repository:MoviesRepository) :
     SearchContract.Presenter,Scope by Scope.Impl(){
 
+    companion object{
+        const val ERROR_MOVIES = "Fail List Movies"
+    }
+
     override fun initView() {
         initScope()
     }
@@ -20,7 +24,7 @@ class SearchPresenter(private val view: SearchContract.View,
 
             val movies = repository.searchMovies(description)
                 when(movies.status){
-                    Status.SUCCESS -> view.showMovies(movies.data?: fail("Fail List Movies "))
+                    Status.SUCCESS -> view.showMovies(movies.data?: fail(ERROR_MOVIES))
                     Status.ERROR -> Log.d("error",movies.message)
                 }
             view.showProgress(isVisible = false)
