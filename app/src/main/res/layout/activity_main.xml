@@ -21,5 +21,6 @@
         android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:visibility="visible"
+        app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

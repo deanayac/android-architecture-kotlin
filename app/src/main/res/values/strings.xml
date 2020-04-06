@@ -14,7 +14,7 @@
     <string name="digits">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890</string>
     <string name="guardar_usuario">Guardar Usuario</string>
 
-    <string name="txt_item_home">Inicio</string>
+    <string name="txt_item_movie">Películas</string>
     <string name="txt_item_extra">Extra</string>
     <string name="txt_item_favorites">Favoritos</string>
 

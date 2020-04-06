@@ -1,5 +1,6 @@
 package com.bootcamp.kotlin.di
 
+import com.bootcamp.kotlin.BuildConfig
 import com.bootcamp.kotlin.base.Constants
 import com.bootcamp.kotlin.favorites.FavoriteNetwork
 import com.bootcamp.kotlin.movies.Movies
@@ -25,7 +26,7 @@ object ApiClient {
             .build()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .client(httpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
