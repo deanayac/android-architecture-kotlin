@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".welcome.SplashActivity"
             android:label="@string/title_activity_splash"
@@ -25,8 +26,10 @@
         <activity android:name=".main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".movie.MovieDetailActivity"
-            android:configChanges="keyboardHidden"/>
+        <activity
+            android:name=".movie.MovieDetailActivity"
+            android:configChanges="keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
