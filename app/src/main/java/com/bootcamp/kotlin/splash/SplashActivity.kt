@@ -1,4 +1,4 @@
-package com.bootcamp.kotlin.welcome
+package com.bootcamp.kotlin.splash
 
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -8,7 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.bootcamp.kotlin.R
 import com.bootcamp.kotlin.base.Constants
+import com.bootcamp.kotlin.util.attachFragment
 import com.bootcamp.kotlin.util.showMessage
+import com.bootcamp.kotlin.welcome.RegisterFragment
+import com.bootcamp.kotlin.welcome.WelcomeFragment
 import kotlinx.android.synthetic.main.activity_splash.*
 
 class SplashActivity : AppCompatActivity() {
@@ -31,18 +34,19 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun sleepScreen() {
-        /****** Create Thread that will sleep for 2 seconds */
         handler.postDelayed({
             checkIfUserExists()?.let {
                 if (it.isEmpty()) {
                     showMessage("No hay usuarios registrados")
-                    R.id.splashContainer.attachFragment(
+                    attachFragment(
+                        R.id.splashContainer,
                         RegisterFragment(),
                         getString(R.string.tag_register_fragment)
                     )
                     hideSplash()
                 } else {
-                    R.id.splashContainer.attachFragment(
+                    attachFragment(
+                        R.id.splashContainer,
                         WelcomeFragment(),
                         getString(R.string.tag_welcome_fragment)
                     )
@@ -55,16 +59,6 @@ class SplashActivity : AppCompatActivity() {
     override fun onDestroy() {
         handler.removeCallbacksAndMessages(null)
         super.onDestroy()
-    }
-
-    private fun Int.attachFragment(
-        view: Fragment,
-        tag: String
-    ) {
-        supportFragmentManager.beginTransaction()
-            .replace(this, view, tag)
-            .addToBackStack(getString(R.string.tag_register_fragment))
-            .commit()
     }
 
     private fun hideSplash() {

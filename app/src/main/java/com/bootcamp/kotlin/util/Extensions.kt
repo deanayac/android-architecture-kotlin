@@ -1,5 +1,7 @@
 package com.bootcamp.kotlin.util
 
+import android.app.Activity
+import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import android.view.LayoutInflater
@@ -7,8 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.LayoutRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bootcamp.kotlin.R
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.properties.Delegates
 
 /**
@@ -72,3 +79,14 @@ fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = true): 
     LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
 
 fun Context.showMessage(message: String)=Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
+
+internal fun AppCompatActivity.attachFragment(
+    containerId: Int,
+    view: Fragment,
+    tag: String
+) {
+    supportFragmentManager.beginTransaction()
+        .replace(containerId, view, tag)
+        .addToBackStack(getString(R.string.tag_register_fragment))
+        .commit()
+}
