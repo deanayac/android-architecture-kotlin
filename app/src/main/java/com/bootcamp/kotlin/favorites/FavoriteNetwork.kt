@@ -1,6 +1,6 @@
 package com.bootcamp.kotlin.favorites
 
-import com.bootcamp.kotlin.di.ApiClient
+import com.bootcamp.kotlin.networking.ApiClient
 import com.bootcamp.kotlin.models.network.favoriteMovies.FavoriteMoviesRequest
 import com.bootcamp.kotlin.models.network.favoriteMovies.FavoriteMoviesResponse
 import com.bootcamp.kotlin.movies.Movies

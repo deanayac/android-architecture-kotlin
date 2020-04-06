@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bootcamp.kotlin.databinding.FragmentFavoriteBinding
-import com.bootcamp.kotlin.di.ApiClient
+import com.bootcamp.kotlin.networking.ApiClient
 import com.bootcamp.kotlin.models.network.favoriteMovies.FavoriteMoviesRequest
 import com.bootcamp.kotlin.models.network.favoriteMovies.FavoriteMoviesResponse
 import com.bootcamp.kotlin.util.showMessage

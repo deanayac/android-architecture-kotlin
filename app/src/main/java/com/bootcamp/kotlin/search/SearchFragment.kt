@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bootcamp.kotlin.databinding.FragmentSearchBinding
-import com.bootcamp.kotlin.di.ApiClient
+import com.bootcamp.kotlin.networking.ApiClient
 import com.bootcamp.kotlin.movies.Movie
 import com.bootcamp.kotlin.movies.MoviesRepositoryImpl
 import com.bootcamp.kotlin.movies.adapter.MoviesAdapter
@@ -35,7 +35,8 @@ class SearchFragment : Fragment(), SearchContract.View{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter = SearchPresenter(view = this, repository = MoviesRepositoryImpl(ApiClient.buildService()))
+        presenter = SearchPresenter(view = this, repository = MoviesRepositoryImpl(
+            ApiClient.buildService()))
         presenter?.initView()
         search_btn.setOnClickListener{
             presenter?.searchMovies(search_src_text.text.toString())
