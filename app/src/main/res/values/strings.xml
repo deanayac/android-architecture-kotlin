@@ -22,4 +22,11 @@
     <string name="tag_welcome_fragment">welcomeFragment</string>
     <string name="tag_register_fragment">registerFragment</string>
     <string name="nameMovie_string">[NOMBRE DE LA PELICULA]</string>
+
+    <!-- Search -->
+    <string name="btn_search">Buscar</string>
+    <string name="txt_search">Encuentra Peliculas</string>
+
+
+
 </resources>

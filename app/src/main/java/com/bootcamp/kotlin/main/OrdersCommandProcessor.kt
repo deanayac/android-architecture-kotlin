@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bootcamp.kotlin.R
 import com.bootcamp.kotlin.favorites.FavoriteFragment
 import com.bootcamp.kotlin.home.HomeFragment
+import com.bootcamp.kotlin.search.SearchFragment
 
 object OrdersCommandProcessor {
     private var queue = HashMap<Int, OrderCommand>()
@@ -13,7 +14,7 @@ object OrdersCommandProcessor {
         this.activity = activity
         queue[R.id.itemHome] = HomeCommand(HomeFragment.newInstance())
         queue[R.id.itemFavorites] = FavoriteCommand(FavoriteFragment.newInstance())
-        queue[R.id.itemExtra] = ExtraCommand(FavoriteFragment.newInstance())
+        queue[R.id.itemExtra] = ExtraCommand(SearchFragment.newInstance())
     }
 
     fun invoke(key: Int) = apply {
