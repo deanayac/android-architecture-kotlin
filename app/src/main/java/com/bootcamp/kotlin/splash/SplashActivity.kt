@@ -4,6 +4,8 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import androidx.annotation.IdRes
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.bootcamp.kotlin.R
@@ -14,54 +16,37 @@ import com.bootcamp.kotlin.welcome.RegisterFragment
 import com.bootcamp.kotlin.welcome.WelcomeFragment
 import kotlinx.android.synthetic.main.activity_splash.*
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : AppCompatActivity(), SplashContract.View {
 
-    private val handler = Handler()
+    private var presenter: SplashPresenter? = null
 
-    private lateinit var sharedPreferences: SharedPreferences
+    private val handler: Handler? = null
+
+    private val sharedPreferences: SharedPreferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-
-        sharedPreferences = getSharedPreferences(Constants.PREF_NAME, Constants.PRIVATE_MODE)
+        presenter = SplashPresenter(this, this, sharedPreferences, handler)
+        presenter?.initView()
 
         sleepScreen()
     }
 
-    private fun checkIfUserExists(): String? {
-        return sharedPreferences.getString(Constants.USER_NAME, Constants.DEFAULT_STRING)
+    private fun sleepScreen() {
+        presenter?.sleepScreen()
     }
 
-    private fun sleepScreen() {
-        handler.postDelayed({
-            checkIfUserExists()?.let {
-                if (it.isEmpty()) {
-                    showMessage("No hay usuarios registrados")
-                    attachFragment(
-                        R.id.splashContainer,
-                        RegisterFragment(),
-                        getString(R.string.tag_register_fragment)
-                    )
-                    hideSplash()
-                } else {
-                    attachFragment(
-                        R.id.splashContainer,
-                        WelcomeFragment(),
-                        getString(R.string.tag_welcome_fragment)
-                    )
-                    hideSplash()
-                }
-            }
-        }, Constants.SPLASH_DELAY)
+    override fun hideSplash() {
+        containerSplash.visibility = View.GONE
+    }
+
+    override fun checkIfUserExists(sharedPreferences: SharedPreferences): String {
+        return sharedPreferences.getString(Constants.USER_NAME, Constants.DEFAULT_STRING)!!
     }
 
     override fun onDestroy() {
-        handler.removeCallbacksAndMessages(null)
+        presenter?.onDestroy()
         super.onDestroy()
-    }
-
-    private fun hideSplash() {
-        containerSplash.visibility = View.GONE
     }
 }
