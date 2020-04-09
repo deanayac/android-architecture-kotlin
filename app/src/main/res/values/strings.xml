@@ -9,6 +9,8 @@
     <string name="see_more">Leer más</string>
     <string name="see_less">Leer menos</string>
 
+    <string name="message_not_found_user">No hay usuarios registrados</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="architect_coders_splash_image">Architect Coders Image</string>
@@ -24,4 +26,9 @@
     <string name="tag_welcome_fragment">welcomeFragment</string>
     <string name="tag_register_fragment">registerFragment</string>
     <string name="nameMovie_string">[NOMBRE DE LA PELICULA]</string>
+
+    <!-- Search -->
+    <string name="btn_search">Buscar</string>
+    <string name="txt_search">Encuentra Peliculas</string>
+
 </resources>

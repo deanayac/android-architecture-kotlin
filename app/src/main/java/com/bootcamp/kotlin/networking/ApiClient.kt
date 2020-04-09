@@ -1,4 +1,4 @@
-package com.bootcamp.kotlin.di
+package com.bootcamp.kotlin.networking
 
 import com.bootcamp.kotlin.BuildConfig
 import com.bootcamp.kotlin.base.Constants
