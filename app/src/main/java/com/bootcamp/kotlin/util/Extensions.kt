@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package com.bootcamp.kotlin.util
 
 import android.app.Activity

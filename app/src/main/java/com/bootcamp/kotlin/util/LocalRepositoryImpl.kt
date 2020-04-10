@@ -7,7 +7,7 @@ import com.bootcamp.kotlin.base.Constants
 /**
  * Created by jhon on 8/04/2020
  */
-class SharedPreferencesRepositoryImpl(private val appCompatActivity: AppCompatActivity) : SharedPreferencesRepository {
+class LocalRepositoryImpl(private val appCompatActivity: AppCompatActivity) : LocalRepository {
 
     companion object {
         private lateinit var sharedPreferences: SharedPreferences
