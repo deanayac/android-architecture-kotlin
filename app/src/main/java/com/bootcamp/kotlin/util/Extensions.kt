@@ -1,10 +1,9 @@
-@file:Suppress("UNCHECKED_CAST")
-
 package com.bootcamp.kotlin.util
 
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
@@ -91,4 +90,11 @@ internal fun AppCompatActivity.attachFragment(
         .replace(containerId, view, tag)
         .addToBackStack(getString(R.string.tag_register_fragment))
         .commit()
+}
+
+inline fun <reified T : Activity> Context.intentFor(body: Intent.() -> Unit): Intent =
+    Intent(this, T::class.java).apply(body)
+
+inline fun <reified T : Activity> Context.startActivity(body: Intent.() -> Unit) {
+    startActivity(intentFor<T>(body))
 }
