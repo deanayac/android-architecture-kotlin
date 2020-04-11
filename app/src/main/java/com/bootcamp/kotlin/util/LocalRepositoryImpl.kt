@@ -22,6 +22,6 @@ class LocalRepositoryImpl(private val appCompatActivity: AppCompatActivity) : Lo
     }
 
     override fun checkIfUserExists(): String {
-        return sharedPreferences.getString(Constants.USER_NAME, Constants.DEFAULT_STRING)!!
+        return sharedPreferences.getString(Constants.USER_NAME, Constants.DEFAULT_STRING) ?: Constants.DEFAULT_STRING
     }
 }
