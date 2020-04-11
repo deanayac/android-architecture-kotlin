@@ -9,16 +9,14 @@ import com.bootcamp.kotlin.base.Constants
  */
 class LocalRepositoryImpl(private val appCompatActivity: AppCompatActivity) : LocalRepository {
 
-    companion object {
-        private lateinit var sharedPreferences: SharedPreferences
+    private val sharedPreferences: SharedPreferences by lazy {
+        appCompatActivity.getSharedPreferences(Constants.PREF_NAME, Constants.PRIVATE_MODE)
     }
 
-    override fun initSharedPreferences() {
-        sharedPreferences = appCompatActivity.getSharedPreferences(Constants.PREF_NAME, Constants.PRIVATE_MODE)
-    }
-
-    override fun saveUserName(userName: String) {
-        sharedPreferences.put(Constants.USER_NAME, userName)
+    override fun saveUserName(userName: String): Boolean {
+        return sharedPreferences.edit().apply {
+            putString(Constants.USER_NAME, userName)
+        }.commit()
     }
 
     override fun checkIfUserExists(): String {
