@@ -35,17 +35,19 @@ class RegisterFragment : Fragment(), RegisterContract.View {
         super.onViewCreated(view, savedInstanceState)
 
         saveUserButton.setOnClickListener {
-            if (validateInput("${nameUserEditText.text}")) {
+            if (!validateInput("${nameUserEditText.text}")) {
                     activity?.startActivity<MainActivity> {}.let {
                     presenter?.saveUserName("${nameUserEditText.text}")
                 }
             } else {
                 activity?.showMessage(Constants.validateNameUser)
+                return@setOnClickListener
             }
         }
     }
 
-    override fun validateInput(userName: String): Boolean {
-        return userName != ""
+    override fun validateInput(userName: String): Boolean = when(userName) {
+        "" -> true
+        else -> false
     }
 }
