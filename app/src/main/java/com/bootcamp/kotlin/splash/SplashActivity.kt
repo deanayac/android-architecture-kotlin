@@ -40,7 +40,7 @@ class SplashActivity : AppCompatActivity(), SplashContract.View {
                 hideSplash()
             } else {
                 startActivity<MainActivity> {  }
-                hideSplash()
+                finish()
             }
         }
     }
