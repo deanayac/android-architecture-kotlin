@@ -40,7 +40,7 @@ class RegisterFragment : Fragment(), RegisterContract.View {
                     presenter?.saveUserName("${nameUserEditText.text}")
                 }
             } else {
-                activity?.showMessage(Constants.validateNameUser)
+                activity?.showMessage(getString(R.string.enter_user_name))
                 return@setOnClickListener
             }
         }
