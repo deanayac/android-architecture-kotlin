@@ -15,10 +15,12 @@ class MovieDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
 
-        val movie: Movie = intent.getParcelableExtra(ARG_MOVIE)
+        val movie: Movie? = intent.getParcelableExtra(ARG_MOVIE)
 
         if (savedInstanceState == null) {
-            val fragment = MovieDetailFragment.newInstance(movie)
+            if (movie == null) finish()
+
+            val fragment = MovieDetailFragment.newInstance(movie!!)
 
             supportFragmentManager
                 .beginTransaction()
