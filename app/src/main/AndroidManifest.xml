@@ -25,7 +25,8 @@
         </activity>
 
         <activity android:name=".main.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan|adjustResize"/>
 
         <activity
             android:name=".movie.MovieDetailActivity"
