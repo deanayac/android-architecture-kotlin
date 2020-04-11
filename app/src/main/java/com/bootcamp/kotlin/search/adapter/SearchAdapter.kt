@@ -36,7 +36,7 @@ class SearchAdapter(items: List<Movie> = emptyList(),private val listener:MovieL
             with(binding){
                 root.setOnClickListener { listener(movie) }
                 title.text = movie.title
-                movieThumb.load("${Constants.PATH_MOVIE_W185.plus(movie.backdropPath)}")
+                movieThumb.load("${Constants.PATH_MOVIE_W300.plus(movie.backdropPath)}")
             }
         }
     }
