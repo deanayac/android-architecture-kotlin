@@ -41,6 +41,3 @@ class SearchAdapter(items: List<Movie> = emptyList(),private val listener:MovieL
         }
     }
 }
-
-
-

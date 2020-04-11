@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doBeforeTextChanged
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bootcamp.kotlin.databinding.FragmentSearchBinding
 import com.bootcamp.kotlin.movies.Movie
 import com.bootcamp.kotlin.movies.MoviesRepositoryImpl
@@ -15,7 +15,6 @@ import com.bootcamp.kotlin.search.adapter.SearchAdapter
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.view_progress_bar.*
 
-
 class SearchFragment : Fragment(), SearchContract.View{
 
     private lateinit var binding:FragmentSearchBinding
@@ -23,6 +22,7 @@ class SearchFragment : Fragment(), SearchContract.View{
     private var presenter:SearchContract.Presenter?=null
 
    companion object{
+       const val START_SEARCH = 4
        @JvmStatic
        fun newInstance():SearchFragment = SearchFragment()
    }
@@ -39,11 +39,14 @@ class SearchFragment : Fragment(), SearchContract.View{
         super.onViewCreated(view, savedInstanceState)
         presenter = SearchPresenter(view = this, repository = MoviesRepositoryImpl(
             ApiClient.buildService()))
-        presenter?.initView()
-        search_btn.setOnClickListener{
-            presenter?.searchMovies(search_src_text.text.toString())
-        }
 
+        presenter?.initView()
+
+        search_src_text.doBeforeTextChanged { text,_,count,_ ->
+            if(count > START_SEARCH){
+                presenter?.searchMovies(text.toString())
+            }
+        }
     }
 
     override fun showMovies(movies: List<Movie>) {
@@ -65,7 +68,7 @@ class SearchFragment : Fragment(), SearchContract.View{
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is SearchFragment.Listener) {
+        if (context is Listener) {
             listener = context
         }
     }
