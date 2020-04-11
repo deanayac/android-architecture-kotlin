@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Kotlin-Bootcamp</string>
-    <string name="title_activity_splash">SplashActivity</string>
-
     <string name="hello_register_fragment">Página de registro</string>
     <string name="add_name_user">Ingresa tu nombre de usuario</string>
     <string name="hello_welcome_fragment">Hola. Usuario: %1$s</string>
