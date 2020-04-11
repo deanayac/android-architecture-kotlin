@@ -29,9 +29,7 @@ class HomeFragment : Fragment(), MoviesContract.View {
         fun navigateTo(movie: Movie)
     }
 
-    private val adapter = MoviesAdapter {
-        listener?.navigateTo(it)
-    }
+    private lateinit var adapter: MoviesAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +41,9 @@ class HomeFragment : Fragment(), MoviesContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        adapter = MoviesAdapter { listener?.navigateTo(it) }
+
         binding.moviesRecyclerView.adapter = adapter
         presenter = MoviesPresenter(
             view = this,
@@ -69,7 +70,6 @@ class HomeFragment : Fragment(), MoviesContract.View {
     }
 
     override fun onDestroyView() {
-        listener = null
         presenter?.onDestroy()
         super.onDestroyView()
     }
