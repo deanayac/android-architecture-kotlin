@@ -3,6 +3,7 @@
     <string name="title_activity_splash">SplashActivity</string>
 
     <string name="hello_register_fragment">Página de registro</string>
+    <string name="add_name_user">Ingresa tu nombre de usuario</string>
     <string name="hello_welcome_fragment">Hola. Usuario: %1$s</string>
 
     <string name="next">Siguiente</string>
@@ -12,9 +13,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="architect_coders_splash_image">Architect Coders Image</string>
-    <string name="registrar_usuario">Registrar Usuario</string>
+    <string name="register_user">Registrar Usuario</string>
     <string name="digits">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890</string>
-    <string name="guardar_usuario">Guardar Usuario</string>
+    <string name="save_user">Guardar Usuario</string>
 
     <string name="txt_item_movie">Películas</string>
     <string name="txt_item_extra">Extra</string>

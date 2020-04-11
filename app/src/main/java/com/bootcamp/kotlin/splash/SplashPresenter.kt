@@ -1,13 +1,13 @@
 package com.bootcamp.kotlin.splash
 
 import android.os.Handler
-import com.bootcamp.kotlin.util.SharedPreferencesRepositoryImpl
+import com.bootcamp.kotlin.util.LocalRepositoryImpl
 
 /**
  * Created by jhon on 6/04/2020
  */
 class SplashPresenter(
-    private var repository: SharedPreferencesRepositoryImpl,
+    private var repository: LocalRepositoryImpl,
     private var handler: Handler?
 ): SplashContract.Presenter {
 

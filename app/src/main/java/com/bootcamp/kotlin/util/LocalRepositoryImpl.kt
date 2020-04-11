@@ -7,7 +7,7 @@ import com.bootcamp.kotlin.base.Constants
 /**
  * Created by jhon on 8/04/2020
  */
-class SharedPreferencesRepositoryImpl(private val appCompatActivity: AppCompatActivity) : SharedPreferencesRepository {
+class LocalRepositoryImpl(private val appCompatActivity: AppCompatActivity) : LocalRepository {
 
     companion object {
         private lateinit var sharedPreferences: SharedPreferences
@@ -15,6 +15,10 @@ class SharedPreferencesRepositoryImpl(private val appCompatActivity: AppCompatAc
 
     override fun initSharedPreferences() {
         sharedPreferences = appCompatActivity.getSharedPreferences(Constants.PREF_NAME, Constants.PRIVATE_MODE)
+    }
+
+    override fun saveUserName(userName: String) {
+        sharedPreferences.put(Constants.USER_NAME, userName)
     }
 
     override fun checkIfUserExists(): String {
