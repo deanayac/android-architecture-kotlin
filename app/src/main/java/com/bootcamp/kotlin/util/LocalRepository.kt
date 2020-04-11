@@ -6,5 +6,6 @@ package com.bootcamp.kotlin.util
 interface LocalRepository {
 
     fun initSharedPreferences()
+    fun saveUserName(userName: String)
     fun checkIfUserExists(): String
 }

@@ -17,6 +17,10 @@ class LocalRepositoryImpl(private val appCompatActivity: AppCompatActivity) : Lo
         sharedPreferences = appCompatActivity.getSharedPreferences(Constants.PREF_NAME, Constants.PRIVATE_MODE)
     }
 
+    override fun saveUserName(userName: String) {
+        sharedPreferences.put(Constants.USER_NAME, userName)
+    }
+
     override fun checkIfUserExists(): String {
         return sharedPreferences.getString(Constants.USER_NAME, Constants.DEFAULT_STRING)!!
     }

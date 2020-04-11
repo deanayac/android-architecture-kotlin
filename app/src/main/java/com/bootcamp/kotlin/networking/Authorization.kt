@@ -1,4 +1,4 @@
-package com.bootcamp.kotlin.welcome
+package com.bootcamp.kotlin.networking
 
 import retrofit2.http.GET
 import retrofit2.http.Query

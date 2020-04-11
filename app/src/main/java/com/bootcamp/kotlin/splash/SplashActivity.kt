@@ -9,8 +9,8 @@ import com.bootcamp.kotlin.main.MainActivity
 import com.bootcamp.kotlin.util.LocalRepositoryImpl
 import com.bootcamp.kotlin.util.attachFragment
 import com.bootcamp.kotlin.util.showMessage
-import com.bootcamp.kotlin.util.startActivity
-import com.bootcamp.kotlin.welcome.RegisterFragment
+import com.bootcamp.kotlin.util.launchActivity
+import com.bootcamp.kotlin.register.RegisterFragment
 import kotlinx.android.synthetic.main.activity_splash.*
 
 class SplashActivity : AppCompatActivity(), SplashContract.View {
@@ -39,7 +39,7 @@ class SplashActivity : AppCompatActivity(), SplashContract.View {
                 )
                 hideSplash()
             } else {
-                startActivity<MainActivity> {  }
+                launchActivity<MainActivity> {  }
                 hideSplash()
             }
         }

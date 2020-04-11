@@ -1,7 +1,8 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package com.bootcamp.kotlin.util
 
 import android.app.Activity
-import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -12,11 +13,9 @@ import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bootcamp.kotlin.R
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.properties.Delegates
 
 /**
@@ -95,6 +94,6 @@ internal fun AppCompatActivity.attachFragment(
 inline fun <reified T : Activity> Context.intentFor(body: Intent.() -> Unit): Intent =
     Intent(this, T::class.java).apply(body)
 
-inline fun <reified T : Activity> Context.startActivity(body: Intent.() -> Unit) {
+inline fun <reified T : Activity> Context.launchActivity(body: Intent.() -> Unit) {
     startActivity(intentFor<T>(body))
 }
