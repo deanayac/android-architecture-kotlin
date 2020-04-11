@@ -67,4 +67,9 @@ class MainActivity : AppCompatActivity(), HomeFragment.Listener {
 
         return 0
     }
+
+    override fun onBackPressed() {
+        finish()
+        super.onBackPressed()
+    }
 }
