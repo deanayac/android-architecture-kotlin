@@ -94,6 +94,6 @@ internal fun AppCompatActivity.attachFragment(
 inline fun <reified T : Activity> Context.intentFor(body: Intent.() -> Unit): Intent =
     Intent(this, T::class.java).apply(body)
 
-inline fun <reified T : Activity> Context.launchActivity(body: Intent.() -> Unit) {
+inline fun <reified T : Activity> Context.startActivity(body: Intent.() -> Unit) {
     startActivity(intentFor<T>(body))
 }
