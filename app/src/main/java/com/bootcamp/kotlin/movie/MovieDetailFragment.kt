@@ -52,6 +52,7 @@ class MovieDetailFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
         setupToolbar()
         movie?.let {
             movieHeaderView.setData(it)
+            expandableTextViewDescription.setData(it.overview?: "")
         }
     }
 
