@@ -14,7 +14,9 @@ object Constants {
     const val readTimeOut = 30L
     const val writeTimeout = 15L
 
+    // w533_and_h300_bestv2
     const val PATH_MOVIE = "https://image.tmdb.org/t/p/w533_and_h300_bestv2/"
 
+    const val PATH_MOVIE_W185 = "https://image.tmdb.org/t/p/w300/"
 }
 

@@ -11,12 +11,12 @@
         android:id="@+id/moviesRecyclerView"
         android:layout_width="404dp"
         android:layout_height="609dp"
+        android:layout_marginTop="8dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_src_text"
-        app:spanCount="3" />
+        app:layout_constraintTop_toBottomOf="@+id/search_src_text" />
 
     <EditText
         android:id="@+id/search_src_text"

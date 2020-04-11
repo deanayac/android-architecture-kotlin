@@ -6,13 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bootcamp.kotlin.databinding.FragmentSearchBinding
-import com.bootcamp.kotlin.networking.ApiClient
 import com.bootcamp.kotlin.movies.Movie
 import com.bootcamp.kotlin.movies.MoviesRepositoryImpl
-import com.bootcamp.kotlin.movies.adapter.MoviesAdapter
+import com.bootcamp.kotlin.networking.ApiClient
+import com.bootcamp.kotlin.search.adapter.SearchAdapter
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.view_progress_bar.*
+
 
 class SearchFragment : Fragment(), SearchContract.View{
 
@@ -41,6 +43,7 @@ class SearchFragment : Fragment(), SearchContract.View{
         search_btn.setOnClickListener{
             presenter?.searchMovies(search_src_text.text.toString())
         }
+
     }
 
     override fun showMovies(movies: List<Movie>) {
@@ -56,7 +59,7 @@ class SearchFragment : Fragment(), SearchContract.View{
         fun navigateTo(movie: Movie)
     }
 
-    private val adapter = MoviesAdapter {
+    private val adapter = SearchAdapter {
         listener?.navigateTo(it)
     }
 
