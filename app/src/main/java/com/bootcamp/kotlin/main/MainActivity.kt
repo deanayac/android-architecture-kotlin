@@ -6,13 +6,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.forEach
 import com.bootcamp.kotlin.R
 import com.bootcamp.kotlin.databinding.ActivityMainBinding
+import com.bootcamp.kotlin.favorites.FavoriteFragment
 import com.bootcamp.kotlin.home.HomeFragment
 import com.bootcamp.kotlin.movie.MovieDetailActivity
 import com.bootcamp.kotlin.movies.Movie
 
 private const val MENU_ITEM = "menu_item"
 
-class MainActivity : AppCompatActivity(), HomeFragment.Listener {
+class MainActivity : AppCompatActivity(),
+    HomeFragment.Listener,
+    FavoriteFragment.Listener
+{
 
     private lateinit var binding: ActivityMainBinding
 
