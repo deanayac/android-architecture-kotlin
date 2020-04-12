@@ -50,7 +50,7 @@
             android:layout_height="match_parent">
 
             <com.bootcamp.kotlin.common.ui.ExpandableTextView
-                android:id="@+id/expandableTextView"
+                android:id="@+id/expandableTextViewDescription"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
