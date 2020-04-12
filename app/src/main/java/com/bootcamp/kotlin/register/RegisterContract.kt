@@ -6,11 +6,11 @@ package com.bootcamp.kotlin.register
 interface RegisterContract {
 
     interface View {
-        fun validateInput(userName: String): Boolean?
+        fun showMessage(message: String)
+        fun navigateToHome()
     }
 
     interface Presenter {
-        fun initView()
         fun saveUserName(userName: String)
         fun saveToken()
     }

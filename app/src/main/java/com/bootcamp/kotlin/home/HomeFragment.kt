@@ -27,7 +27,7 @@ class HomeFragment : Fragment(), MoviesContract.View {
     }
 
     interface Listener {
-        fun navigateTo(movie: Movie)
+        fun navigateTo(movieId: Int)
     }
 
     private lateinit var adapter: MoviesAdapter
@@ -43,7 +43,7 @@ class HomeFragment : Fragment(), MoviesContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = MoviesAdapter { listener?.navigateTo(it) }
+        adapter = MoviesAdapter { listener?.navigateTo(it.id) }
 
 
         context?.let {
@@ -56,7 +56,7 @@ class HomeFragment : Fragment(), MoviesContract.View {
             repository = MoviesRepositoryImpl(ApiClient.buildService())
         )
 
-        presenter?.onCreate()
+        presenter?.onCreateScope()
     }
 
     override fun showMovies(movies: List<Movie>) {
@@ -64,7 +64,7 @@ class HomeFragment : Fragment(), MoviesContract.View {
     }
 
     override fun showProgress(isVisible: Boolean) {
-        progress.visibility = if (isVisible) View.VISIBLE else View.GONE
+        progress?.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 
     override fun onAttach(context: Context) {
@@ -76,7 +76,7 @@ class HomeFragment : Fragment(), MoviesContract.View {
     }
 
     override fun onDestroyView() {
-        presenter?.onDestroy()
+        presenter?.onDestroyScope()
         super.onDestroyView()
     }
 }

@@ -78,7 +78,11 @@ inline fun <VH : RecyclerView.ViewHolder, T> RecyclerView.Adapter<VH>.basicDiffU
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = true): View =
     LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
 
-fun Context.showMessage(message: String)=Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
+fun Context.showMessage(message: String?) {
+    if (!message.isNullOrEmpty()) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+}
 
 internal fun AppCompatActivity.attachFragment(
     containerId: Int,
@@ -96,4 +100,8 @@ inline fun <reified T : Activity> Context.intentFor(body: Intent.() -> Unit): In
 
 inline fun <reified T : Activity> Context.startActivity(body: Intent.() -> Unit) {
     startActivity(intentFor<T>(body))
+}
+
+inline fun <reified T : Activity> Context.startActivity() {
+    startActivity(Intent(this, T::class.java))
 }

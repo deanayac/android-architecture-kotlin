@@ -1,20 +1,23 @@
 package com.bootcamp.kotlin.register
 
+import com.bootcamp.kotlin.R
+import com.bootcamp.kotlin.util.AndroidHelper
 import com.bootcamp.kotlin.util.LocalRepository
 
 /**
  * Created by jhon on 6/04/2020
  */
 class RegisterPresenter(
-    private var repository: LocalRepository
-): RegisterContract.Presenter {
-
-    override fun initView() {
-        repository.initSharedPreferences()
-    }
+    private val view: RegisterContract.View?,
+    private val repository: LocalRepository
+) : RegisterContract.Presenter {
 
     override fun saveUserName(userName: String) {
-        repository.saveUserName(userName)
+        if (repository.saveUserName(userName)) {
+            view?.navigateToHome()
+        } else {
+            view?.showMessage(AndroidHelper.getString(R.string.error_save_user))
+        }
     }
 
     override fun saveToken() {

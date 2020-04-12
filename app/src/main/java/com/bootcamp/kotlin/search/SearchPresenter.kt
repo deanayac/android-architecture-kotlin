@@ -16,7 +16,7 @@ class SearchPresenter(private val view: SearchContract.View,
     }
 
     override fun initView() {
-        initScope()
+        createScope()
     }
 
     override fun searchMovies(description:String) {

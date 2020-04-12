@@ -10,17 +10,37 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.bootcamp.kotlin.R
-import com.bootcamp.kotlin.movies.Movie
+import com.bootcamp.kotlin.domain.Movie
+import com.bootcamp.kotlin.movies.MoviesRepositoryImpl
+import com.bootcamp.kotlin.networking.ApiClient
+import com.bootcamp.kotlin.util.showMessage
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
+import kotlinx.android.synthetic.main.view_progress_bar.*
 
-class MovieDetailFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
-    private var movie: Movie? = null
+const val DEFAULT_MOVIE_ID = 0
+
+class MovieDetailFragment : Fragment(),
+    MovieDetailContract.View,
+    AppBarLayout.OnOffsetChangedListener
+{
+    private var movieId: Int = 0
     private var listener: ActionListener? = null
+    private var presenter: MovieDetailPresenter? = null
+    private var movieTitle = ""
+
+    companion object {
+        @JvmStatic
+        fun newInstance(movieId: Int) = MovieDetailFragment().apply {
+            arguments = Bundle().apply {
+                putInt(MovieDetailActivity.ARG_MOVIE_ID, movieId)
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        movie = arguments?.getParcelable(MovieDetailActivity.ARG_MOVIE)
+        movieId = arguments?.getInt(MovieDetailActivity.ARG_MOVIE_ID) ?: DEFAULT_MOVIE_ID
     }
 
     interface ActionListener {
@@ -50,9 +70,9 @@ class MovieDetailFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
-        movie?.let {
-            movieHeaderView.setData(it)
-        }
+        presenter = MovieDetailPresenter(this, MoviesRepositoryImpl(ApiClient.buildService()))
+        presenter?.onCreateScope()
+        presenter?.loadData(movieId)
     }
 
     private fun addHomeAsUpIndicator(withBackground: Boolean = true) {
@@ -82,6 +102,14 @@ class MovieDetailFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
         }
     }
 
+    override fun showProgress() {
+        progress.visibility = View.VISIBLE
+    }
+
+    override fun hideProgress() {
+        progress.visibility = View.GONE
+    }
+
     override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
         var arrowWithBackground = true
         val alphaValueLimit = 0.35f
@@ -96,7 +124,7 @@ class MovieDetailFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
 
         val title = if (alphaValue <= alphaValueLimit) {
             arrowWithBackground = false
-            movie?.title ?: ""
+            movieTitle
         } else {
             ""
         }
@@ -106,12 +134,18 @@ class MovieDetailFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
         movieHeaderView.alpha = alphaValue
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(movie: Movie) = MovieDetailFragment().apply {
-            arguments = Bundle().apply {
-                putParcelable(MovieDetailActivity.ARG_MOVIE, movie)
-            }
-        }
+    override fun showMessage(message: String) {
+        context?.showMessage(message)
+    }
+
+    override fun onDestroyView() {
+        presenter?.onDestroyScope()
+        super.onDestroyView()
+    }
+
+    override fun showMovieDetail(movie: Movie) {
+        movieTitle = movie.title
+        movieHeaderView.setData(movie)
+        expandableTextViewDescription.setData(movie.overview)
     }
 }

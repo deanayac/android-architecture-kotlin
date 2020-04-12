@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.room.Room
 import com.bootcamp.kotlin.BuildConfig
 import com.bootcamp.kotlin.database.MovieDatabase
+import com.bootcamp.kotlin.util.AndroidHelper
 import com.bootcamp.kotlin.util.CrashlyticsTree
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import timber.log.Timber
@@ -15,6 +16,7 @@ class ApplicationMovies : Application() {
     override fun onCreate() {
         super.onCreate()
         initTimberWithFirebaseCrashlytics()
+        AndroidHelper.init(applicationContext)
         db = Room.databaseBuilder(
             this,MovieDatabase::class.java,"movie_db").build()
     }

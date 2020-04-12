@@ -7,11 +7,14 @@ interface SplashContract {
 
     interface View {
         fun hideSplash()
+        fun showMessage(message: String)
+        fun showRegister()
+        fun navigateToHome()
     }
 
     interface Presenter {
         fun initView()
-        fun sleepScreen(): String
+        fun sleepScreen()
         fun onDestroy()
     }
 }

@@ -11,7 +11,7 @@ import com.bootcamp.kotlin.models.network.favoriteMovies.ResultFavoriteResponse
 import com.bootcamp.kotlin.util.basicDiffUtil
 import kotlinx.android.synthetic.main.item_my_favorite_movie.view.*
 
-class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.ViewHolder>() {
+class FavoriteAdapter(private val listener: (ResultFavoriteResponse) -> Unit) : RecyclerView.Adapter<FavoriteAdapter.ViewHolder>() {
 
     var moviesList: List<ResultFavoriteResponse> by basicDiffUtil(
         emptyList(), { old, new -> old.id == new.id }
@@ -28,17 +28,20 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movie = moviesList[position]
         holder.bind(movie)
+        holder.itemView.backgroundImageView.setOnClickListener {
+            listener.invoke(movie)
+        }
     }
 
     class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
         fun bind(movie: ResultFavoriteResponse) {
-            itemView.nameMovie_textView.text = movie.title
-            itemView.backgroundMyFavorite_imageView.load(getUri(movie.background)) {
+            itemView.movieNameTextView.text = movie.title
+            itemView.backgroundImageView.load(getUri(movie.background)) {
                 crossfade(true)
             }
         }
 
-        fun getUri(movie:String?):String{
+        private fun getUri(movie:String?):String{
             return Constants.PATH_MOVIE.plus(movie)
         }
     }

@@ -15,7 +15,7 @@ data class FavoriteMoviesResponse(
 
 data class ResultFavoriteResponse(
     @SerializedName("id")
-    val id:Int?,
+    val id:Int,
     @SerializedName("title")
     val title:String?,
     @SerializedName("poster_path")

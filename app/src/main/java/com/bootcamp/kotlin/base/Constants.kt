@@ -5,7 +5,6 @@ package com.bootcamp.kotlin.base
  */
 object Constants {
     const val SPLASH_DELAY = 2 * 1000L
-    const val validateNameUser = "Ingresar el nombre del Usuario por favor."
     const val PRIVATE_MODE = 0
     const val PREF_NAME = "bootCamp"
     const val USER_NAME = "user_name"
@@ -18,5 +17,6 @@ object Constants {
     const val PATH_MOVIE = "https://image.tmdb.org/t/p/w533_and_h300_bestv2/"
 
     const val PATH_MOVIE_W300 = "https://image.tmdb.org/t/p/w300/"
+    const val PATH_MOVIE_W185 = "https://image.tmdb.org/t/p/w185/"
 }
 

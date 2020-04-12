@@ -7,13 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bootcamp.kotlin.R
 import com.bootcamp.kotlin.main.MainActivity
 import com.bootcamp.kotlin.util.LocalRepositoryImpl
+import com.bootcamp.kotlin.register.RegisterFragment
 import com.bootcamp.kotlin.util.attachFragment
 import com.bootcamp.kotlin.util.showMessage
 import com.bootcamp.kotlin.util.startActivity
-import com.bootcamp.kotlin.register.RegisterFragment
 import kotlinx.android.synthetic.main.activity_splash.*
 
-class SplashActivity : AppCompatActivity(), SplashContract.View {
+class SplashActivity : AppCompatActivity(), SplashContract.View, RegisterFragment.ActionListener {
 
     private var presenter: SplashPresenter? = null
 
@@ -22,27 +22,19 @@ class SplashActivity : AppCompatActivity(), SplashContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-        presenter = SplashPresenter(LocalRepositoryImpl(this), handler)
+        presenter = SplashPresenter(this, LocalRepositoryImpl(this), handler)
         presenter?.initView()
 
         sleepScreen()
     }
 
     private fun sleepScreen() {
-        presenter?.sleepScreen()?.let { result ->
-            if (result.isEmpty()) {
-                showMessage(getString(R.string.message_not_found_user))
-                attachFragment(
-                    R.id.splashContainer,
-                    RegisterFragment(),
-                    getString(R.string.tag_register_fragment)
-                )
-                hideSplash()
-            } else {
-                startActivity<MainActivity> {  }
-                hideSplash()
-            }
-        }
+        presenter?.sleepScreen()
+    }
+
+    override fun navigateToHome() {
+        startActivity<MainActivity>()
+        finish()
     }
 
     override fun hideSplash() {
@@ -52,5 +44,18 @@ class SplashActivity : AppCompatActivity(), SplashContract.View {
     override fun onDestroy() {
         presenter?.onDestroy()
         super.onDestroy()
+    }
+
+    override fun showMessage(message: String) {
+        applicationContext.showMessage(message)
+    }
+
+    override fun showRegister() {
+        attachFragment(
+            R.id.splashContainer,
+            RegisterFragment(),
+            getString(R.string.tag_register_fragment)
+        )
+        hideSplash()
     }
 }
