@@ -1,11 +1,8 @@
 <resources>
     <string name="app_name">Kotlin-Bootcamp</string>
-    <string name="title_activity_splash">SplashActivity</string>
-
     <string name="hello_register_fragment">Página de registro</string>
     <string name="add_name_user">Ingresa tu nombre de usuario</string>
     <string name="hello_welcome_fragment">Hola. Usuario: %1$s</string>
-
     <string name="next">Siguiente</string>
     <string name="see_more">Leer más</string>
     <string name="see_less">Leer menos</string>
@@ -18,10 +15,12 @@
     <string name="register_user">Registrar Usuario</string>
     <string name="digits">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890</string>
     <string name="save_user">Guardar Usuario</string>
+    <string name="enter_user_name">Ingresar el nombre del Usuario por favor.</string>
 
-    <string name="txt_item_movie">Películas</string>
-    <string name="txt_item_extra">Extra</string>
-    <string name="txt_item_favorites">Favoritos</string>
+    <!-- MainActivity -->
+    <string name="item_movie">Películas</string>
+    <string name="item_extra">Extra</string>
+    <string name="item_favorites">Favoritos</string>
 
     <!-- Fragment Tags -->
     <string name="tag_welcome_fragment">welcomeFragment</string>
@@ -31,5 +30,5 @@
     <!-- Search -->
     <string name="btn_search">Buscar</string>
     <string name="txt_search">Encuentra Peliculas</string>
-
+    <string name="error_save_user">Ocurrio un error al guardar su usuaruo, intentelo nuevamente por favor</string>
 </resources>

@@ -15,6 +15,7 @@ class ApplicationMovies : Application() {
     override fun onCreate() {
         super.onCreate()
         initTimberWithFirebaseCrashlytics()
+        AndroidHelper.init(applicationContext)
         db = Room.databaseBuilder(
             this,MovieDatabase::class.java,"movie_db").build()
     }

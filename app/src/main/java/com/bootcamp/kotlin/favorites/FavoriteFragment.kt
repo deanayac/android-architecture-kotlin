@@ -67,9 +67,7 @@ class FavoriteFragment : Fragment(), FavoriteContract.View {
     }
 
     override fun showError(message: String?) {
-        message?.let {
-            activity?.showMessage(it)
-        }
+        activity?.showMessage(message)
     }
 
     override fun updateData(request: FavoriteMoviesResponse?) {

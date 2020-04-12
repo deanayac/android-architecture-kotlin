@@ -1,6 +1,5 @@
 package com.bootcamp.kotlin.main
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.forEach
@@ -9,6 +8,7 @@ import com.bootcamp.kotlin.databinding.ActivityMainBinding
 import com.bootcamp.kotlin.home.HomeFragment
 import com.bootcamp.kotlin.movie.MovieDetailActivity
 import com.bootcamp.kotlin.movies.Movie
+import com.bootcamp.kotlin.util.startActivity
 
 private const val MENU_ITEM = "menu_item"
 
@@ -33,23 +33,23 @@ class MainActivity : AppCompatActivity(), HomeFragment.Listener {
     }
 
     override fun navigateTo(movie: Movie) {
-        val intent = Intent(this, MovieDetailActivity::class.java)
-        intent.putExtra(MovieDetailActivity.ARG_MOVIE, movie)
-        startActivity(intent)
+        startActivity<MovieDetailActivity> {
+            putExtra(MovieDetailActivity.ARG_MOVIE, movie)
+        }
     }
 
     private fun setupBottomNavigationView() {
-        `OrdersCommandProcessor`.init(this)
+        OrdersCommandProcessor.init(this)
         binding.bottomNavigationView.inflateMenu(R.menu.menu_bottom_navigation)
         binding.bottomNavigationView.setOnNavigationItemSelectedListener {
-            `OrdersCommandProcessor`.invoke(it.itemId)
+            OrdersCommandProcessor.invoke(it.itemId)
             return@setOnNavigationItemSelectedListener true
         }
         binding.bottomNavigationView.selectedItemId = R.id.itemHome
     }
 
     override fun onDestroy() {
-        `OrdersCommandProcessor`.clear()
+        OrdersCommandProcessor.clear()
         super.onDestroy()
     }
 
@@ -66,5 +66,10 @@ class MainActivity : AppCompatActivity(), HomeFragment.Listener {
         }
 
         return 0
+    }
+
+    override fun onBackPressed() {
+        finish()
+        super.onBackPressed()
     }
 }
