@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bootcamp.kotlin.common.ui.PosterItemDecorator
 import com.bootcamp.kotlin.databinding.FragmentHomeBinding
 import com.bootcamp.kotlin.movies.MoviesContract
 import com.bootcamp.kotlin.movies.MoviesPresenter
@@ -43,6 +44,11 @@ class HomeFragment : Fragment(), MoviesContract.View {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = MoviesAdapter { listener?.navigateTo(it) }
+
+
+        context?.let {
+            binding.moviesRecyclerView.addItemDecoration(PosterItemDecorator(it))
+        }
 
         binding.moviesRecyclerView.adapter = adapter
         presenter = MoviesPresenter(
