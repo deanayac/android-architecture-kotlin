@@ -5,7 +5,7 @@ import android.os.Bundle
 import com.bootcamp.kotlin.R
 import com.bootcamp.kotlin.movies.Movie
 
-class MovieDetailActivity : AppCompatActivity() {
+class MovieDetailActivity : AppCompatActivity(), MovieDetailFragment.ActionListener {
 
     companion object {
         const val ARG_MOVIE = "MovieDetailActivity:movie"
@@ -18,14 +18,18 @@ class MovieDetailActivity : AppCompatActivity() {
         val movie: Movie? = intent.getParcelableExtra(ARG_MOVIE)
 
         if (savedInstanceState == null) {
-            if (movie == null) finish()
+            movie?.let {
+                val fragment = MovieDetailFragment.newInstance(it)
 
-            val fragment = MovieDetailFragment.newInstance(movie!!)
-
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.frameLayoutMain, fragment)
-                .commit()
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.frameLayoutMain, fragment)
+                    .commit()
+            }
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 }

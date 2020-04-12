@@ -7,6 +7,8 @@
     <string name="hello_welcome_fragment">Hola. Usuario: %1$s</string>
 
     <string name="next">Siguiente</string>
+    <string name="see_more">Leer más</string>
+    <string name="see_less">Leer menos</string>
 
     <string name="message_not_found_user">No hay usuarios registrados</string>
 
