@@ -4,6 +4,13 @@
     <string name="add_name_user">Ingresa tu nombre de usuario</string>
     <string name="hello_welcome_fragment">Hola. Usuario: %1$s</string>
     <string name="next">Siguiente</string>
+    <string name="see_more">Leer más</string>
+    <string name="see_less">Leer menos</string>
+
+    <string name="message_not_found_user">No hay usuarios registrados</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="architect_coders_splash_image">Architect Coders Image</string>
     <string name="register_user">Registrar Usuario</string>
     <string name="digits">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890</string>
