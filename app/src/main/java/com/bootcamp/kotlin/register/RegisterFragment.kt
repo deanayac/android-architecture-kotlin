@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.bootcamp.kotlin.R
-import com.bootcamp.kotlin.util.LocalRepositoryImpl
+import com.bootcamp.kotlin.util.AccountRepositoryImpl
 import com.bootcamp.kotlin.util.showMessage
 import kotlinx.android.synthetic.main.fragment_register.*
 
@@ -30,7 +30,7 @@ class RegisterFragment : Fragment(), RegisterContract.View, View.OnClickListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = RegisterPresenter(this, LocalRepositoryImpl(activity as AppCompatActivity))
+        presenter = RegisterPresenter(this, AccountRepositoryImpl(activity as AppCompatActivity))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

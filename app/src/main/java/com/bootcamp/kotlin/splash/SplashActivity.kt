@@ -6,7 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.bootcamp.kotlin.R
 import com.bootcamp.kotlin.main.MainActivity
-import com.bootcamp.kotlin.util.LocalRepositoryImpl
+import com.bootcamp.kotlin.util.AccountRepositoryImpl
 import com.bootcamp.kotlin.register.RegisterFragment
 import com.bootcamp.kotlin.util.attachFragment
 import com.bootcamp.kotlin.util.showMessage
@@ -22,7 +22,7 @@ class SplashActivity : AppCompatActivity(), SplashContract.View, RegisterFragmen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-        presenter = SplashPresenter(this, LocalRepositoryImpl(this), handler)
+        presenter = SplashPresenter(this, AccountRepositoryImpl(this), handler)
         presenter?.initView()
 
         sleepScreen()

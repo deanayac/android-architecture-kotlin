@@ -1,14 +1,14 @@
 package com.bootcamp.kotlin.splash
 
 import android.os.Handler
-import com.bootcamp.kotlin.util.LocalRepository
+import com.bootcamp.kotlin.util.AccountRepository
 
 /**
  * Created by jhon on 6/04/2020
  */
 class SplashPresenter(
     private val view: SplashContract.View?,
-    private val repository: LocalRepository,
+    private val repository: AccountRepository,
     private var handler: Handler?
 ): SplashContract.Presenter {
 
