@@ -8,11 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bootcamp.kotlin.databinding.FragmentFavoriteBinding
+import com.bootcamp.kotlin.databinding.ViewProgressBarBinding
 import com.bootcamp.kotlin.models.network.favoriteMovies.FavoriteMoviesRequest
 import com.bootcamp.kotlin.models.network.favoriteMovies.FavoriteMoviesResponse
 import com.bootcamp.kotlin.networking.ApiClient
 import com.bootcamp.kotlin.util.showMessage
-import kotlinx.android.synthetic.main.view_progress_bar.*
 
 /**
  * Create by Edmundo
@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.view_progress_bar.*
 class FavoriteFragment : Fragment(), FavoriteContract.View {
 
     private lateinit var binding: FragmentFavoriteBinding
+    private lateinit var loadingBinding: ViewProgressBarBinding
     private var listener: Listener? = null
 
     interface Listener {
@@ -45,6 +46,7 @@ class FavoriteFragment : Fragment(), FavoriteContract.View {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentFavoriteBinding.inflate(inflater, container, false)
+        loadingBinding = ViewProgressBarBinding.bind(binding.root)
         return binding.root
     }
 
@@ -73,11 +75,11 @@ class FavoriteFragment : Fragment(), FavoriteContract.View {
     }
 
     override fun showProgress() {
-        progress?.visibility = View.VISIBLE
+        loadingBinding.progress.visibility = View.VISIBLE
     }
 
     override fun hideProgress() {
-        progress?.visibility = View.GONE
+        loadingBinding.progress.visibility = View.GONE
     }
 
     override fun showError(message: String?) {

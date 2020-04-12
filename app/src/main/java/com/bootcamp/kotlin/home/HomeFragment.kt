@@ -7,19 +7,20 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bootcamp.kotlin.common.ui.PosterItemDecorator
 import com.bootcamp.kotlin.databinding.FragmentHomeBinding
+import com.bootcamp.kotlin.databinding.ViewProgressBarBinding
 import com.bootcamp.kotlin.movies.MoviesContract
 import com.bootcamp.kotlin.movies.MoviesPresenter
 import com.bootcamp.kotlin.movies.MoviesRepositoryImpl
 import com.bootcamp.kotlin.movies.Movie
 import com.bootcamp.kotlin.networking.ApiClient
 import com.bootcamp.kotlin.movies.adapter.MoviesAdapter
-import kotlinx.android.synthetic.main.view_progress_bar.*
 
 class HomeFragment : Fragment(), MoviesContract.View {
 
     private var listener: Listener? = null
     private var presenter: MoviesContract.Presenter? = null
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var loadingBinding: ViewProgressBarBinding
 
     companion object {
         @JvmStatic
@@ -30,21 +31,21 @@ class HomeFragment : Fragment(), MoviesContract.View {
         fun navigateTo(movieId: Int)
     }
 
-    private lateinit var adapter: MoviesAdapter
+    private val adapter: MoviesAdapter by lazy {
+        MoviesAdapter { listener?.navigateTo(it.id) }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        loadingBinding = ViewProgressBarBinding.bind(binding.root)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        adapter = MoviesAdapter { listener?.navigateTo(it.id) }
-
 
         context?.let {
             binding.moviesRecyclerView.addItemDecoration(PosterItemDecorator(it))
@@ -64,7 +65,7 @@ class HomeFragment : Fragment(), MoviesContract.View {
     }
 
     override fun showProgress(isVisible: Boolean) {
-        progress?.visibility = if (isVisible) View.VISIBLE else View.GONE
+        loadingBinding.progress.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 
     override fun onAttach(context: Context) {

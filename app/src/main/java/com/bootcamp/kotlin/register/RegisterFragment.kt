@@ -8,16 +8,17 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.bootcamp.kotlin.R
+import com.bootcamp.kotlin.databinding.FragmentRegisterBinding
 
 import com.bootcamp.kotlin.util.AccountRepositoryImpl
 
 import com.bootcamp.kotlin.util.showMessage
-import kotlinx.android.synthetic.main.fragment_register.*
 
 class RegisterFragment : Fragment(), RegisterContract.View, View.OnClickListener {
 
     private var presenter: RegisterPresenter? = null
     private var listener: ActionListener? = null
+    private lateinit var binding: FragmentRegisterBinding
 
     interface ActionListener {
         fun navigateToHome()
@@ -27,7 +28,8 @@ class RegisterFragment : Fragment(), RegisterContract.View, View.OnClickListener
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_register, container, false)
+        binding = FragmentRegisterBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,17 +39,17 @@ class RegisterFragment : Fragment(), RegisterContract.View, View.OnClickListener
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        saveUserButton.setOnClickListener(this)
+        binding.saveUserButton.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
 
-        if (nameUserEditText.text.isNullOrEmpty()) {
+        if (binding.nameUserEditText.text.isNullOrEmpty()) {
             context?.showMessage(getString(R.string.enter_user_name))
             return
         }
 
-        presenter?.saveUserName(nameUserEditText.text.toString())
+        presenter?.saveUserName(binding.nameUserEditText.text.toString())
     }
 
     override fun showMessage(message: String) {

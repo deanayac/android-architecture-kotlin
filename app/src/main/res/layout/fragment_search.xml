@@ -7,7 +7,7 @@
     tools:context=".search.SearchFragment">
 
     <EditText
-        android:id="@+id/search_src_text"
+        android:id="@+id/searchEditText"
         android:layout_width="0dp"
         android:layout_height="64dp"
         android:layout_marginStart="8dp"
@@ -26,9 +26,9 @@
         android:paddingBottom="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/search_src_text"
-        app:layout_constraintStart_toStartOf="@+id/search_src_text"
-        app:layout_constraintTop_toBottomOf="@+id/search_src_text" />
+        app:layout_constraintEnd_toEndOf="@+id/searchEditText"
+        app:layout_constraintStart_toStartOf="@+id/searchEditText"
+        app:layout_constraintTop_toBottomOf="@+id/searchEditText" />
 
     <include layout="@layout/view_progress_bar" />
 
