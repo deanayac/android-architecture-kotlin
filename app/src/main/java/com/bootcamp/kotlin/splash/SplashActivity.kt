@@ -6,8 +6,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.bootcamp.kotlin.R
 import com.bootcamp.kotlin.main.MainActivity
-import com.bootcamp.kotlin.util.AccountRepositoryImpl
 import com.bootcamp.kotlin.register.RegisterFragment
+import com.bootcamp.kotlin.util.AccountRepositoryImpl
 import com.bootcamp.kotlin.util.attachFragment
 import com.bootcamp.kotlin.util.showMessage
 import com.bootcamp.kotlin.util.startActivity

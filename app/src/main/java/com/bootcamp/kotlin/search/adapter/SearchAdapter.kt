@@ -13,13 +13,14 @@ import kotlin.properties.Delegates
 
 private typealias MovieListener = (Movie) -> Unit
 
-class SearchAdapter(items: List<Movie> = emptyList(),private val listener:MovieListener) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
+class SearchAdapter(items: List<Movie> = emptyList(), private val listener: MovieListener) :
+    RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
-    var movies: List<Movie> by Delegates.observable(items){_,_,_ -> notifyDataSetChanged()}
+    var movies: List<Movie> by Delegates.observable(items) { _, _, _ -> notifyDataSetChanged() }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = parent.inflate(R.layout.item_search_movie,false)
-        return ViewHolder(view,listener)
+        val view = parent.inflate(R.layout.item_search_movie, false)
+        return ViewHolder(view, listener)
     }
 
     override fun getItemCount(): Int = movies.size
@@ -28,15 +29,15 @@ class SearchAdapter(items: List<Movie> = emptyList(),private val listener:MovieL
         holder.bin(movies[position])
     }
 
-    class ViewHolder(view: View, private val listener:MovieListener) :
+    class ViewHolder(view: View, private val listener: MovieListener) :
         RecyclerView.ViewHolder(view) {
         private val binding = ItemSearchMovieBinding.bind(view)
 
         fun bin(movie: Movie) {
-            with(binding){
+            with(binding) {
                 root.setOnClickListener { listener(movie) }
                 title.text = movie.title
-                movieThumb.load("${Constants.PATH_MOVIE_W300.plus(movie.backdropPath)}")
+                movieThumb.load(Constants.PATH_MOVIE_W300.plus(movie.backdropPath))
             }
         }
     }

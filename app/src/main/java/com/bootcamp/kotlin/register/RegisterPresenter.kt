@@ -1,8 +1,8 @@
 package com.bootcamp.kotlin.register
 
 import com.bootcamp.kotlin.R
-import com.bootcamp.kotlin.util.AndroidHelper
 import com.bootcamp.kotlin.util.AccountRepository
+import com.bootcamp.kotlin.util.AndroidHelper
 
 /**
  * Created by jhon on 6/04/2020

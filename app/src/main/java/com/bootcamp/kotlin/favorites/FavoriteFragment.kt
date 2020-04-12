@@ -73,11 +73,11 @@ class FavoriteFragment : Fragment(), FavoriteContract.View {
     }
 
     override fun showProgress() {
-        progress.visibility = View.VISIBLE
+        progress?.visibility = View.VISIBLE
     }
 
     override fun hideProgress() {
-        progress.visibility = View.GONE
+        progress?.visibility = View.GONE
     }
 
     override fun showError(message: String?) {

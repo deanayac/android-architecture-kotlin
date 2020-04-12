@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.bootcamp.kotlin.R
+
 import com.bootcamp.kotlin.util.AccountRepositoryImpl
+
 import com.bootcamp.kotlin.util.showMessage
 import kotlinx.android.synthetic.main.fragment_register.*
 
