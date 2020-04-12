@@ -75,9 +75,4 @@ class SearchFragment : Fragment(), SearchContract.View {
             listener = context
         }
     }
-
-    override fun onDestroyView() {
-        listener = null
-        super.onDestroyView()
-    }
 }
