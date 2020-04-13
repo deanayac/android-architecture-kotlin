@@ -16,8 +16,8 @@ class SearchPresenter(
         private const val ERROR_MOVIES = "Fail List Movies"
     }
 
-    override fun initView() {
-        initScope()
+    override fun onCreateScope() {
+        createScope()
     }
 
     override fun searchMovies(description: String) {
@@ -38,5 +38,9 @@ class SearchPresenter(
 
     private fun fail(message: String): Nothing {
         throw IllegalArgumentException(message)
+    }
+
+    override fun onDestroyScope() {
+        destroyScope()
     }
 }

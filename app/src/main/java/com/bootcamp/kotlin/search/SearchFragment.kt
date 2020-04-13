@@ -8,18 +8,22 @@ import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import com.bootcamp.kotlin.databinding.FragmentSearchBinding
+import com.bootcamp.kotlin.databinding.ViewProgressBarBinding
 import com.bootcamp.kotlin.movies.Movie
 import com.bootcamp.kotlin.movies.MoviesRepositoryImpl
 import com.bootcamp.kotlin.networking.ApiClient
 import com.bootcamp.kotlin.search.adapter.SearchAdapter
-import kotlinx.android.synthetic.main.fragment_search.*
-import kotlinx.android.synthetic.main.view_progress_bar.*
 
 class SearchFragment : Fragment(), SearchContract.View {
 
     private lateinit var binding: FragmentSearchBinding
+    private lateinit var loadingBinding: ViewProgressBarBinding
     private var listener: Listener? = null
     private var presenter: SearchContract.Presenter? = null
+
+    private val adapter by lazy {
+        SearchAdapter { listener?.navigateTo(it.id) }
+    }
 
     companion object {
         const val START_SEARCH = 3
@@ -32,6 +36,7 @@ class SearchFragment : Fragment(), SearchContract.View {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSearchBinding.inflate(inflater, container, false)
+        loadingBinding = ViewProgressBarBinding.bind(binding.root)
         return binding.root
     }
 
@@ -43,9 +48,9 @@ class SearchFragment : Fragment(), SearchContract.View {
             )
         )
 
-        presenter?.initView()
+        presenter?.onCreateScope()
 
-        search_src_text.doOnTextChanged { text, _, _, count ->
+        binding.searchEditText.doOnTextChanged { text, _, _, count ->
             if (count >= START_SEARCH) {
                 presenter?.searchMovies(text.toString())
             }
@@ -58,15 +63,11 @@ class SearchFragment : Fragment(), SearchContract.View {
     }
 
     override fun showProgress(isVisible: Boolean) {
-        progress.visibility = if (isVisible) View.VISIBLE else View.GONE
+        loadingBinding.progress.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 
     interface Listener {
         fun navigateTo(movieId: Int)
-    }
-
-    private val adapter = SearchAdapter {
-        listener?.navigateTo(it.id)
     }
 
     override fun onAttach(context: Context) {
@@ -77,7 +78,7 @@ class SearchFragment : Fragment(), SearchContract.View {
     }
 
     override fun onDestroyView() {
-        listener = null
+        presenter?.onDestroyScope()
         super.onDestroyView()
     }
 }

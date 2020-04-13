@@ -13,9 +13,8 @@ interface FavoriteContract {
     }
 
     interface Presenter {
-        fun initContract()
-        fun cancelContract()
+        fun onCreateScope()
+        fun onDestroyScope()
         fun getFavoriteMovies(request: FavoriteMoviesRequest)
     }
-
 }

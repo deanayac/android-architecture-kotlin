@@ -10,17 +10,39 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.bootcamp.kotlin.R
-import com.bootcamp.kotlin.movies.Movie
+import com.bootcamp.kotlin.databinding.FragmentMovieDetailBinding
+import com.bootcamp.kotlin.databinding.ViewProgressBarBinding
+import com.bootcamp.kotlin.domain.Movie
+import com.bootcamp.kotlin.movies.MoviesRepositoryImpl
+import com.bootcamp.kotlin.networking.ApiClient
+import com.bootcamp.kotlin.util.showMessage
 import com.google.android.material.appbar.AppBarLayout
-import kotlinx.android.synthetic.main.fragment_movie_detail.*
 
-class MovieDetailFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
-    private var movie: Movie? = null
+const val DEFAULT_MOVIE_ID = 0
+
+class MovieDetailFragment : Fragment(),
+    MovieDetailContract.View,
+    AppBarLayout.OnOffsetChangedListener
+{
+    private var movieId: Int = 0
     private var listener: ActionListener? = null
+    private var presenter: MovieDetailPresenter? = null
+    private var movieTitle = ""
+    private lateinit var binding: FragmentMovieDetailBinding
+    private lateinit var loadingBinding: ViewProgressBarBinding
+
+    companion object {
+        @JvmStatic
+        fun newInstance(movieId: Int) = MovieDetailFragment().apply {
+            arguments = Bundle().apply {
+                putInt(MovieDetailActivity.ARG_MOVIE_ID, movieId)
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        movie = arguments?.getParcelable(MovieDetailActivity.ARG_MOVIE)
+        movieId = arguments?.getInt(MovieDetailActivity.ARG_MOVIE_ID) ?: DEFAULT_MOVIE_ID
     }
 
     interface ActionListener {
@@ -31,12 +53,14 @@ class MovieDetailFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_movie_detail, container, false)
+        binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
+        loadingBinding = ViewProgressBarBinding.bind(binding.root)
+        return binding.root
     }
 
     private fun setupToolbar() {
         with(activity as AppCompatActivity) {
-            setSupportActionBar(toolbar)
+            setSupportActionBar(binding.toolbar)
             setHasOptionsMenu(true)
             supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_TITLE or
                     ActionBar.DISPLAY_SHOW_HOME or
@@ -44,16 +68,15 @@ class MovieDetailFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
         }
 
         addHomeAsUpIndicator()
-        appBarLayout.addOnOffsetChangedListener(this)
+        binding.appBarLayout.addOnOffsetChangedListener(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
-        movie?.let {
-            movieHeaderView.setData(it)
-            expandableTextViewDescription.setData(it.overview?: "")
-        }
+        presenter = MovieDetailPresenter(this, MoviesRepositoryImpl(ApiClient.buildService()))
+        presenter?.onCreateScope()
+        presenter?.loadData(movieId)
     }
 
     private fun addHomeAsUpIndicator(withBackground: Boolean = true) {
@@ -83,12 +106,20 @@ class MovieDetailFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
         }
     }
 
+    override fun showProgress() {
+        loadingBinding.progress.visibility = View.VISIBLE
+    }
+
+    override fun hideProgress() {
+        loadingBinding.progress.visibility = View.GONE
+    }
+
     override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
         var arrowWithBackground = true
         val alphaValueLimit = 0.35f
         val newVerticalOffset = verticalOffset * -1
         val collapseHeight = appBarLayout?.height ?: 0
-        val alphaRange = collapseHeight - toolbar.height - 25 * resources.displayMetrics.density
+        val alphaRange = collapseHeight - binding.toolbar.height - 25 * resources.displayMetrics.density
         var alphaValue = 1f
 
         if (newVerticalOffset >= 0) {
@@ -97,22 +128,28 @@ class MovieDetailFragment : Fragment(), AppBarLayout.OnOffsetChangedListener {
 
         val title = if (alphaValue <= alphaValueLimit) {
             arrowWithBackground = false
-            movie?.title ?: ""
+            movieTitle
         } else {
             ""
         }
 
         addHomeAsUpIndicator(arrowWithBackground)
-        collapsingToolbar.title = title
-        movieHeaderView.alpha = alphaValue
+        binding.collapsingToolbar.title = title
+        binding.movieHeaderView.alpha = alphaValue
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(movie: Movie) = MovieDetailFragment().apply {
-            arguments = Bundle().apply {
-                putParcelable(MovieDetailActivity.ARG_MOVIE, movie)
-            }
-        }
+    override fun showMessage(message: String) {
+        context?.showMessage(message)
+    }
+
+    override fun onDestroyView() {
+        presenter?.onDestroyScope()
+        super.onDestroyView()
+    }
+
+    override fun showMovieDetail(movie: Movie) {
+        movieTitle = movie.title
+        binding.movieHeaderView.setData(movie)
+        binding.expandableTextViewDescription.setData(movie.overview)
     }
 }

@@ -29,4 +29,6 @@
     <string name="btn_search">Buscar</string>
     <string name="txt_search">Encuentra Peliculas</string>
     <string name="error_save_user">Ocurrio un error al guardar su usuaruo, intentelo nuevamente por favor</string>
+    <string name="error_load_data">Ocurrio un error al obtener la información</string>
+    <string name="error_show_information">Ocurrio un error al mostrar la información</string>
 </resources>
