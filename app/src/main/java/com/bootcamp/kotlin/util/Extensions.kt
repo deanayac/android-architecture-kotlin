@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bootcamp.kotlin.R
+import com.bootcamp.kotlin.base.ApplicationMovies
 import kotlin.properties.Delegates
 
 /**
@@ -105,3 +106,6 @@ inline fun <reified T : Activity> Context.startActivity(body: Intent.() -> Unit)
 inline fun <reified T : Activity> Context.startActivity() {
     startActivity(Intent(this, T::class.java))
 }
+
+val Context.app: ApplicationMovies
+    get() = applicationContext as ApplicationMovies

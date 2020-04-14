@@ -11,5 +11,6 @@ interface SearchContract {
     interface Presenter{
        fun initView()
        fun searchMovies(description:String)
+      suspend fun getInputs()
     }
 }
