@@ -1,0 +1,10 @@
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+
+dependencies {
+    implementation project(':data')
+    implementation project(':domain')
+}
+
+sourceCompatibility = "8"
+targetCompatibility = "8"
