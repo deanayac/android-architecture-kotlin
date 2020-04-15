@@ -1,7 +1,9 @@
 package com.bootcamp.kotlin.favorites
 
+import com.bootcamp.kotlin.R
 import com.bootcamp.kotlin.common.Scope
 import com.bootcamp.kotlin.models.network.favoriteMovies.FavoriteMoviesRequest
+import com.bootcamp.kotlin.util.AndroidHelper
 import kotlinx.coroutines.launch
 
 class FavoritePresenter(
@@ -9,11 +11,11 @@ class FavoritePresenter(
     private val repository: FavoriteRepository
 ) : FavoriteContract.Presenter, Scope by Scope.Impl() {
 
-    override fun initContract() {
-        initScope()
+    override fun onCreateScope() {
+        createScope()
     }
 
-    override fun cancelContract() {
+    override fun onDestroyScope() {
         destroyScope()
     }
 
@@ -27,7 +29,7 @@ class FavoritePresenter(
                 favoriteContract.updateData(response)
             } else {
                 favoriteContract.hideProgress()
-                favoriteContract.showError("Error al obtener los Datos")
+                favoriteContract.showError(AndroidHelper.getString(R.string.error_load_data))
             }
         }
     }

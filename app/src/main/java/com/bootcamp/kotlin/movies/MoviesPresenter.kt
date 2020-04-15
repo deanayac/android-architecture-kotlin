@@ -21,12 +21,12 @@ class MoviesPresenter(private val view: MoviesContract.View,
                 }
     }
 
-    override fun onCreate() {
-        initScope()
+    override fun onCreateScope () {
+        createScope()
         loadMovies()
     }
 
-    override fun onDestroy() {
+    override fun onDestroyScope() {
         destroyScope()
     }
 

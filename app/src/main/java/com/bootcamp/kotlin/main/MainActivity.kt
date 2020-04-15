@@ -8,14 +8,16 @@ import com.bootcamp.kotlin.databinding.ActivityMainBinding
 import com.bootcamp.kotlin.favorites.FavoriteFragment
 import com.bootcamp.kotlin.home.HomeFragment
 import com.bootcamp.kotlin.movie.MovieDetailActivity
-import com.bootcamp.kotlin.movies.Movie
+import com.bootcamp.kotlin.search.SearchFragment
+
 import com.bootcamp.kotlin.util.startActivity
 
 private const val MENU_ITEM = "menu_item"
 
 class MainActivity : AppCompatActivity(),
     HomeFragment.Listener,
-    FavoriteFragment.Listener
+    FavoriteFragment.Listener,
+    SearchFragment.Listener
 {
 
     private lateinit var binding: ActivityMainBinding
@@ -36,9 +38,9 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    override fun navigateTo(movie: Movie) {
+    override fun navigateTo(movieId: Int) {
         startActivity<MovieDetailActivity> {
-            putExtra(MovieDetailActivity.ARG_MOVIE, movie)
+            putExtra(MovieDetailActivity.ARG_MOVIE_ID, movieId)
         }
     }
 

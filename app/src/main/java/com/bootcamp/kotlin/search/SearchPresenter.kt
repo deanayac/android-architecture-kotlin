@@ -1,27 +1,27 @@
 package com.bootcamp.kotlin.search
 
-import android.util.Log
 import com.bootcamp.kotlin.common.Scope
 import com.bootcamp.kotlin.database.InputSearch
 import com.bootcamp.kotlin.movies.Movie
 import com.bootcamp.kotlin.movies.MoviesRepository
 import com.bootcamp.kotlin.networking.Status
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class SearchPresenter(private val view: SearchContract.View,
                       private val repository:MoviesRepository,
                       private val searchRepository: InputSearchRepository) :
     SearchContract.Presenter,Scope by Scope.Impl(){
 
-    companion object{
-        const val ERROR_MOVIES = "Fail List Movies"
+    companion object {
+        private const val ERROR_MOVIES = "Fail List Movies"
     }
 
-    override fun initView() {
-        initScope()
+    override fun onCreateScope() {
+        createScope()
     }
 
-    override fun searchMovies(description:String) {
+    override fun searchMovies(description: String) {
         launch {
             view.showProgress(isVisible = true)
 
@@ -31,7 +31,7 @@ class SearchPresenter(private val view: SearchContract.View,
                         view.showMovies(filterMovies(movies.data?: fail(ERROR_MOVIES)))
                         registerInput(description)
                     }
-                    Status.ERROR -> Log.d("error",movies.message)
+                    Status.ERROR -> Timber.e(movies.message)
                 }
             view.showProgress(isVisible = false)
         }
@@ -39,7 +39,7 @@ class SearchPresenter(private val view: SearchContract.View,
 
     override suspend  fun getInputs() {
         var inputs = searchRepository.getAllInputSearch()
-        Log.d("Inpus", inputs.toString())    }
+        Timber.d( inputs.toString())    }
 
     private fun filterMovies(movies:List<Movie>)= movies.filterNot{ it.backdropPath.isNullOrEmpty()}
 
@@ -49,5 +49,9 @@ class SearchPresenter(private val view: SearchContract.View,
 
     private fun fail(message: String): Nothing {
         throw IllegalArgumentException(message)
+    }
+
+    override fun onDestroyScope() {
+        destroyScope()
     }
 }

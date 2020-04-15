@@ -9,7 +9,8 @@ interface SearchContract {
     }
 
     interface Presenter{
-       fun initView()
+       fun onCreateScope()
+        fun onDestroyScope()
        fun searchMovies(description:String)
       suspend fun getInputs()
     }

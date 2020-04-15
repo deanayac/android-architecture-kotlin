@@ -7,7 +7,7 @@ import com.bootcamp.kotlin.base.Constants
 /**
  * Created by jhon on 8/04/2020
  */
-class LocalRepositoryImpl(private val appCompatActivity: AppCompatActivity) : LocalRepository {
+class AccountRepositoryImpl(private val appCompatActivity: AppCompatActivity) : AccountRepository {
 
     private val sharedPreferences: SharedPreferences by lazy {
         appCompatActivity.getSharedPreferences(Constants.PREF_NAME, Constants.PRIVATE_MODE)
