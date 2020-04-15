@@ -1,2 +1,5 @@
 include ':app'
 rootProject.name='Kotlin-Bootcamp'
+include ':data'
+include ':interactor'
+include ':domain'
