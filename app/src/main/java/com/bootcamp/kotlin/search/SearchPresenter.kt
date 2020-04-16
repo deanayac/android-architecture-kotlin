@@ -37,14 +37,23 @@ class SearchPresenter(private val view: SearchContract.View,
         }
     }
 
-    override suspend  fun getInputs() {
-        var inputs = searchRepository.getAllInputSearch()
-        Timber.d( inputs.toString())    }
+    override  fun getInputs() {
+        launch {
+            var inputs = searchRepository.getAllInputSearch()
+            if(inputs.isNotEmpty()){
+              var inputs =  inputs.map { it.description }
+                view.showInputs(inputs)
+            }
+            Timber.d("input = $inputs.toString()")
+        }
+    }
 
     private fun filterMovies(movies:List<Movie>)= movies.filterNot{ it.backdropPath.isNullOrEmpty()}
 
-    suspend fun registerInput( input: String){
-        searchRepository.insertInputSearch(InputSearch(0,input))
+    override  fun registerInput( input: String){
+        launch {
+            searchRepository.insertInputSearch(InputSearch(0, input))
+        }
     }
 
     private fun fail(message: String): Nothing {

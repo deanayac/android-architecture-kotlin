@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import com.bootcamp.kotlin.base.ApplicationMovies
@@ -15,7 +16,7 @@ import com.bootcamp.kotlin.movies.Movie
 import com.bootcamp.kotlin.movies.MoviesRepositoryImpl
 import com.bootcamp.kotlin.networking.ApiClient
 import com.bootcamp.kotlin.search.adapter.SearchAdapter
-import com.bootcamp.kotlin.util.AndroidHelper
+
 
 class SearchFragment : Fragment(), SearchContract.View {
 
@@ -27,6 +28,7 @@ class SearchFragment : Fragment(), SearchContract.View {
     private val adapter by lazy {
         SearchAdapter { listener?.navigateTo(it.id) }
     }
+
 
     companion object {
         const val START_SEARCH = 3
@@ -59,10 +61,11 @@ class SearchFragment : Fragment(), SearchContract.View {
                 presenter?.searchMovies(text.toString())
             }
             else{
-               // presenter?.
+                presenter?.getInputs()
             }
 
         }
+
 
     }
 
@@ -73,6 +76,14 @@ class SearchFragment : Fragment(), SearchContract.View {
 
     override fun showProgress(isVisible: Boolean) {
         loadingBinding.progress.visibility = if (isVisible) View.VISIBLE else View.GONE
+    }
+
+    override fun showInputs(inputs: List<String>) {
+         val adapter: ArrayAdapter<String> = ArrayAdapter(
+            context!!,
+            R.layout.simple_dropdown_item_1line, inputs
+        )
+        binding.searchEditText.setAdapter(adapter)
     }
 
     interface Listener {

@@ -6,12 +6,14 @@ interface SearchContract {
     interface View{
         fun showMovies(movies: List<Movie>)
         fun showProgress(isVisible: Boolean)
+        fun showInputs(inputs:List<String>)
     }
 
     interface Presenter{
        fun onCreateScope()
-        fun onDestroyScope()
+       fun onDestroyScope()
        fun searchMovies(description:String)
-      suspend fun getInputs()
+        fun getInputs()
+        fun registerInput(input:String)
     }
 }
