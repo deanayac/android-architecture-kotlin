@@ -1,4 +1,4 @@
-package com.bootcamp.kotlin.movie
+package com.bootcamp.kotlin.movieDetail
 
 import android.content.Context
 import android.os.Bundle
@@ -13,6 +13,7 @@ import com.bootcamp.kotlin.R
 import com.bootcamp.kotlin.databinding.FragmentMovieDetailBinding
 import com.bootcamp.kotlin.databinding.ViewProgressBarBinding
 import com.bootcamp.kotlin.domain.Movie
+import com.bootcamp.kotlin.domain.MovieImages
 import com.bootcamp.kotlin.movies.MoviesRepositoryImpl
 import com.bootcamp.kotlin.networking.ApiClient
 import com.bootcamp.kotlin.util.showMessage
@@ -77,6 +78,7 @@ class MovieDetailFragment : Fragment(),
         presenter = MovieDetailPresenter(this, MoviesRepositoryImpl(ApiClient.buildService()))
         presenter?.onCreateScope()
         presenter?.loadData(movieId)
+        presenter?.loadImage(movieId)
     }
 
     private fun addHomeAsUpIndicator(withBackground: Boolean = true) {
@@ -151,5 +153,10 @@ class MovieDetailFragment : Fragment(),
         movieTitle = movie.title
         binding.movieHeaderView.setData(movie)
         binding.expandableTextViewDescription.setData(movie.overview)
+    }
+
+    override fun showMovieImages(movieImages: MovieImages) {
+        binding.recyclerViewId.setImage(movieImages)
+
     }
 }

@@ -1,4 +1,4 @@
-package com.bootcamp.kotlin.movie
+package com.bootcamp.kotlin.movieDetail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

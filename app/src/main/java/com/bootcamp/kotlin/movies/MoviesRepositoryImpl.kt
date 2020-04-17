@@ -1,7 +1,10 @@
 package com.bootcamp.kotlin.movies
 
 import com.bootcamp.kotlin.data.server.MovieDbServices
+import com.bootcamp.kotlin.data.server.MoviesImages
 import com.bootcamp.kotlin.data.server.toDomainMovie
+import com.bootcamp.kotlin.data.server.toDomainMovieImages
+import com.bootcamp.kotlin.domain.MovieImages
 import com.bootcamp.kotlin.networking.Resource
 import com.bootcamp.kotlin.networking.ResponseHandler
 import retrofit2.Retrofit
@@ -54,6 +57,20 @@ class MoviesRepositoryImpl(private val retrofit: Retrofit) : MoviesRepository {
             )
             ResponseHandler().handleSuccess(movies.results)
         } catch (e: java.lang.Exception) {
+            ResponseHandler().handleException(e)
+        }
+    }
+
+    override suspend fun movieImages(id: Int): Resource<MovieImages> {
+        return try {
+            val api = retrofit.run { create(MovieDbServices::class.java) }
+            val movie = api.getMovieImages(
+                id = id,
+                apiKey = API_KEY,
+                language = DEFAULT_LANGUAGE
+            )
+            ResponseHandler().handleSuccess(movie.toDomainMovieImages())
+        } catch (e: Exception) {
             ResponseHandler().handleException(e)
         }
     }

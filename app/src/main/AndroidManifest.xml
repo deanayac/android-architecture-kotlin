@@ -32,7 +32,7 @@
             android:windowSoftInputMode="adjustPan|adjustResize"/>
 
         <activity
-            android:name=".movie.MovieDetailActivity"
+            android:name=".movieDetail.MovieDetailActivity"
             android:configChanges="keyboardHidden"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
