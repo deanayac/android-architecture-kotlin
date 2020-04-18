@@ -1,4 +1,4 @@
-package com.bootcamp.kotlin.domain
+package com.movies.domain
 
 data class Movie(
     val backDropPath: String?,
