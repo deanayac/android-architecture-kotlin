@@ -1,4 +1,4 @@
-package com.bootcamp.kotlin.movieDetail
+package com.bootcamp.kotlin.moviedetail
 
 import com.bootcamp.kotlin.R
 import com.bootcamp.kotlin.common.Scope
@@ -25,17 +25,12 @@ class MovieDetailPresenter(
             val movie = async(Dispatchers.IO) {
                 moviesRepository.movie(movieId)
             }
-            showMovieDetail(movie.await())
-        }
-    }
-
-    override fun loadImage(movieId: Int) {
-        launch {
             view?.showProgress()
             val movieImage = async(Dispatchers.IO) {
                 moviesRepository.movieImages(movieId)
             }
             showMovieImages(movieImage.await())
+            showMovieDetail(movie.await())
         }
     }
 

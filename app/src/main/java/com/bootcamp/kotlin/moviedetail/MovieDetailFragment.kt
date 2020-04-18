@@ -1,4 +1,4 @@
-package com.bootcamp.kotlin.movieDetail
+package com.bootcamp.kotlin.moviedetail
 
 import android.content.Context
 import android.os.Bundle
@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bootcamp.kotlin.R
 import com.bootcamp.kotlin.databinding.FragmentMovieDetailBinding
 import com.bootcamp.kotlin.databinding.ViewProgressBarBinding
@@ -18,6 +19,7 @@ import com.bootcamp.kotlin.movies.MoviesRepositoryImpl
 import com.bootcamp.kotlin.networking.ApiClient
 import com.bootcamp.kotlin.util.showMessage
 import com.google.android.material.appbar.AppBarLayout
+import kotlinx.android.synthetic.main.fragment_movie_detail.*
 
 const val DEFAULT_MOVIE_ID = 0
 
@@ -31,6 +33,7 @@ class MovieDetailFragment : Fragment(),
     private var movieTitle = ""
     private lateinit var binding: FragmentMovieDetailBinding
     private lateinit var loadingBinding: ViewProgressBarBinding
+    private lateinit var adapter: MovieDetailAdapter
 
     companion object {
         @JvmStatic
@@ -56,6 +59,7 @@ class MovieDetailFragment : Fragment(),
     ): View? {
         binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
         loadingBinding = ViewProgressBarBinding.bind(binding.root)
+
         return binding.root
     }
 
@@ -75,10 +79,15 @@ class MovieDetailFragment : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
+
+        adapter = MovieDetailAdapter()
+        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        recyclerViewBrackgrounds.layoutManager = layoutManager
+        recyclerViewBrackgrounds.adapter = adapter
+
         presenter = MovieDetailPresenter(this, MoviesRepositoryImpl(ApiClient.buildService()))
         presenter?.onCreateScope()
         presenter?.loadData(movieId)
-        presenter?.loadImage(movieId)
     }
 
     private fun addHomeAsUpIndicator(withBackground: Boolean = true) {
@@ -155,8 +164,7 @@ class MovieDetailFragment : Fragment(),
         binding.expandableTextViewDescription.setData(movie.overview)
     }
 
-    override fun showMovieImages(movieImages: MovieImages) {
-        binding.recyclerViewId.setImage(movieImages)
-
+    override fun showMovieImages(moviesImages: MovieImages) {
+        adapter.movieImages = moviesImages.backdrops
     }
 }

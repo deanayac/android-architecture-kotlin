@@ -1,7 +1,6 @@
 package com.bootcamp.kotlin.movies
 
 import com.bootcamp.kotlin.data.server.MovieDbServices
-import com.bootcamp.kotlin.data.server.MoviesImages
 import com.bootcamp.kotlin.data.server.toDomainMovie
 import com.bootcamp.kotlin.data.server.toDomainMovieImages
 import com.bootcamp.kotlin.domain.MovieImages
@@ -66,8 +65,7 @@ class MoviesRepositoryImpl(private val retrofit: Retrofit) : MoviesRepository {
             val api = retrofit.run { create(MovieDbServices::class.java) }
             val movie = api.getMovieImages(
                 id = id,
-                apiKey = API_KEY,
-                language = DEFAULT_LANGUAGE
+                apiKey = API_KEY
             )
             ResponseHandler().handleSuccess(movie.toDomainMovieImages())
         } catch (e: Exception) {

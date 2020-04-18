@@ -18,5 +18,6 @@ object Constants {
 
     const val PATH_MOVIE_W300 = "https://image.tmdb.org/t/p/w300/"
     const val PATH_MOVIE_W185 = "https://image.tmdb.org/t/p/w185/"
+    const val PATH_MOVIE_W500 = "https://image.tmdb.org/t/p/w500"
 }
 
