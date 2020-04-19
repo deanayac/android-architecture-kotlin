@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/windowBackground"
     android:fitsSystemWindows="true"
-    tools:context=".movie.MovieDetailFragment">
+    tools:context=".ui.moviedetail.MovieDetailFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -22,7 +22,7 @@
             android:fitsSystemWindows="true"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <com.bootcamp.kotlin.common.ui.MovieHeaderView
+            <com.bootcamp.kotlin.ui.common.MovieHeaderView
                 android:id="@+id/movieHeaderView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.bootcamp.kotlin.common.ui.ExpandableTextView
+            <com.bootcamp.kotlin.ui.common.ExpandableTextView
                 android:id="@+id/expandableTextViewDescription"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
