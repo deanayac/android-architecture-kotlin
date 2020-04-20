@@ -1,4 +1,4 @@
-package com.bootcamp.kotlin.data.database
+package com.bootcamp.kotlin.data.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

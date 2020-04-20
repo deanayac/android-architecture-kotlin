@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.bootcamp.kotlin">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -35,6 +36,16 @@
             android:name="com.bootcamp.kotlin.ui.moviedetail.MovieDetailActivity"
             android:configChanges="keyboardHidden"
             android:theme="@style/AppTheme.NoActionBar" />
+
+
+        <provider
+            android:name=".data.provider.AppContextProvider"
+            android:authorities="${applicationId}.provider.applicationprovider"
+            android:directBootAware="true"
+            android:exported="false"
+            android:initOrder="900"
+            tools:ignore="UnusedAttribute" />
+
     </application>
 
 </manifest>

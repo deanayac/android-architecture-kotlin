@@ -30,4 +30,20 @@ class RetrofitDataSource(private val retrofit: Retrofit): RemoteDataSource {
             ResponseHandler().handleException(e)
         }
     }
+
+    override suspend fun searchMovies(description: String): Resource<List<PopularMovie>> {
+        return try {
+            val api = retrofit.run { create(MovieDbServices::class.java) }
+            val movies = api.searchMovies(
+                apiKey = API_KEY,
+                page = DEFAULT_PAGE,
+                language = DEFAULT_LANGUAGE,
+                query = description
+            )
+
+            ResponseHandler().handleSuccess(movies.results.toDomainPopularMovie())
+        } catch (e: Exception) {
+            ResponseHandler().handleException(e)
+        }
+    }
 }

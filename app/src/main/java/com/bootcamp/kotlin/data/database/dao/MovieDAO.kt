@@ -1,6 +1,7 @@
-package com.bootcamp.kotlin.data.database
+package com.bootcamp.kotlin.data.database.dao
 
 import androidx.room.*
+import com.bootcamp.kotlin.data.database.entity.Movie
 
 @Dao
 interface MovieDAO {

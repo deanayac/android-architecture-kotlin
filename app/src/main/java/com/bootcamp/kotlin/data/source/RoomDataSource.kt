@@ -1,5 +1,7 @@
 package com.bootcamp.kotlin.data.source
 
-interface RoomDataSource {
+import com.movies.data.source.LocalDataSource
+
+interface RoomDataSource : LocalDataSource {
 
 }

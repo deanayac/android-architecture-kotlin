@@ -11,13 +11,10 @@ import com.bootcamp.kotlin.databinding.ViewProgressBarBinding
 import com.bootcamp.kotlin.ui.movies.MoviesContract
 import com.bootcamp.kotlin.ui.movies.MoviesPresenter
 import com.movies.data.repository.MovieRepositoryImpl
-import com.bootcamp.kotlin.data.server.Movie
-import com.bootcamp.kotlin.data.source.LocalDataSourceImpl
 import com.bootcamp.kotlin.data.source.RetrofitDataSource
+import com.bootcamp.kotlin.data.source.RoomDataSourceImpl
 import com.bootcamp.kotlin.networking.ApiClient
 import com.bootcamp.kotlin.ui.movies.adapter.MoviesAdapter
-import com.movies.data.repository.MovieRepository
-import com.movies.data.source.RemoteDataSource
 import com.movies.domain.PopularMovie
 import com.movies.interactor.GetPopularMovies
 
@@ -65,7 +62,7 @@ class HomeFragment : Fragment(), MoviesContract.View {
         presenter = MoviesPresenter(
             view = this,
             getPopularMovies = GetPopularMovies(MovieRepositoryImpl(
-                localDataSource = LocalDataSourceImpl(),
+                localDataSource = RoomDataSourceImpl(),
                 remoteDataSource = RetrofitDataSource(ApiClient.buildService())
             ))
         )

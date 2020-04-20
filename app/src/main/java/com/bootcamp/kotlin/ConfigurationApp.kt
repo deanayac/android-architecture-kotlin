@@ -14,7 +14,6 @@ class ConfigurationApp : Application() {
         super.onCreate()
         initTimberWithFirebaseCrashlytics()
         AndroidHelper.init(applicationContext)
-        AppDatabase.build(this)
 
     }
 
