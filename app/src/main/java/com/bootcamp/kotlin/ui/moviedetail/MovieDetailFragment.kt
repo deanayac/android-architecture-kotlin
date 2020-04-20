@@ -9,14 +9,19 @@ import android.view.ViewGroup
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bootcamp.kotlin.R
 import com.bootcamp.kotlin.data.repositories.MoviesRepositoryImpl
+import com.bootcamp.kotlin.data.source.RetrofitDataSource
 import com.bootcamp.kotlin.databinding.FragmentMovieDetailBinding
 import com.bootcamp.kotlin.databinding.ViewProgressBarBinding
 import com.movies.domain.Movie
 import com.bootcamp.kotlin.networking.ApiClient
 import com.bootcamp.kotlin.util.showMessage
 import com.google.android.material.appbar.AppBarLayout
+import com.movies.data.repository.MovieImageDetailRepositoryImpl
+import com.movies.domain.MovieImages
+import kotlinx.android.synthetic.main.fragment_movie_detail.*
 
 const val DEFAULT_MOVIE_ID = 0
 
@@ -30,6 +35,7 @@ class MovieDetailFragment : Fragment(),
     private var movieTitle = ""
     private lateinit var binding: FragmentMovieDetailBinding
     private lateinit var loadingBinding: ViewProgressBarBinding
+    private lateinit var adapter: MovieDetailAdapter
 
     companion object {
         @JvmStatic
@@ -74,8 +80,15 @@ class MovieDetailFragment : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
+
+        adapter = MovieDetailAdapter()
+        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        recyclerViewBrackgrounds.layoutManager = layoutManager
+        recyclerViewBrackgrounds.adapter = adapter
+
         presenter = MovieDetailPresenter(this,
-            MoviesRepositoryImpl(ApiClient.buildService())
+            MoviesRepositoryImpl(ApiClient.buildService()),
+            MovieImageDetailRepositoryImpl(RetrofitDataSource(ApiClient.buildService()))
         )
         presenter?.onCreateScope()
         presenter?.loadData(movieId)
@@ -153,5 +166,9 @@ class MovieDetailFragment : Fragment(),
         movieTitle = movie.title
         binding.movieHeaderView.setData(movie)
         binding.expandableTextViewDescription.setData(movie.overview)
+    }
+
+    override fun showMovieImages(moviesImages: MovieImages) {
+        adapter.movieImages = moviesImages.backdrops
     }
 }

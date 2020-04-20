@@ -1,10 +1,12 @@
 package com.bootcamp.kotlin.data.source
 
 import com.bootcamp.kotlin.data.server.MovieDbServices
+import com.bootcamp.kotlin.data.toDomainMovieImages
 import com.bootcamp.kotlin.data.toDomainPopularMovie
 import com.bootcamp.kotlin.networking.ResponseHandler
 import com.movies.data.common.Resource
 import com.movies.data.source.RemoteDataSource
+import com.movies.domain.MovieImages
 import com.movies.domain.PopularMovie
 import retrofit2.Retrofit
 
@@ -42,6 +44,19 @@ class RetrofitDataSource(private val retrofit: Retrofit): RemoteDataSource {
             )
 
             ResponseHandler().handleSuccess(movies.results.toDomainPopularMovie())
+        } catch (e: Exception) {
+            ResponseHandler().handleException(e)
+        }
+    }
+
+    override suspend fun getMovieImage(id: Int): Resource<MovieImages> {
+        return try {
+            val api = retrofit.run { create(MovieDbServices::class.java) }
+            val movieImage = api.getMovieImages(
+                id = id,
+                apiKey = API_KEY
+            )
+            ResponseHandler().handleSuccess(movieImage.toDomainMovieImages())
         } catch (e: Exception) {
             ResponseHandler().handleException(e)
         }

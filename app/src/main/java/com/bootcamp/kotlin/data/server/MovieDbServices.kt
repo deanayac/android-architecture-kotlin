@@ -36,4 +36,10 @@ interface MovieDbServices {
         @Query("language") language: String,
         @Query("query") query: String
     ): MoviesBase
+
+    @GET("3/movie/{movie_id}/images")
+    suspend fun getMovieImages(
+        @Path("movie_id") id: Int,
+        @Query("api_key") apiKey: String
+    ): MovieImages
 }
