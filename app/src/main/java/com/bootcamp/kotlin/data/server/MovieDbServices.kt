@@ -1,7 +1,7 @@
 package com.bootcamp.kotlin.data.server
 
 import com.bootcamp.kotlin.models.network.favoriteMovies.FavoriteMoviesResponse
-import com.bootcamp.kotlin.movies.MoviesBase
+import com.bootcamp.kotlin.ui.movies.MoviesBase
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -20,7 +20,7 @@ interface MovieDbServices {
         @Query("api_key") apiKey: String,
         @Query("page") page: String,
         @Query("language") language: String
-    ): MoviesBase
+    ): PopularMoviesDbResult
 
     @GET("3/account/{account_id}/favorite/movies")
     suspend fun getFavoriteMovies(

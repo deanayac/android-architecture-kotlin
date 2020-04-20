@@ -1,0 +1,17 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.movies.data">
+
+    <application>
+
+        <provider
+            android:name=".provider.AppContextProvider"
+            android:authorities="${applicationId}.provider.applicationprovider"
+            android:directBootAware="true"
+            android:exported="false"
+            android:initOrder="900"
+            tools:ignore="UnusedAttribute" />
+
+    </application>
+
+</manifest>
