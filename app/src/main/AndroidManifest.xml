@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.bootcamp.kotlin">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".ConfigurationApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="false" />
+
         <activity
-            android:name=".welcome.SplashActivity"
-            android:label="@string/title_activity_splash"
+            android:name="com.bootcamp.kotlin.ui.splash.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +27,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".welcome.MainActivity"/>
+
+        <activity android:name="com.bootcamp.kotlin.ui.main.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan|adjustResize"/>
+
+        <activity
+            android:name="com.bootcamp.kotlin.ui.moviedetail.MovieDetailActivity"
+            android:configChanges="keyboardHidden"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+
+        <provider
+            android:name=".data.provider.AppContextProvider"
+            android:authorities="${applicationId}.provider.applicationprovider"
+            android:directBootAware="true"
+            android:exported="false"
+            android:initOrder="900"
+            tools:ignore="UnusedAttribute" />
+
     </application>
 
 </manifest>
