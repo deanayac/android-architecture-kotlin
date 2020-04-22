@@ -1,10 +1,11 @@
 package com.bootcamp.kotlin.data.source
 
 import com.bootcamp.kotlin.data.server.MovieDbServices
+
+import com.bootcamp.kotlin.data.ResponseHandler
 import com.bootcamp.kotlin.data.toDomainFavoriteMovie
 import com.bootcamp.kotlin.data.toDomainMovie
 import com.bootcamp.kotlin.data.toDomainMovieImages
-import com.bootcamp.kotlin.data.ResponseHandler
 import com.movies.data.common.Resource
 import com.movies.data.source.RemoteDataSource
 import com.movies.domain.FavoriteMovie
@@ -76,9 +77,9 @@ class RetrofitDataSource(retrofit: Retrofit) : RemoteDataSource {
         }
     }
 
+
     override suspend fun searchMovies(description: String): Resource<List<Movie>> {
         return try {
-
             val movies = api.searchMovies(
                 apiKey = API_KEY,
                 page = DEFAULT_PAGE,
@@ -102,7 +103,6 @@ class RetrofitDataSource(retrofit: Retrofit) : RemoteDataSource {
                 id = id,
                 apiKey = API_KEY
             )
-
             ResponseHandler().handleSuccess(movieImage.toDomainMovieImages())
         } catch (e: Exception) {
             ResponseHandler().handleException(e)

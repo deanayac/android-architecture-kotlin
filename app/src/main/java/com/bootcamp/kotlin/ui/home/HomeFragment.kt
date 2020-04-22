@@ -1,4 +1,5 @@
 package com.bootcamp.kotlin.ui.home
+
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,10 +13,12 @@ import com.bootcamp.kotlin.ui.movies.MoviesContract
 import com.bootcamp.kotlin.ui.movies.MoviesPresenter
 import com.movies.data.repository.MovieRepositoryImpl
 import com.bootcamp.kotlin.data.source.RetrofitDataSource
+
 import com.bootcamp.kotlin.data.source.RoomDataSource
 import com.bootcamp.kotlin.data.server.ApiClient
 import com.bootcamp.kotlin.ui.movies.adapter.MoviesAdapter
 import com.movies.domain.Movie
+
 import com.movies.interactor.GetPopularMovies
 
 class HomeFragment : Fragment(), MoviesContract.View {

@@ -2,12 +2,12 @@ package com.bootcamp.kotlin.ui.moviedetail
 
 import com.bootcamp.kotlin.R
 import com.bootcamp.kotlin.ui.common.Scope
-import com.movies.domain.Movie
+import com.bootcamp.kotlin.util.AndroidHelper
 import com.movies.data.common.Resource
 import com.movies.data.common.Status.ERROR
 import com.movies.data.common.Status.SUCCESS
-import com.bootcamp.kotlin.util.AndroidHelper
 import com.movies.data.repository.MovieImageDetailRepository
+import com.movies.domain.Movie
 import com.movies.domain.MovieImages
 import com.movies.interactor.GetMovieDetail
 import kotlinx.coroutines.Dispatchers

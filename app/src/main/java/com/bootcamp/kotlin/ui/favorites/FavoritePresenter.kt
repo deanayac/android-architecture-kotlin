@@ -1,7 +1,6 @@
-package com.bootcamp.kotlin.ui.favorites
-
 import com.bootcamp.kotlin.R
 import com.bootcamp.kotlin.ui.common.Scope
+import com.bootcamp.kotlin.ui.favorites.FavoriteContract
 import com.bootcamp.kotlin.util.AndroidHelper
 import com.movies.interactor.GetFavoriteMovies
 import kotlinx.coroutines.launch

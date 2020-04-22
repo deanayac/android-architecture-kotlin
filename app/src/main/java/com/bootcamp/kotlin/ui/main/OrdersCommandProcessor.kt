@@ -2,7 +2,6 @@ package com.bootcamp.kotlin.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import com.bootcamp.kotlin.R
-import com.bootcamp.kotlin.ui.favorites.FavoriteFragment
 import com.bootcamp.kotlin.ui.home.HomeFragment
 import com.bootcamp.kotlin.ui.search.SearchFragment
 

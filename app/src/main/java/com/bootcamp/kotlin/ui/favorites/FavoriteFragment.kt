@@ -1,5 +1,3 @@
-package com.bootcamp.kotlin.ui.favorites
-
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +10,8 @@ import com.bootcamp.kotlin.data.source.RoomDataSource
 import com.bootcamp.kotlin.databinding.FragmentFavoriteBinding
 import com.bootcamp.kotlin.databinding.ViewProgressBarBinding
 import com.bootcamp.kotlin.data.server.ApiClient
+import com.bootcamp.kotlin.ui.favorites.FavoriteAdapter
+import com.bootcamp.kotlin.ui.favorites.FavoriteContract
 import com.bootcamp.kotlin.util.showMessage
 import com.movies.data.repository.MovieRepositoryImpl
 import com.movies.domain.FavoriteMovie

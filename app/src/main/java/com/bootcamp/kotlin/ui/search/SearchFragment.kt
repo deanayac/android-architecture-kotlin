@@ -9,11 +9,11 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import com.bootcamp.kotlin.data.server.ApiClient
 import com.bootcamp.kotlin.data.source.RetrofitDataSource
 import com.bootcamp.kotlin.data.source.RoomDataSource
 import com.bootcamp.kotlin.databinding.FragmentSearchBinding
 import com.bootcamp.kotlin.databinding.ViewProgressBarBinding
-import com.bootcamp.kotlin.data.server.ApiClient
 import com.bootcamp.kotlin.ui.search.adapter.SearchAdapter
 import com.movies.data.repository.InputSearchRepositoryImpl
 import com.movies.data.repository.MovieRepositoryImpl

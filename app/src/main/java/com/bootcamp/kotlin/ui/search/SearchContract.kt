@@ -2,7 +2,6 @@ package com.bootcamp.kotlin.ui.search
 
 import com.movies.domain.Movie
 
-
 interface SearchContract {
     interface View{
         fun showMovies(movies: List<Movie>)

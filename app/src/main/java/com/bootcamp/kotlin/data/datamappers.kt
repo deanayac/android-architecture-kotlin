@@ -4,10 +4,12 @@ import com.bootcamp.kotlin.data.database.entity.Genre as DataBaseGenre
 import com.bootcamp.kotlin.data.database.entity.Movie as DataBaseMovie
 import com.bootcamp.kotlin.data.server.FavoriteMovie as ServerFavoriteMovie
 import com.bootcamp.kotlin.data.server.MovieDbResult
+import com.movies.domain.Backdrops
 import com.movies.domain.FavoriteMovie as DomainFavoriteMovie
 import com.movies.domain.Genre as DomainGenre
 import com.movies.domain.Movie as DomainMovie
 import com.movies.domain.MovieImages
+import com.movies.domain.Posters
 import com.bootcamp.kotlin.data.database.entity.InputSearch as InputSearchEntity
 import com.bootcamp.kotlin.data.server.Movie as ServerMovie
 import com.bootcamp.kotlin.data.server.MovieImages as ServerMovieImages
@@ -119,7 +121,7 @@ fun ServerMovieImages.toDomainMovieImages(): MovieImages {
     this.backdrops.forEach { backdrop ->
         with(backdrop) {
             backdrops.add(
-                com.movies.domain.Backdrops(
+                Backdrops(
                     aspectRatio,
                     filePath,
                     height,
@@ -135,7 +137,7 @@ fun ServerMovieImages.toDomainMovieImages(): MovieImages {
     this.posters.forEach { poster ->
         with(poster) {
             posters.add(
-                com.movies.domain.Posters(
+                Posters(
                     aspectRatio,
                     filePath,
                     height,

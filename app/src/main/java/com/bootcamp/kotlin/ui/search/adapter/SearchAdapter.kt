@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.bootcamp.kotlin.R
-import com.bootcamp.kotlin.ui.common.Constants
 import com.bootcamp.kotlin.databinding.ItemSearchMovieBinding
+import com.bootcamp.kotlin.ui.common.Constants
 import com.bootcamp.kotlin.util.inflate
 import com.movies.domain.Movie
 import kotlin.properties.Delegates

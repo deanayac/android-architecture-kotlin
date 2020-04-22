@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.bootcamp.kotlin.R
 import com.bootcamp.kotlin.ui.common.Constants
+
 import com.bootcamp.kotlin.util.basicDiffUtil
 import com.movies.domain.FavoriteMovie
 import kotlinx.android.synthetic.main.item_my_favorite_movie.view.*

@@ -11,16 +11,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bootcamp.kotlin.R
+import com.bootcamp.kotlin.data.server.ApiClient
 import com.bootcamp.kotlin.data.source.RetrofitDataSource
 import com.bootcamp.kotlin.data.source.RoomDataSource
 import com.bootcamp.kotlin.databinding.FragmentMovieDetailBinding
 import com.bootcamp.kotlin.databinding.ViewProgressBarBinding
-import com.movies.domain.Movie
-import com.bootcamp.kotlin.data.server.ApiClient
 import com.bootcamp.kotlin.util.showMessage
 import com.google.android.material.appbar.AppBarLayout
 import com.movies.data.repository.MovieImageDetailRepositoryImpl
 import com.movies.data.repository.MovieRepositoryImpl
+import com.movies.domain.Movie
 import com.movies.domain.MovieImages
 import com.movies.interactor.GetMovieDetail
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
@@ -95,6 +95,7 @@ class MovieDetailFragment : Fragment(),
                     RetrofitDataSource(ApiClient.buildService())
                 )
             ),
+
             MovieImageDetailRepositoryImpl(RetrofitDataSource(ApiClient.buildService()))
         )
         presenter?.onCreateScope()
