@@ -1,24 +1,30 @@
 package com.bootcamp.kotlin.data
 
-import com.bootcamp.kotlin.data.database.entity.InputSearch as InputSearchEntity
+import com.bootcamp.kotlin.data.database.entity.Genre as DataBaseGenre
+import com.bootcamp.kotlin.data.database.entity.Movie as DataBaseMovie
+import com.bootcamp.kotlin.data.server.FavoriteMovie as ServerFavoriteMovie
 import com.bootcamp.kotlin.data.server.MovieDbResult
-import com.bootcamp.kotlin.data.server.MovieImages
-import com.movies.domain.Genre
-import com.movies.domain.InputSearch as InputSearchDomain
-import com.movies.domain.Movie
-import com.movies.domain.PopularMovie
+import com.movies.domain.Backdrops
+import com.movies.domain.FavoriteMovie as DomainFavoriteMovie
+import com.movies.domain.Genre as DomainGenre
+import com.movies.domain.Movie as DomainMovie
+import com.movies.domain.MovieImages
+import com.movies.domain.Posters
+import com.bootcamp.kotlin.data.database.entity.InputSearch as InputSearchEntity
 import com.bootcamp.kotlin.data.server.Movie as ServerMovie
+import com.bootcamp.kotlin.data.server.MovieImages as ServerMovieImages
+import com.movies.domain.InputSearch as InputSearchDomain
 
-fun MovieDbResult.toDomainMovie(): Movie {
-    val genres = ArrayList<Genre>()
+fun MovieDbResult.toDomainMovie(): DomainMovie {
+    val listGenres = ArrayList<DomainGenre>()
 
     this.genres.forEach { (id, name) ->
-        genres.add(Genre(id, name))
+        listGenres.add(DomainGenre(id, name))
     }
 
-    return Movie(
+    return DomainMovie(
         backDropPath,
-        genres,
+        listGenres,
         id,
         originalTitle,
         overview,
@@ -30,54 +36,99 @@ fun MovieDbResult.toDomainMovie(): Movie {
     )
 }
 
-fun List<ServerMovie>.toDomainPopularMovie(): List<PopularMovie> {
-    val popularMovies = mutableListOf<PopularMovie>()
-    this.map { movie ->
-        with(movie) {
-            popularMovies.add(
-                PopularMovie(
-                    backdropPath,
-                    genreIds,
-                    id,
-                    originalTitle,
-                    overview,
-                    posterPath,
-                    releaseDate,
-                    title,
-                    video,
-                    voteAverage
-                )
-            )
-        }
+fun ServerMovie.toDomainMovie(): DomainMovie {
+    val listGenres = ArrayList<DomainGenre>()
+    genreIds.map {
+        listGenres.add(DomainGenre(it, ""))
     }
-    return popularMovies
+
+    return DomainMovie(
+        backdropPath,
+        listGenres,
+        id,
+        originalTitle,
+        overview,
+        posterPath,
+        releaseDate,
+        title,
+        video,
+        voteAverage
+    )
 }
 
-fun InputSearchDomain.toDomainToEntity():InputSearchEntity = InputSearchEntity(0,description)
+fun ServerFavoriteMovie.toDomainFavoriteMovie() = DomainFavoriteMovie(
+    id,
+    title,
+    posterPath
+)
 
-fun List<InputSearchEntity>.toEntityInDomain():List<InputSearchDomain>{
-    val inputSearch = mutableListOf<InputSearchDomain>()
-    this.map { input ->
-        with(input){
-            inputSearch.add(InputSearchDomain(description))
-        }
+fun DomainMovie.toDataBaseMovie(): DataBaseMovie {
+    val listGenres = ArrayList<DataBaseGenre>()
+    genres.map {
+        listGenres.add(DataBaseGenre(it.id, it.name))
     }
-    return  inputSearch
+
+    return DataBaseMovie(
+        id,
+        title,
+        backdropPath,
+        listGenres,
+        originalTitle,
+        overview,
+        posterPath,
+        releaseDate,
+        video,
+        voteAverage
+    )
+
 }
 
-fun MovieImages.toDomainMovieImages(): com.movies.domain.MovieImages {
+fun DataBaseGenre.toDomainGenre() = DomainGenre(
+    id,
+    name
+)
+
+fun DataBaseMovie.toDomainMovie(): DomainMovie {
+    val listGenres = ArrayList<DomainGenre>()
+    genres?.map {
+        listGenres.add(DomainGenre(it.id, it.name))
+    }
+
+    return DomainMovie(
+        backdropPath,
+        listGenres,
+        id,
+        originalTitle,
+        overview,
+        posterPath,
+        releaseDate,
+        title,
+        video,
+        voteAverage
+    )
+}
+
+fun InputSearchDomain.toDomainToEntity(): InputSearchEntity = InputSearchEntity(0, description)
+
+fun InputSearchEntity.toDomainEntityIn(): InputSearchDomain {
+    return InputSearchDomain(description)
+}
+
+fun ServerMovieImages.toDomainMovieImages(): MovieImages {
     val backdrops = ArrayList<com.movies.domain.Backdrops>()
     val posters = ArrayList<com.movies.domain.Posters>()
 
     this.backdrops.forEach { backdrop ->
         with(backdrop) {
             backdrops.add(
-                com.movies.domain.Backdrops(
-                    aspect_ratio,
-                    file_path,
-                    height, iso_639_1,
-                    vote_average,
-                    vote_count, width
+                Backdrops(
+                    aspectRatio,
+                    filePath,
+                    height,
+                    iso_639_1,
+                    voteAverage,
+                    voteCount,
+                    width
                 )
             )
         }
@@ -86,20 +137,20 @@ fun MovieImages.toDomainMovieImages(): com.movies.domain.MovieImages {
     this.posters.forEach { poster ->
         with(poster) {
             posters.add(
-                com.movies.domain.Posters(
-                    aspect_ratio,
-                    file_path,
+                Posters(
+                    aspectRatio,
+                    filePath,
                     height,
                     iso_639_1,
-                    vote_average,
-                    vote_count,
+                    voteAverage,
+                    voteCount,
                     width
                 )
             )
         }
     }
 
-    return com.movies.domain.MovieImages(
+    return MovieImages(
         id,
         backdrops,
         posters

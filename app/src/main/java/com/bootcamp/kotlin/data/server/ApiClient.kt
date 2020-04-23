@@ -1,8 +1,7 @@
-package com.bootcamp.kotlin.networking
+package com.bootcamp.kotlin.data.server
 
 import com.bootcamp.kotlin.BuildConfig
 import com.bootcamp.kotlin.ui.common.Constants
-import com.bootcamp.kotlin.ui.favorites.FavoriteNetwork
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -29,9 +28,5 @@ object ApiClient {
             .client(httpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-    }
-
-    fun providerFavoriteRepository(): FavoriteNetwork {
-        return FavoriteNetwork()
     }
 }

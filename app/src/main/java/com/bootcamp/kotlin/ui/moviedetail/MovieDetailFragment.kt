@@ -11,24 +11,25 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bootcamp.kotlin.R
-import com.bootcamp.kotlin.data.repositories.MoviesRepositoryImpl
+import com.bootcamp.kotlin.data.server.ApiClient
 import com.bootcamp.kotlin.data.source.RetrofitDataSource
+import com.bootcamp.kotlin.data.source.RoomDataSource
 import com.bootcamp.kotlin.databinding.FragmentMovieDetailBinding
 import com.bootcamp.kotlin.databinding.ViewProgressBarBinding
-import com.movies.domain.Movie
-import com.bootcamp.kotlin.networking.ApiClient
 import com.bootcamp.kotlin.util.showMessage
 import com.google.android.material.appbar.AppBarLayout
 import com.movies.data.repository.MovieImageDetailRepositoryImpl
+import com.movies.data.repository.MovieRepositoryImpl
+import com.movies.domain.Movie
 import com.movies.domain.MovieImages
+import com.movies.interactor.GetMovieDetail
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
 
 const val DEFAULT_MOVIE_ID = 0
 
 class MovieDetailFragment : Fragment(),
     MovieDetailContract.View,
-    AppBarLayout.OnOffsetChangedListener
-{
+    AppBarLayout.OnOffsetChangedListener {
     private var movieId: Int = 0
     private var listener: ActionListener? = null
     private var presenter: MovieDetailPresenter? = null
@@ -86,8 +87,15 @@ class MovieDetailFragment : Fragment(),
         recyclerViewBrackgrounds.layoutManager = layoutManager
         recyclerViewBrackgrounds.adapter = adapter
 
-        presenter = MovieDetailPresenter(this,
-            MoviesRepositoryImpl(ApiClient.buildService()),
+        presenter = MovieDetailPresenter(
+            this,
+            GetMovieDetail(
+                MovieRepositoryImpl(
+                    RoomDataSource(),
+                    RetrofitDataSource(ApiClient.buildService())
+                )
+            ),
+
             MovieImageDetailRepositoryImpl(RetrofitDataSource(ApiClient.buildService()))
         )
         presenter?.onCreateScope()
@@ -134,7 +142,8 @@ class MovieDetailFragment : Fragment(),
         val alphaValueLimit = 0.35f
         val newVerticalOffset = verticalOffset * -1
         val collapseHeight = appBarLayout?.height ?: 0
-        val alphaRange = collapseHeight - binding.toolbar.height - 25 * resources.displayMetrics.density
+        val alphaRange =
+            collapseHeight - binding.toolbar.height - 25 * resources.displayMetrics.density
         var alphaValue = 1f
 
         if (newVerticalOffset >= 0) {

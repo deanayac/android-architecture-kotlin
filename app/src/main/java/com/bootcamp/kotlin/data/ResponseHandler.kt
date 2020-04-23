@@ -1,4 +1,4 @@
-package com.bootcamp.kotlin.networking
+package com.bootcamp.kotlin.data
 
 import com.movies.data.common.Resource
 import retrofit2.HttpException

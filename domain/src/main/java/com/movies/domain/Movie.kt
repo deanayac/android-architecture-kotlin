@@ -1,7 +1,7 @@
 package com.movies.domain
 
 data class Movie(
-    val backDropPath: String?,
+    val backdropPath: String?,
     val genres: ArrayList<Genre>,
     val id: Int,
     val originalTitle: String,

@@ -18,7 +18,7 @@ class MovieDetailAdapter :
     RecyclerView.Adapter<MovieDetailAdapter.ViewHolder>() {
 
     var movieImages: List<Backdrops> by basicDiffUtil(
-        emptyList(), { old, new -> old.file_path == new.file_path }
+        emptyList(), { old, new -> old.filePath == new.filePath }
     )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -37,7 +37,7 @@ class MovieDetailAdapter :
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(movieImages: Backdrops) {
-            itemView.imageViewBackground.load(getUri(movieImages.file_path)) {
+            itemView.imageViewBackground.load(getUri(movieImages.filePath)) {
                 crossfade(true)
             }
         }

@@ -24,7 +24,7 @@ class RecyclerViewFooterView @JvmOverloads constructor(
 
     fun setImage(movieImages: ArrayList<Backdrops>) {
         movieImages.forEach {
-            imageViewBackground.load("${Constants.PATH_MOVIE_W500}${it.file_path}")
+            imageViewBackground.load("${Constants.PATH_MOVIE_W500}${it.filePath}")
         }
     }
 }

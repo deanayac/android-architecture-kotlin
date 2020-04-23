@@ -21,7 +21,7 @@ class MovieHeaderView @JvmOverloads constructor(
     }
 
     fun setData(movie: Movie) {
-        imageViewBackground.load("${Constants.PATH_MOVIE_W185}${movie.backDropPath}")
+        imageViewBackground.load("${Constants.PATH_MOVIE_W185}${movie.backdropPath}")
         imageViewPoster.load("${Constants.PATH_MOVIE_W185}${movie.posterPath}")
         imageViewStar.visibility = View.VISIBLE
         textViewName.text = movie.title

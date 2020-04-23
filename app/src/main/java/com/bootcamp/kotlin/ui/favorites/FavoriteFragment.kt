@@ -1,5 +1,3 @@
-package com.bootcamp.kotlin.ui.favorites
-
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,17 +5,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bootcamp.kotlin.data.source.RetrofitDataSource
+import com.bootcamp.kotlin.data.source.RoomDataSource
 import com.bootcamp.kotlin.databinding.FragmentFavoriteBinding
 import com.bootcamp.kotlin.databinding.ViewProgressBarBinding
-import com.bootcamp.kotlin.models.network.favoriteMovies.FavoriteMoviesRequest
-import com.bootcamp.kotlin.models.network.favoriteMovies.FavoriteMoviesResponse
-import com.bootcamp.kotlin.networking.ApiClient
+import com.bootcamp.kotlin.data.server.ApiClient
+import com.bootcamp.kotlin.ui.favorites.FavoriteAdapter
+import com.bootcamp.kotlin.ui.favorites.FavoriteContract
 import com.bootcamp.kotlin.util.showMessage
+import com.movies.data.repository.MovieRepositoryImpl
+import com.movies.domain.FavoriteMovie
+import com.movies.interactor.GetFavoriteMovies
 
-/**
- * Create by Edmundo
- * 18/03/2020
- * */
 class FavoriteFragment : Fragment(), FavoriteContract.View {
 
     private lateinit var binding: FragmentFavoriteBinding
@@ -31,7 +30,12 @@ class FavoriteFragment : Fragment(), FavoriteContract.View {
     private val presenter by lazy {
         FavoritePresenter(
             this,
-            ApiClient.providerFavoriteRepository()
+            GetFavoriteMovies(
+                MovieRepositoryImpl(
+                    RoomDataSource(),
+                    RetrofitDataSource(ApiClient.buildService())
+                )
+            )
         )
     }
 
@@ -53,13 +57,7 @@ class FavoriteFragment : Fragment(), FavoriteContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.onCreateScope()
-        presenter.getFavoriteMovies(
-            FavoriteMoviesRequest(
-                1,
-                "d9ae4921794c06bd0fdbd1463d274804",
-                "878539e32c923af4c422e5c0b1fa015ba4aa2dfe"
-            )
-        )
+        presenter.getFavoriteMovies()
         binding.favoriteMoviesRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.favoriteMoviesRecyclerView.adapter = adapter
     }
@@ -93,7 +91,7 @@ class FavoriteFragment : Fragment(), FavoriteContract.View {
         }
     }
 
-    override fun updateData(request: FavoriteMoviesResponse?) {
-        request?.results?.let { adapter.moviesList = it }
+    override fun updateData(favoriteMovies: List<FavoriteMovie>) {
+        adapter.moviesList = favoriteMovies
     }
 }

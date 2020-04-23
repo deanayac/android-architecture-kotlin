@@ -1,9 +1,8 @@
 package com.bootcamp.kotlin.data.repositories
 
+import com.bootcamp.kotlin.data.ResponseHandler
 import com.bootcamp.kotlin.data.server.*
 import com.bootcamp.kotlin.data.toDomainMovie
-import com.bootcamp.kotlin.data.toDomainMovieImages
-import com.bootcamp.kotlin.networking.ResponseHandler
 import com.movies.data.common.Resource
 import retrofit2.Retrofit
 import com.movies.domain.Movie as DomainMovie

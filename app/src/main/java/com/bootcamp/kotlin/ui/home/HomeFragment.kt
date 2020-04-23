@@ -1,4 +1,5 @@
 package com.bootcamp.kotlin.ui.home
+
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,10 +13,12 @@ import com.bootcamp.kotlin.ui.movies.MoviesContract
 import com.bootcamp.kotlin.ui.movies.MoviesPresenter
 import com.movies.data.repository.MovieRepositoryImpl
 import com.bootcamp.kotlin.data.source.RetrofitDataSource
-import com.bootcamp.kotlin.data.source.RoomDataSourceImpl
-import com.bootcamp.kotlin.networking.ApiClient
+
+import com.bootcamp.kotlin.data.source.RoomDataSource
+import com.bootcamp.kotlin.data.server.ApiClient
 import com.bootcamp.kotlin.ui.movies.adapter.MoviesAdapter
-import com.movies.domain.PopularMovie
+import com.movies.domain.Movie
+
 import com.movies.interactor.GetPopularMovies
 
 class HomeFragment : Fragment(), MoviesContract.View {
@@ -62,7 +65,7 @@ class HomeFragment : Fragment(), MoviesContract.View {
         presenter = MoviesPresenter(
             view = this,
             getPopularMovies = GetPopularMovies(MovieRepositoryImpl(
-                localDataSource = RoomDataSourceImpl(),
+                dataBaseDataSource = RoomDataSource(),
                 remoteDataSource = RetrofitDataSource(ApiClient.buildService())
             ))
         )
@@ -70,7 +73,7 @@ class HomeFragment : Fragment(), MoviesContract.View {
         presenter?.onCreateScope()
     }
 
-    override fun showMovies(movies: List<PopularMovie>) {
+    override fun showMovies(movies: List<Movie>) {
         adapter.movies = movies
     }
 

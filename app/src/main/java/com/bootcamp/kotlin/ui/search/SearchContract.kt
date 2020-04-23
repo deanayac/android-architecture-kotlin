@@ -1,11 +1,10 @@
 package com.bootcamp.kotlin.ui.search
 
-import com.bootcamp.kotlin.data.server.Movie
-import com.movies.domain.PopularMovie
+import com.movies.domain.Movie
 
 interface SearchContract {
     interface View{
-        fun showMovies(movies: List<PopularMovie>)
+        fun showMovies(movies: List<Movie>)
         fun showProgress(isVisible: Boolean)
         fun showInputs(inputs:List<String>)
     }

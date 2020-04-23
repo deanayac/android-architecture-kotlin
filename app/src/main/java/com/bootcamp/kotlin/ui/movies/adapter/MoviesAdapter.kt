@@ -7,14 +7,15 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.bootcamp.kotlin.R
-import com.movies.domain.PopularMovie
+import com.movies.domain.Movie
 import kotlinx.android.synthetic.main.view_movie.view.*
 import kotlin.properties.Delegates
 
-class MoviesAdapter(private val listener: (PopularMovie) -> Unit): RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
+class MoviesAdapter(private val listener: (Movie) -> Unit) :
+    RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
 
-    var movies: List<PopularMovie> by Delegates.observable(emptyList()) { _, old, new ->
-        DiffUtil.calculateDiff(object: DiffUtil.Callback() {
+    var movies: List<Movie> by Delegates.observable(emptyList()) { _, old, new ->
+        DiffUtil.calculateDiff(object : DiffUtil.Callback() {
             override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
                 return old[oldItemPosition].id == new[newItemPosition].id
             }
@@ -44,8 +45,8 @@ class MoviesAdapter(private val listener: (PopularMovie) -> Unit): RecyclerView.
         }
     }
 
-    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        fun bind(movie: PopularMovie) {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        fun bind(movie: Movie) {
             itemView.posterImageView.load("https://image.tmdb.org/t/p/w185/${movie.posterPath}")
         }
     }

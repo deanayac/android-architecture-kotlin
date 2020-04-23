@@ -15,7 +15,7 @@ interface MovieDAO {
     @Query("SELECT COUNT(id) FROM Movie")
     fun movieCount(): Int
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMovies(movies: List<Movie>)
 
     @Update

@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.forEach
 import com.bootcamp.kotlin.R
 import com.bootcamp.kotlin.databinding.ActivityMainBinding
-import com.bootcamp.kotlin.ui.favorites.FavoriteFragment
 import com.bootcamp.kotlin.ui.home.HomeFragment
 import com.bootcamp.kotlin.ui.moviedetail.MovieDetailActivity
 import com.bootcamp.kotlin.ui.search.SearchFragment

@@ -1,15 +1,15 @@
 package com.bootcamp.kotlin.ui.moviedetail
 
 import com.bootcamp.kotlin.R
-import com.bootcamp.kotlin.data.repositories.MoviesRepository
 import com.bootcamp.kotlin.ui.common.Scope
-import com.movies.domain.Movie
+import com.bootcamp.kotlin.util.AndroidHelper
 import com.movies.data.common.Resource
 import com.movies.data.common.Status.ERROR
 import com.movies.data.common.Status.SUCCESS
-import com.bootcamp.kotlin.util.AndroidHelper
 import com.movies.data.repository.MovieImageDetailRepository
+import com.movies.domain.Movie
 import com.movies.domain.MovieImages
+import com.movies.interactor.GetMovieDetail
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -17,7 +17,7 @@ import timber.log.Timber
 
 class MovieDetailPresenter(
     private val view: MovieDetailContract.View?,
-    private val moviesRepository: MoviesRepository,
+    private val getMovieDetail: GetMovieDetail,
     private val movieImageDetailRepository: MovieImageDetailRepository
 ) : MovieDetailContract.Presenter, Scope by Scope.Impl() {
 
@@ -25,7 +25,7 @@ class MovieDetailPresenter(
         launch {
             view?.showProgress()
             val movie = async(Dispatchers.IO) {
-                moviesRepository.movie(movieId)
+                getMovieDetail.invoke(movieId)
             }
             val movieImage = async(Dispatchers.IO) {
                 movieImageDetailRepository.getMovieImageDetail(movieId)
