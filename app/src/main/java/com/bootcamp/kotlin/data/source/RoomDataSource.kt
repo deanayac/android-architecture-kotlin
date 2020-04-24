@@ -25,7 +25,7 @@ class RoomDataSource : DataBaseDataSource {
         movies
     }
 
-    override suspend fun moviesCount(): Int = withContext(Dispatchers.IO) {
+    override suspend fun isEmpty(): Boolean = withContext(Dispatchers.IO) {
         var moviesCount = 0
 
         ApplicationProvider.listen { application ->
@@ -33,7 +33,7 @@ class RoomDataSource : DataBaseDataSource {
             moviesCount = database.movieDao().movieCount()
         }
 
-        moviesCount
+        moviesCount <= 0
     }
 
     override suspend fun saveMovies(movies: List<Movie>) = withContext(Dispatchers.IO) {

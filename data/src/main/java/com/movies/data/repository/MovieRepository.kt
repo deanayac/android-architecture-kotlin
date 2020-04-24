@@ -9,7 +9,7 @@ import com.movies.domain.MovieImages
 interface MovieRepository {
     suspend fun popularMovies(): List<Movie>
     suspend fun searchMovies(description:String): Resource<List<Movie>>
-    suspend fun getMovieImage(id: Int) : Resource<MovieImages>
+    suspend fun getMovieImages(id: Int) : Resource<MovieImages>
     suspend fun favoriteMovies(): Resource<List<FavoriteMovie>>
     suspend fun movieDetail(movieId: Int): Resource<Movie>
 }

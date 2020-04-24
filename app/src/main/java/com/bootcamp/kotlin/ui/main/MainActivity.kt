@@ -1,5 +1,6 @@
 package com.bootcamp.kotlin.ui.main
 
+import FavoriteFragment
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.forEach
@@ -8,7 +9,6 @@ import com.bootcamp.kotlin.databinding.ActivityMainBinding
 import com.bootcamp.kotlin.ui.home.HomeFragment
 import com.bootcamp.kotlin.ui.moviedetail.MovieDetailActivity
 import com.bootcamp.kotlin.ui.search.SearchFragment
-
 import com.bootcamp.kotlin.util.startActivity
 
 private const val MENU_ITEM = "menu_item"
@@ -16,8 +16,7 @@ private const val MENU_ITEM = "menu_item"
 class MainActivity : AppCompatActivity(),
     HomeFragment.Listener,
     FavoriteFragment.Listener,
-    SearchFragment.Listener
-{
+    SearchFragment.Listener {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -28,12 +27,10 @@ class MainActivity : AppCompatActivity(),
 
         setupBottomNavigationView()
 
-        if (savedInstanceState != null) {
-            val menuSelected = savedInstanceState.getInt(MENU_ITEM, 0)
+        val menuSelected = savedInstanceState?.getInt(MENU_ITEM, 0) ?: 0
 
-            if (menuSelected > 0) {
-                binding.bottomNavigationView.selectedItemId = menuSelected
-            }
+        if (menuSelected > 0) {
+            binding.bottomNavigationView.selectedItemId = menuSelected
         }
     }
 

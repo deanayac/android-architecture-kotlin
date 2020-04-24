@@ -42,9 +42,7 @@ abstract class AppDatabase : RoomDatabase() {
             override fun onOpen(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
                 CoroutineScope(Dispatchers.IO).launch {
-                    INSTANCE?.let { appDataBase ->
-                        appDataBase.movieDao().deleteAll()
-                    }
+                    INSTANCE?.movieDao()?.deleteAll()
                 }
             }
         }

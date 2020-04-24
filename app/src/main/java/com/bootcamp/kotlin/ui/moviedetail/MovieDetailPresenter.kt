@@ -6,10 +6,10 @@ import com.bootcamp.kotlin.util.AndroidHelper
 import com.movies.data.common.Resource
 import com.movies.data.common.Status.ERROR
 import com.movies.data.common.Status.SUCCESS
-import com.movies.data.repository.MovieImageDetailRepository
 import com.movies.domain.Movie
 import com.movies.domain.MovieImages
 import com.movies.interactor.GetMovieDetail
+import com.movies.interactor.GetMovieDetailImages
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -18,7 +18,7 @@ import timber.log.Timber
 class MovieDetailPresenter(
     private val view: MovieDetailContract.View?,
     private val getMovieDetail: GetMovieDetail,
-    private val movieImageDetailRepository: MovieImageDetailRepository
+    private val getMovieDetailImages: GetMovieDetailImages
 ) : MovieDetailContract.Presenter, Scope by Scope.Impl() {
 
     override fun loadData(movieId: Int) {
@@ -28,7 +28,7 @@ class MovieDetailPresenter(
                 getMovieDetail.invoke(movieId)
             }
             val movieImage = async(Dispatchers.IO) {
-                movieImageDetailRepository.getMovieImageDetail(movieId)
+                getMovieDetailImages.invoke(movieId)
             }
             showMovieDetail(movie.await())
             showMovieImages(movieImage.await())

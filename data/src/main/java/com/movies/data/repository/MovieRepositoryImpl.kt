@@ -14,7 +14,7 @@ class MovieRepositoryImpl(
 ) : MovieRepository {
 
     override suspend fun popularMovies(): List<Movie> {
-        if (dataBaseDataSource.moviesCount() == 0) {
+        if (dataBaseDataSource.isEmpty()) {
             val movies = remoteDataSource.listPopularMovies()
             movies.data?.let {
                 dataBaseDataSource.saveMovies(it)
@@ -33,7 +33,7 @@ class MovieRepositoryImpl(
         return remoteDataSource.movieDetail(movieId)
     }
 
-    override suspend fun getMovieImage(id: Int): Resource<MovieImages> {
+    override suspend fun getMovieImages(id: Int): Resource<MovieImages> {
         return remoteDataSource.getMovieImage(id)
     }
 

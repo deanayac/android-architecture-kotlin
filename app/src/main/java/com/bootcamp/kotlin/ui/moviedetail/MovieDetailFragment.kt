@@ -18,11 +18,11 @@ import com.bootcamp.kotlin.databinding.FragmentMovieDetailBinding
 import com.bootcamp.kotlin.databinding.ViewProgressBarBinding
 import com.bootcamp.kotlin.util.showMessage
 import com.google.android.material.appbar.AppBarLayout
-import com.movies.data.repository.MovieImageDetailRepositoryImpl
 import com.movies.data.repository.MovieRepositoryImpl
 import com.movies.domain.Movie
 import com.movies.domain.MovieImages
 import com.movies.interactor.GetMovieDetail
+import com.movies.interactor.GetMovieDetailImages
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
 
 const val DEFAULT_MOVIE_ID = 0
@@ -96,7 +96,12 @@ class MovieDetailFragment : Fragment(),
                 )
             ),
 
-            MovieImageDetailRepositoryImpl(RetrofitDataSource(ApiClient.buildService()))
+            GetMovieDetailImages(
+                MovieRepositoryImpl(
+                    RoomDataSource(),
+                    RetrofitDataSource(ApiClient.buildService())
+                )
+            )
         )
         presenter?.onCreateScope()
         presenter?.loadData(movieId)
