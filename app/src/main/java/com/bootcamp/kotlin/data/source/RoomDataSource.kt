@@ -25,6 +25,16 @@ class RoomDataSource : DataBaseDataSource {
         movies
     }
 
+    override suspend fun moviesCount(): Int = withContext(Dispatchers.IO) {
+        var moviesCount = 0
+
+        ApplicationProvider.listen { application ->
+            val database = AppDatabase.getInstance(application)
+            moviesCount = database.movieDao().movieCount()
+        }
+
+        moviesCount
+    }
 
     override suspend fun saveMovies(movies: List<Movie>) = withContext(Dispatchers.IO) {
         ApplicationProvider.listen { application ->

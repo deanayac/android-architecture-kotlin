@@ -8,4 +8,5 @@ interface DataBaseDataSource {
     suspend fun saveMovies(movies: List<Movie>)
     suspend fun insertInputSearch(inputSearch: InputSearch)
     suspend fun getAllInputSearch():List<InputSearch>?
+    suspend fun moviesCount(): Int
 }

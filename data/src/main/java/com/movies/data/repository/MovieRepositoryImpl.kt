@@ -14,10 +14,13 @@ class MovieRepositoryImpl(
 ) : MovieRepository {
 
     override suspend fun popularMovies(): List<Movie> {
-        val movies = remoteDataSource.listPopularMovies()
-        movies.data?.let {
-            dataBaseDataSource.saveMovies(it)
+        if (dataBaseDataSource.moviesCount() == 0) {
+            val movies = remoteDataSource.listPopularMovies()
+            movies.data?.let {
+                dataBaseDataSource.saveMovies(it)
+            }
         }
+
         return dataBaseDataSource.popularMovies()
     }
 
