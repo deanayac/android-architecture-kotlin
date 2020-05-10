@@ -73,6 +73,13 @@ dependencies {
     implementation "androidx.room:room-ktx:2.2.5"
     testImplementation "androidx.room:room-testing:2.2.5"
 
+    // Koin for Android
+    implementation "org.koin:koin-android:$koin_version"
+    // or Koin for Lifecycle scoping
+    implementation "org.koin:koin-android-scope:$koin_version"
+    // or Koin for Android Architecture ViewModel
+    implementation "org.koin:koin-android-viewmodel:$koin_version"
+
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'

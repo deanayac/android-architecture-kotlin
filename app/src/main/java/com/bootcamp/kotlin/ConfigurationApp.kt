@@ -1,8 +1,6 @@
 package com.bootcamp.kotlin
 
 import android.app.Application
-import androidx.room.Room
-import com.bootcamp.kotlin.data.database.AppDatabase
 import com.bootcamp.kotlin.util.AndroidHelper
 import com.bootcamp.kotlin.util.CrashlyticsTree
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -14,7 +12,7 @@ class ConfigurationApp : Application() {
         super.onCreate()
         initTimberWithFirebaseCrashlytics()
         AndroidHelper.init(applicationContext)
-
+        initDI()
     }
 
     private fun initTimberWithFirebaseCrashlytics() {
