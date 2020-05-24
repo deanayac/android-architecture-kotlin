@@ -3,14 +3,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bootcamp.kotlin.ui.common.Event
 import com.bootcamp.kotlin.ui.common.Scope
+import com.bootcamp.kotlin.ui.common.ScopeViewModel
 import com.bootcamp.kotlin.ui.favorites.FavoriteUiModel
 import com.movies.domain.FavoriteMovie
 import com.movies.interactor.GetFavoriteMovies
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
 class FavoriteViewModel(
+    uiDispatcher: CoroutineDispatcher,
     private val getFavoriteMovies: GetFavoriteMovies
-) : ViewModel(), Scope by Scope.Impl() {
+) : ScopeViewModel(uiDispatcher) {
 
     init {
         createScope()
