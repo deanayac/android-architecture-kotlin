@@ -3,6 +3,7 @@ package com.bootcamp.kotlin.ui.movies
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.bootcamp.kotlin.ui.common.Event
 import com.bootcamp.kotlin.ui.common.Scope
 import com.movies.domain.Movie
 import com.movies.interactor.GetPopularMovies
@@ -26,6 +27,9 @@ class MoviesViewModel(
             return _model
         }
 
+    private val _navigation = MutableLiveData<Event<Movie>>()
+    val navigation: LiveData<Event<Movie>> = _navigation
+
     private fun loadMovies() {
         launch {
             _model.value = MovieUiModel.Loading
@@ -34,7 +38,7 @@ class MoviesViewModel(
     }
 
     fun onMovieClicked(movie: Movie) {
-        _model.value = MovieUiModel.Navigation(movie)
+        _navigation.value = Event(movie)
     }
 
     override fun onCleared() {

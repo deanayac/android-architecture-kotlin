@@ -31,7 +31,6 @@ class HomeFragment : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance() = HomeFragment()
-
     }
 
     interface Listener {
@@ -70,6 +69,12 @@ class HomeFragment : Fragment() {
         binding.moviesRecyclerView.adapter = adapter
 
         viewModel.model.observe(this, Observer(::updateUi))
+
+        viewModel.navigation.observe(this, Observer {
+            it.getContentIfNotHandled()?.let {movie ->
+                listener?.navigateTo(movie.id)
+            }
+        })
     }
 
     private fun updateUi(model: MovieUiModel) {
@@ -78,9 +83,6 @@ class HomeFragment : Fragment() {
         when (model) {
             is Content -> {
                 adapter.movies = model.movies
-            }
-            is Navigation -> {
-                listener?.navigateTo(model.movie.id)
             }
         }
     }

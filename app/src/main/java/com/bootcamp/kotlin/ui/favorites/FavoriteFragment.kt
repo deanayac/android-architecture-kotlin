@@ -59,6 +59,11 @@ class FavoriteFragment : Fragment() {
         binding.favoriteMoviesRecyclerView.adapter = adapter
 
         viewModel.model.observe(this, Observer(::updateUi))
+        viewModel.navigation.observe(this, Observer {
+            it.getContentIfNotHandled()?.let { favoriteMovie ->
+                listener?.navigateTo(favoriteMovie.id)
+            }
+        })
     }
 
     private fun updateUi(model: FavoriteUiModel) {
@@ -67,9 +72,6 @@ class FavoriteFragment : Fragment() {
         when (model) {
             is Content -> {
                 adapter.moviesList = model.favoriteMovies
-            }
-            is Navigation -> {
-                listener?.navigateTo(model.favoriteMovie.id)
             }
         }
     }

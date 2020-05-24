@@ -1,6 +1,7 @@
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.bootcamp.kotlin.ui.common.Event
 import com.bootcamp.kotlin.ui.common.Scope
 import com.bootcamp.kotlin.ui.favorites.FavoriteUiModel
 import com.movies.domain.FavoriteMovie
@@ -25,6 +26,9 @@ class FavoriteViewModel(
             return _model
         }
 
+    private val _navigation = MutableLiveData<Event<FavoriteMovie>>()
+    val navigation: LiveData<Event<FavoriteMovie>> = _navigation
+
     private fun getFavoriteMovies() {
         launch {
             _model.value = FavoriteUiModel.Loading
@@ -34,7 +38,7 @@ class FavoriteViewModel(
     }
 
     fun onMovieClicked(favoriteMovie: FavoriteMovie) {
-        _model.value = FavoriteUiModel.Navigation(favoriteMovie)
+        _navigation.value = Event(favoriteMovie)
     }
 
     override fun onCleared() {
