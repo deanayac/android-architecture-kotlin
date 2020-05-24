@@ -1,10 +1,10 @@
 package com.bootcamp.kotlin.ui.search
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.bootcamp.kotlin.ui.common.ScopedViewModel
 import com.movies.data.common.Status
-import com.movies.domain.InputSearch
 import com.movies.domain.Movie
 import com.movies.interactor.GetSearchAutocomplete
 import com.movies.interactor.GetSearchMovies
@@ -20,7 +20,6 @@ class SearchViewModel(
 
     sealed class UiModel {
         object Loading : UiModel()
-        data class Content(val movies: List<Movie>) : UiModel()
         data class SearchMovie(val movies: List<Movie>) : UiModel()
         data class Autocomplete(val inputs: List<String>) : UiModel()
     }
@@ -40,11 +39,11 @@ class SearchViewModel(
         _model.value = UiModel.Autocomplete(emptyList())
     }
 
-    private fun searchMovies(description: String){
+     fun searchMovies(description: String){
         launch {
             _model.value = UiModel.Loading
             val movies = getSearchMovies.invoke(description)
-            when(movies){
+            when(movies.status){
                 Status.SUCCESS -> {
                     _model.value = UiModel.SearchMovie(filterMovies(movies.data ?: fail(ERROR_MOVIES)))
                 }
@@ -55,9 +54,8 @@ class SearchViewModel(
         }
     }
 
-    private fun getInputs(){
+     fun getInputs(){
         launch {
-            _model.value = UiModel.Loading
             _model.value = getSearchAutocomplete.invoke()?.let { UiModel.Autocomplete(it.map { v -> v.description }) }
         }
     }

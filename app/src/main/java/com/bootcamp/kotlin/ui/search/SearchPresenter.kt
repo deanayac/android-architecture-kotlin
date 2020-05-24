@@ -18,6 +18,10 @@ class SearchPresenter(
         private const val ERROR_MOVIES = "Fail List Movies"
     }
 
+    init {
+        onCreateScope()
+    }
+
     override fun onCreateScope() {
         createScope()
     }

@@ -16,7 +16,7 @@ object ApiClient {
         return interceptor
     }
 
-    fun buildService(): Retrofit {
+    private fun retrofit(): Retrofit {
         val httpClient = OkHttpClient.Builder().addInterceptor(addInterceptor())
             .connectTimeout(Constants.connectTimeout, TimeUnit.MINUTES)
             .readTimeout(Constants.readTimeOut, TimeUnit.SECONDS)
@@ -29,4 +29,6 @@ object ApiClient {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
+
+    val movieDbServices: MovieDbServices by lazy { retrofit().create(MovieDbServices::class.java) }
 }
