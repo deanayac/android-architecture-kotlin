@@ -74,17 +74,28 @@ val dataModule = module {
 
 private val scopesModule = module {
     scope(named<HomeFragment>()) {
-        viewModel { MoviesViewModel(getPopularMovies = get()) }
+        viewModel {
+            MoviesViewModel(
+                uiDispatcher = get(),
+                getPopularMovies = get()
+            )
+        }
         scoped { GetPopularMovies(movieRepository = get()) }
     }
     scope(named<FavoriteFragment>()) {
-        viewModel { FavoriteViewModel(getFavoriteMovies = get()) }
+        viewModel {
+            FavoriteViewModel(
+                uiDispatcher = get(),
+                getFavoriteMovies = get()
+            )
+        }
         scoped { GetFavoriteMovies(movieRepository = get()) }
     }
 
     scope(named<MovieDetailFragment>()) {
         viewModel { (movieId: Int) ->
             MovieDetailViewModel(
+                uiDispatcher = get(),
                 getMovieDetail = get(),
                 getMovieDetailImages = get(),
                 movieId = movieId

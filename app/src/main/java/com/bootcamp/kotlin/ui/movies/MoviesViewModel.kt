@@ -5,13 +5,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bootcamp.kotlin.ui.common.Event
 import com.bootcamp.kotlin.ui.common.Scope
+import com.bootcamp.kotlin.ui.common.ScopeViewModel
 import com.movies.domain.Movie
 import com.movies.interactor.GetPopularMovies
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
 class MoviesViewModel(
+    uiDispatcher: CoroutineDispatcher,
     private val getPopularMovies: GetPopularMovies
-) : ViewModel(), Scope by Scope.Impl() {
+) : ScopeViewModel(uiDispatcher) {
 
     init {
         createScope()
