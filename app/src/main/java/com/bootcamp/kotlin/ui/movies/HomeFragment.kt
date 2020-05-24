@@ -19,13 +19,15 @@ import com.bootcamp.kotlin.ui.movies.adapter.MoviesAdapter
 import com.movies.data.repository.MovieRepositoryImpl
 import com.movies.interactor.GetPopularMovies
 import kotlinx.android.synthetic.main.view_progress_bar.*
+import org.koin.android.scope.lifecycleScope
+import org.koin.android.viewmodel.scope.viewModel
 
 class HomeFragment : Fragment() {
 
     private var listener: Listener? = null
     private lateinit var binding: FragmentHomeBinding
     private lateinit var loadingBinding: ViewProgressBarBinding
-    private lateinit var viewModel: MoviesViewModel
+    private val viewModel: MoviesViewModel by lifecycleScope.viewModel(this)
     private lateinit var adapter: MoviesAdapter
 
     companion object {
@@ -48,16 +50,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel = ViewModelProviders.of(
-            this, MoviesViewModelFactory(
-                GetPopularMovies(
-                    MovieRepositoryImpl(
-                        RoomDataSource(), RetrofitDataSource(ApiClient.buildService())
-                    )
-                )
-            )
-        )[MoviesViewModel::class.java]
 
         binding.moviesRecyclerView.addItemDecoration(
             PosterItemDecorator(

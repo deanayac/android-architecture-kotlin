@@ -27,6 +27,9 @@ import com.movies.domain.MovieImages
 import com.movies.interactor.GetMovieDetail
 import com.movies.interactor.GetMovieDetailImages
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
+import org.koin.android.scope.lifecycleScope
+import org.koin.android.viewmodel.scope.viewModel
+import org.koin.core.parameter.parametersOf
 
 const val DEFAULT_MOVIE_ID = 0
 
@@ -38,7 +41,9 @@ class MovieDetailFragment : Fragment(),
     private lateinit var binding: FragmentMovieDetailBinding
     private lateinit var loadingBinding: ViewProgressBarBinding
     private lateinit var adapter: MovieDetailAdapter
-    private lateinit var viewModel: MovieDetailViewModel
+    private val viewModel: MovieDetailViewModel by lifecycleScope.viewModel(this) {
+        parametersOf(movieId)
+    }
 
     companion object {
         @JvmStatic
@@ -83,17 +88,6 @@ class MovieDetailFragment : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
-
-        val movieRepository = MovieRepositoryImpl(
-            RoomDataSource(), RetrofitDataSource(ApiClient.buildService())
-        )
-        viewModel = ViewModelProviders.of(
-            this, MovieDetailViewModelFactory(
-                GetMovieDetail(movieRepository),
-                GetMovieDetailImages(movieRepository),
-                movieId
-            )
-        )[MovieDetailViewModel::class.java]
 
         adapter = MovieDetailAdapter()
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)

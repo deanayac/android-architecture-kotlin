@@ -19,13 +19,15 @@ import com.bootcamp.kotlin.ui.favorites.FavoriteViewModelFactory
 import com.movies.data.repository.MovieRepositoryImpl
 import com.movies.interactor.GetFavoriteMovies
 import kotlinx.android.synthetic.main.view_progress_bar.*
+import org.koin.android.scope.lifecycleScope
+import org.koin.android.viewmodel.scope.viewModel
 
 class FavoriteFragment : Fragment() {
 
     private lateinit var binding: FragmentFavoriteBinding
     private lateinit var loadingBinding: ViewProgressBarBinding
     private var listener: Listener? = null
-    private lateinit var viewModel: FavoriteViewModel
+    private val viewModel: FavoriteViewModel by lifecycleScope.viewModel(this)
     private lateinit var adapter: FavoriteAdapter
 
     interface Listener {
@@ -43,17 +45,6 @@ class FavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel = ViewModelProviders.of(
-            this, FavoriteViewModelFactory(
-                GetFavoriteMovies(
-                    MovieRepositoryImpl(
-                        RoomDataSource(), RetrofitDataSource(ApiClient.buildService())
-                    )
-                )
-            )
-        )[FavoriteViewModel::class.java]
-
         adapter = FavoriteAdapter(viewModel::onMovieClicked)
         binding.favoriteMoviesRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.favoriteMoviesRecyclerView.adapter = adapter

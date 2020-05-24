@@ -9,25 +9,19 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import com.bootcamp.kotlin.data.server.ApiClient
-import com.bootcamp.kotlin.data.source.RetrofitDataSource
-import com.bootcamp.kotlin.data.source.RoomDataSource
 import com.bootcamp.kotlin.databinding.FragmentSearchBinding
 import com.bootcamp.kotlin.databinding.ViewProgressBarBinding
 import com.bootcamp.kotlin.ui.search.adapter.SearchAdapter
-import com.movies.data.repository.InputSearchRepositoryImpl
-import com.movies.data.repository.MovieRepositoryImpl
 import com.movies.domain.Movie
-import com.movies.interactor.GetSearchAutocomplete
-import com.movies.interactor.GetSearchMovies
-
+import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
 class SearchFragment : Fragment(), SearchContract.View {
 
     private lateinit var binding: FragmentSearchBinding
     private lateinit var loadingBinding: ViewProgressBarBinding
     private var listener: Listener? = null
-    private var presenter: SearchContract.Presenter? = null
+    private val presenter: SearchContract.Presenter? by inject { parametersOf(this) }
 
     private val adapter by lazy {
         SearchAdapter { listener?.navigateTo(it.id) }
@@ -35,6 +29,7 @@ class SearchFragment : Fragment(), SearchContract.View {
 
     companion object {
         const val START_SEARCH = 3
+
         @JvmStatic
         fun newInstance(): SearchFragment = SearchFragment()
     }
@@ -50,22 +45,6 @@ class SearchFragment : Fragment(), SearchContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        presenter = SearchPresenter(
-            view = this, getSearchAutocomplete =
-            GetSearchAutocomplete(
-                inputSearchRepository = InputSearchRepositoryImpl
-                    (localDataSource = RoomDataSource())
-            ),
-            getSearchMovies = GetSearchMovies(
-                MovieRepositoryImpl(
-                    dataBaseDataSource = RoomDataSource(),
-                    remoteDataSource = RetrofitDataSource(ApiClient.buildService())
-                )
-            )
-        )
-
-        presenter?.onCreateScope()
 
         binding.searchEditText.doOnTextChanged { text, _, _, count ->
             if (count >= START_SEARCH) {
@@ -103,10 +82,5 @@ class SearchFragment : Fragment(), SearchContract.View {
         if (context is Listener) {
             listener = context
         }
-    }
-
-    override fun onDestroyView() {
-        presenter?.onDestroyScope()
-        super.onDestroyView()
     }
 }
