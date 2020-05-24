@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bootcamp.kotlin.R
 import com.bootcamp.kotlin.data.server.ApiClient
@@ -16,6 +18,7 @@ import com.bootcamp.kotlin.data.source.RetrofitDataSource
 import com.bootcamp.kotlin.data.source.RoomDataSource
 import com.bootcamp.kotlin.databinding.FragmentMovieDetailBinding
 import com.bootcamp.kotlin.databinding.ViewProgressBarBinding
+import com.bootcamp.kotlin.ui.moviedetail.MovieDetailUiModel.*
 import com.bootcamp.kotlin.util.showMessage
 import com.google.android.material.appbar.AppBarLayout
 import com.movies.data.repository.MovieRepositoryImpl
@@ -28,15 +31,14 @@ import kotlinx.android.synthetic.main.fragment_movie_detail.*
 const val DEFAULT_MOVIE_ID = 0
 
 class MovieDetailFragment : Fragment(),
-    MovieDetailContract.View,
     AppBarLayout.OnOffsetChangedListener {
     private var movieId: Int = 0
     private var listener: ActionListener? = null
-    private var presenter: MovieDetailPresenter? = null
     private var movieTitle = ""
     private lateinit var binding: FragmentMovieDetailBinding
     private lateinit var loadingBinding: ViewProgressBarBinding
     private lateinit var adapter: MovieDetailAdapter
+    private lateinit var viewModel: MovieDetailViewModel
 
     companion object {
         @JvmStatic
@@ -82,29 +84,40 @@ class MovieDetailFragment : Fragment(),
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
 
+        val movieRepository = MovieRepositoryImpl(
+            RoomDataSource(), RetrofitDataSource(ApiClient.buildService())
+        )
+        viewModel = ViewModelProviders.of(
+            this, MovieDetailViewModelFactory(
+                GetMovieDetail(movieRepository),
+                GetMovieDetailImages(movieRepository),
+                movieId
+            )
+        )[MovieDetailViewModel::class.java]
+
         adapter = MovieDetailAdapter()
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         recyclerViewBrackgrounds.layoutManager = layoutManager
         recyclerViewBrackgrounds.adapter = adapter
 
-        presenter = MovieDetailPresenter(
-            this,
-            GetMovieDetail(
-                MovieRepositoryImpl(
-                    RoomDataSource(),
-                    RetrofitDataSource(ApiClient.buildService())
-                )
-            ),
+        viewModel.model.observe(this, Observer(::updateUi))
+    }
 
-            GetMovieDetailImages(
-                MovieRepositoryImpl(
-                    RoomDataSource(),
-                    RetrofitDataSource(ApiClient.buildService())
-                )
-            )
-        )
-        presenter?.onCreateScope()
-        presenter?.loadData(movieId)
+    private fun updateUi(model: MovieDetailUiModel) {
+        loadingBinding.progress.visibility =
+            if (model is Loading) View.VISIBLE else View.GONE
+
+        when (model) {
+            is Header -> {
+                showMovieDetail(model.movie)
+            }
+            is Posters -> {
+                showMovieImages(model.moviesImages)
+            }
+            is Message -> {
+                context?.showMessage(model.message)
+            }
+        }
     }
 
     private fun addHomeAsUpIndicator(withBackground: Boolean = true) {
@@ -134,14 +147,6 @@ class MovieDetailFragment : Fragment(),
         }
     }
 
-    override fun showProgress() {
-        loadingBinding.progress.visibility = View.VISIBLE
-    }
-
-    override fun hideProgress() {
-        loadingBinding.progress.visibility = View.GONE
-    }
-
     override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
         var arrowWithBackground = true
         val alphaValueLimit = 0.35f
@@ -167,22 +172,13 @@ class MovieDetailFragment : Fragment(),
         binding.movieHeaderView.alpha = alphaValue
     }
 
-    override fun showMessage(message: String) {
-        context?.showMessage(message)
-    }
-
-    override fun onDestroyView() {
-        presenter?.onDestroyScope()
-        super.onDestroyView()
-    }
-
-    override fun showMovieDetail(movie: Movie) {
+    private fun showMovieDetail(movie: Movie) {
         movieTitle = movie.title
         binding.movieHeaderView.setData(movie)
         binding.expandableTextViewDescription.setData(movie.overview)
     }
 
-    override fun showMovieImages(moviesImages: MovieImages) {
+    private fun showMovieImages(moviesImages: MovieImages) {
         adapter.movieImages = moviesImages.backdrops
     }
 }

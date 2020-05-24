@@ -1,6 +1,5 @@
 package com.bootcamp.kotlin.data.server
 
-import com.bootcamp.kotlin.ui.movies.MoviesBase
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

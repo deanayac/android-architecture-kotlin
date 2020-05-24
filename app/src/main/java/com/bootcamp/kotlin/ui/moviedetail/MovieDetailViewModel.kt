@@ -1,5 +1,8 @@
 package com.bootcamp.kotlin.ui.moviedetail
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.bootcamp.kotlin.R
 import com.bootcamp.kotlin.ui.common.Scope
 import com.bootcamp.kotlin.util.AndroidHelper
@@ -15,21 +18,38 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class MovieDetailPresenter(
-    private val view: MovieDetailContract.View?,
+class MovieDetailViewModel(
     private val getMovieDetail: GetMovieDetail,
-    private val getMovieDetailImages: GetMovieDetailImages
-) : MovieDetailContract.Presenter, Scope by Scope.Impl() {
+    private val getMovieDetailImages: GetMovieDetailImages,
+    private val movieId: Int
+) : ViewModel(), Scope by Scope.Impl() {
 
-    override fun loadData(movieId: Int) {
+    init {
+        createScope()
+    }
+
+    private val _model = MutableLiveData<MovieDetailUiModel>()
+    val model: LiveData<MovieDetailUiModel>
+        get() {
+            if (_model.value == null) {
+                loadData(movieId)
+            }
+
+            return _model
+        }
+
+    private fun loadData(movieId: Int) {
         launch {
-            view?.showProgress()
+            _model.value = MovieDetailUiModel.Loading
+
             val movie = async(Dispatchers.IO) {
                 getMovieDetail.invoke(movieId)
             }
+
             val movieImage = async(Dispatchers.IO) {
                 getMovieDetailImages.invoke(movieId)
             }
+
             showMovieDetail(movie.await())
             showMovieImages(movieImage.await())
         }
@@ -39,43 +59,40 @@ class MovieDetailPresenter(
         when (movie.status) {
             SUCCESS -> {
                 movie.data?.let {
-                    view?.showMovieDetail(it)
+                    _model.value = MovieDetailUiModel.Header(it)
                 } ?: run {
-                    view?.showMessage(AndroidHelper.getString(R.string.error_show_information))
+                    _model.value =
+                        MovieDetailUiModel.Message(AndroidHelper.getString(R.string.error_show_information))
                 }
             }
             ERROR -> {
-                view?.showMessage(AndroidHelper.getString(R.string.error_load_data))
+                _model.value =
+                    MovieDetailUiModel.Message(AndroidHelper.getString(R.string.error_load_data))
                 Timber.e(movie.message)
             }
         }
-
-        view?.hideProgress()
     }
 
     private fun showMovieImages(movieImages: Resource<MovieImages>) {
         when (movieImages.status) {
             SUCCESS -> {
                 movieImages.data?.let {
-                    view?.showMovieImages(it)
+                    _model.value = MovieDetailUiModel.Posters(it)
                 } ?: run {
-                    view?.showMessage(AndroidHelper.getString(R.string.error_show_information))
+                    _model.value =
+                        MovieDetailUiModel.Message(AndroidHelper.getString(R.string.error_show_information))
                 }
             }
             ERROR -> {
-                view?.showMessage(AndroidHelper.getString(R.string.error_load_data))
+                _model.value =
+                    MovieDetailUiModel.Message(AndroidHelper.getString(R.string.error_load_data))
                 Timber.e(movieImages.message)
             }
         }
-
-        view?.hideProgress()
     }
 
-    override fun onDestroyScope() {
+    override fun onCleared() {
         destroyScope()
-    }
-
-    override fun onCreateScope() {
-        createScope()
+        super.onCleared()
     }
 }
