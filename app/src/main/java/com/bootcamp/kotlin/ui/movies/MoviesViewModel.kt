@@ -16,14 +16,8 @@ class MoviesViewModel(
         createScope()
     }
 
-    sealed class UiModel {
-        object Loading : UiModel()
-        class Content(val movies: List<Movie>) : UiModel()
-        class Navigation(val movie: Movie) : UiModel()
-    }
-
-    private val _model = MutableLiveData<UiModel>()
-    val model: LiveData<UiModel>
+    private val _model = MutableLiveData<MovieUiModel>()
+    val model: LiveData<MovieUiModel>
         get() {
             if (_model.value == null) {
                 loadMovies()
@@ -34,13 +28,13 @@ class MoviesViewModel(
 
     private fun loadMovies() {
         launch {
-            _model.value = UiModel.Loading
-            _model.value = UiModel.Content(getPopularMovies.invoke())
+            _model.value = MovieUiModel.Loading
+            _model.value = MovieUiModel.Content(getPopularMovies.invoke())
         }
     }
 
     fun onMovieClicked(movie: Movie) {
-        _model.value = UiModel.Navigation(movie)
+        _model.value = MovieUiModel.Navigation(movie)
     }
 
     override fun onCleared() {

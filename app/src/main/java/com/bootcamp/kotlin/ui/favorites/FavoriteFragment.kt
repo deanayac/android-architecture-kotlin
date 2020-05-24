@@ -28,7 +28,7 @@ class FavoriteFragment : Fragment(), FavoriteContract.View {
     }
 
     private val presenter by lazy {
-        FavoritePresenter(
+        FavoriteViewModel(
             this,
             GetFavoriteMovies(
                 MovieRepositoryImpl(

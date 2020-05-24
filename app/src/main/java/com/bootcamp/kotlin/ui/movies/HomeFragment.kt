@@ -14,7 +14,7 @@ import com.bootcamp.kotlin.data.source.RoomDataSource
 import com.bootcamp.kotlin.databinding.FragmentHomeBinding
 import com.bootcamp.kotlin.databinding.ViewProgressBarBinding
 import com.bootcamp.kotlin.ui.common.PosterItemDecorator
-import com.bootcamp.kotlin.ui.movies.MoviesViewModel.UiModel.*
+import com.bootcamp.kotlin.ui.movies.MovieUiModel.*
 import com.bootcamp.kotlin.ui.movies.adapter.MoviesAdapter
 import com.movies.data.repository.MovieRepositoryImpl
 import com.movies.interactor.GetPopularMovies
@@ -72,7 +72,7 @@ class HomeFragment : Fragment() {
         viewModel.model.observe(this, Observer(::updateUi))
     }
 
-    private fun updateUi(model: MoviesViewModel.UiModel) {
+    private fun updateUi(model: MovieUiModel) {
         progress.visibility = if (model == Loading) View.VISIBLE else View.GONE
 
         when (model) {

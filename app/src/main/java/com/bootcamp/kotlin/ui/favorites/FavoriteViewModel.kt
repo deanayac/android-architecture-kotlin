@@ -5,7 +5,7 @@ import com.bootcamp.kotlin.util.AndroidHelper
 import com.movies.interactor.GetFavoriteMovies
 import kotlinx.coroutines.launch
 
-class FavoritePresenter(
+class FavoriteViewModel(
     private val favoriteContract: FavoriteContract.View,
     private val getFavoriteMovies: GetFavoriteMovies
 ) : FavoriteContract.Presenter, Scope by Scope.Impl() {
