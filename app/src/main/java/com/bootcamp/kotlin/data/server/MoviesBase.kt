@@ -1,4 +1,4 @@
-package com.bootcamp.kotlin.ui.movies
+package com.bootcamp.kotlin.data.server
 
 import com.bootcamp.kotlin.data.server.Movie
 import com.google.gson.annotations.SerializedName

@@ -2,7 +2,7 @@ package com.bootcamp.kotlin.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import com.bootcamp.kotlin.R
-import com.bootcamp.kotlin.ui.home.HomeFragment
+import com.bootcamp.kotlin.ui.movies.HomeFragment
 import com.bootcamp.kotlin.ui.search.SearchFragment
 
 object OrdersCommandProcessor {
