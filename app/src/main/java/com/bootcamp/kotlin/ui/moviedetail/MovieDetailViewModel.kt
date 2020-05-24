@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bootcamp.kotlin.R
 import com.bootcamp.kotlin.ui.common.Scope
+import com.bootcamp.kotlin.ui.common.ScopeViewModel
 import com.bootcamp.kotlin.util.AndroidHelper
 import com.movies.data.common.Resource
 import com.movies.data.common.Status.ERROR
@@ -13,16 +14,18 @@ import com.movies.domain.Movie
 import com.movies.domain.MovieImages
 import com.movies.interactor.GetMovieDetail
 import com.movies.interactor.GetMovieDetailImages
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class MovieDetailViewModel(
+    uiDispatcher: CoroutineDispatcher,
     private val getMovieDetail: GetMovieDetail,
     private val getMovieDetailImages: GetMovieDetailImages,
     private val movieId: Int
-) : ViewModel(), Scope by Scope.Impl() {
+) : ScopeViewModel(uiDispatcher) {
 
     init {
         createScope()
