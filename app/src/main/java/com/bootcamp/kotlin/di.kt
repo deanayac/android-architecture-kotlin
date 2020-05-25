@@ -12,7 +12,9 @@ import com.bootcamp.kotlin.ui.moviedetail.MovieDetailViewModel
 import com.bootcamp.kotlin.ui.movies.HomeFragment
 import com.bootcamp.kotlin.ui.movies.MoviesViewModel
 import com.bootcamp.kotlin.ui.search.SearchContract
+import com.bootcamp.kotlin.ui.search.SearchFragment
 import com.bootcamp.kotlin.ui.search.SearchPresenter
+import com.bootcamp.kotlin.ui.search.SearchViewModel
 import com.movies.data.repository.InputSearchRepository
 import com.movies.data.repository.InputSearchRepositoryImpl
 import com.movies.data.repository.MovieRepository
@@ -42,6 +44,7 @@ private val appModule = module {
     single { ApiClient.movieDbServices }
     single { AppDatabase.getInstance(get()) }
     single<CoroutineDispatcher> { Dispatchers.Main }
+
     factory<DataBaseDataSource> {
         RoomDataSource(appDatabase = get())
     }
@@ -88,6 +91,7 @@ private val scopesModule = module {
         }
         scoped { GetFavoriteMovies(movieRepository = get()) }
     }
+
     scope(named<MovieDetailFragment>()) {
         viewModel { (movieId: Int) ->
             MovieDetailViewModel(
@@ -101,14 +105,11 @@ private val scopesModule = module {
         scoped { GetMovieDetailImages(movieRepository = get()) }
     }
 
-    factory { GetSearchAutocomplete(inputSearchRepository = get()) }
-    factory { GetSearchMovies(movieRepository = get()) }
-    factory<SearchContract.Presenter> { (view: SearchContract.View) ->
-        SearchPresenter(
-            uiDispatcher = get(),
-            view = view,
-            getSearchAutocomplete = get(),
-            getSearchMovies = get()
-        )
+    scope (named<SearchFragment>()){
+        viewModel { SearchViewModel(get(),get(),get())}
+        scoped { GetSearchAutocomplete(get())}
+        scoped { GetSearchMovies(movieRepository = get())}
     }
+
+
 }

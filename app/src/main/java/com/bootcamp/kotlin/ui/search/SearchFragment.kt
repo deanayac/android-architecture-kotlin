@@ -9,19 +9,21 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.bootcamp.kotlin.databinding.FragmentSearchBinding
 import com.bootcamp.kotlin.databinding.ViewProgressBarBinding
 import com.bootcamp.kotlin.ui.search.adapter.SearchAdapter
 import com.movies.domain.Movie
-import org.koin.android.ext.android.inject
-import org.koin.core.parameter.parametersOf
+import org.koin.android.scope.lifecycleScope
+import org.koin.android.viewmodel.scope.viewModel
 
-class SearchFragment : Fragment(), SearchContract.View {
+class SearchFragment : Fragment(){
 
     private lateinit var binding: FragmentSearchBinding
     private lateinit var loadingBinding: ViewProgressBarBinding
     private var listener: Listener? = null
-    private val presenter: SearchContract.Presenter? by inject { parametersOf(this) }
+
+    private val viewModel: SearchViewModel by lifecycleScope.viewModel(this)
 
     private val adapter by lazy {
         SearchAdapter { listener?.navigateTo(it.id) }
@@ -46,26 +48,23 @@ class SearchFragment : Fragment(), SearchContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.model.observe(this,Observer(::updateUi))
+
         binding.searchEditText.doOnTextChanged { text, _, _, count ->
             if (count >= START_SEARCH) {
-                presenter?.searchMovies(text.toString())
+                viewModel.searchMovies(text.toString())
             } else {
-                presenter?.getInputs()
+                viewModel.getInputs()
             }
-
         }
     }
 
-    override fun showMovies(movies: List<Movie>) {
+     fun showMovies(movies: List<Movie>) {
         binding.moviesRecyclerView.adapter = adapter
         adapter.movies = movies
     }
 
-    override fun showProgress(isVisible: Boolean) {
-        loadingBinding.progress.visibility = if (isVisible) View.VISIBLE else View.GONE
-    }
-
-    override fun showInputs(inputs: List<String>) {
+     fun showInputs(inputs: List<String>) {
         val adapter: ArrayAdapter<String> = ArrayAdapter(
             context!!,
             R.layout.simple_dropdown_item_1line, inputs
@@ -81,6 +80,16 @@ class SearchFragment : Fragment(), SearchContract.View {
         super.onAttach(context)
         if (context is Listener) {
             listener = context
+        }
+    }
+
+    private fun updateUi(model:SearchViewModel.UiModel){
+        loadingBinding.progress.visibility =
+            if (model is SearchViewModel.UiModel.SearchMovie) View.VISIBLE else View.GONE
+
+        when(model){
+            is SearchViewModel.UiModel.SearchMovie -> showMovies(model.movies)
+            is SearchViewModel.UiModel.Autocomplete -> showInputs(model.inputs)
         }
     }
 }
