@@ -2,9 +2,11 @@ apply plugin: 'java-library'
 apply plugin: 'kotlin'
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':domain')
+    implementation project(":domain")
+
     implementation kotlinLibs.values()
     testImplementation testLibs.values()
-
 }
+
+sourceCompatibility = "8"
+targetCompatibility = "8"

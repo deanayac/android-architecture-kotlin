@@ -2,8 +2,6 @@
 
 buildscript {
     ext.kotlin_version = '1.3.50'
-    // Stable Koin Version
-    ext.koin_version = "2.1.5"
 
     repositories {
         maven { url "https://plugins.gradle.org/m2/" }
@@ -15,7 +13,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:3.6.1'
         classpath 'com.google.gms:google-services:4.3.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.0.0-beta03'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.1.1'
         classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.0.0-RC16"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -27,27 +25,40 @@ plugins {
 }
 
 detekt {
-    toolVersion = "[version]"                             // Version of the Detekt CLI that will be used. When unspecified the latest detekt version found will be used. Override to stay on the same version.
+    toolVersion = "[version]"
+    // Version of the Detekt CLI that will be used. When unspecified the latest detekt version found will be used. Override to stay on the same version.
 
-    parallel = false                                      // Builds the AST in parallel. Rules are always executed in parallel. Can lead to speedups in larger projects. `false` by default.
-    config = files("path/to/config.yml")                  // Define the detekt configuration(s) you want to use. Defaults to the default detekt configuration.
-    buildUponDefaultConfig = false                        // Interpret config files as updates to the default config. `false` by default.
-    baseline = file("path/to/baseline.xml")               // Specifying a baseline file. All findings stored in this file in subsequent runs of detekt.
-    disableDefaultRuleSets = false                        // Disables all default detekt rulesets and will only run detekt with custom rules defined in plugins passed in with `detektPlugins` configuration. `false` by default.
-    debug = false                                         // Adds debug output during task execution. `false` by default.
-    ignoreFailures = false                                // If set to `true` the build does not fail when the maxIssues count was reached. Defaults to `false`.
+    parallel = false
+    // Builds the AST in parallel. Rules are always executed in parallel. Can lead to speedups in larger projects. `false` by default.
+    config = files("path/to/config.yml")
+    // Define the detekt configuration(s) you want to use. Defaults to the default detekt configuration.
+    buildUponDefaultConfig = false
+    // Interpret config files as updates to the default config. `false` by default.
+    baseline = file("path/to/baseline.xml")
+    // Specifying a baseline file. All findings stored in this file in subsequent runs of detekt.
+    disableDefaultRuleSets = false
+    // Disables all default detekt rulesets and will only run detekt with custom rules defined in plugins passed in with `detektPlugins` configuration. `false` by default.
+    debug = false
+    // Adds debug output during task execution. `false` by default.
+    ignoreFailures = false
+    // If set to `true` the build does not fail when the maxIssues count was reached. Defaults to `false`.
     reports {
         xml {
-            enabled = true                                // Enable/Disable XML report (default: true)
-            destination = file("build/reports/detekt.xml") // Path where XML report will be stored (default: `build/reports/detekt/detekt.xml`)
+            enabled = true
+            // Enable/Disable XML report (default: true)
+            destination = file("build/reports/detekt.xml")
+            // Path where XML report will be stored (default: `build/reports/detekt/detekt.xml`)
         }
         html {
-            enabled = true                                // Enable/Disable HTML report (default: true)
-            destination = file("build/reports/detekt.html") // Path where HTML report will be stored (default: `build/reports/detekt/detekt.html`)
+            enabled = true
+            // Enable/Disable HTML report (default: true)
+            destination = file("build/reports/detekt.html")
+            // Path where HTML report will be stored (default: `build/reports/detekt/detekt.html`)
         }
 
         custom {
-            reportId = "CustomJsonReport"                   // The simple class name of your custom report.
+            reportId = "CustomJsonReport"
+            // The simple class name of your custom report.
             destination = file("build/reports/detekt.json") // Path where report will be stored
         }
     }
@@ -57,6 +68,65 @@ allprojects {
     repositories {
         google()
         jcenter()
+    }
+
+    ext {
+        androidLibs = [
+                appcompat           : 'androidx.appcompat:appcompat:1.1.0',
+                recyclerview        : 'androidx.recyclerview:recyclerview:1.1.0',
+                constraintlayout    : 'androidx.constraintlayout:constraintlayout:1.1.3',
+                androidxCore        : 'androidx.core:core-ktx:1.2.0',
+                lifecycleViewModel  : 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0',
+                playServicesLocation: 'com.google.android.gms:play-services-location:17.0.0',
+                material            : 'com.google.android.material:material:1.1.0',
+                roomRuntime         : 'androidx.room:room-runtime:2.2.5',
+                roomKtx             : "androidx.room:room-ktx:2.2.5"
+        ]
+
+        androidKaptLibs = [
+                roomCompiler: 'androidx.room:room-compiler:2.2.5'
+        ]
+
+        kotlinLibs = [
+                stdlib    : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
+                coroutines: 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.3'
+        ]
+
+        libs = [
+                okhttpLoginInterceptor: 'com.squareup.okhttp3:logging-interceptor:4.4.0',
+                okhttp                : 'com.squareup.okhttp3:okhttp:4.4.0',
+                retrofit              : 'com.squareup.retrofit2:retrofit:2.8.1',
+                retrofitGsonConverter : 'com.squareup.retrofit2:converter-gson:2.8.1',
+                koin                  : "org.koin:koin-android:2.1.5",
+                koinScope             : "org.koin:koin-android-scope:2.1.5",
+                koinViewModel         : "org.koin:koin-android-viewmodel:2.1.5",
+                timber                : 'com.jakewharton.timber:timber:4.7.1',
+                firebaseAnalytics     : 'com.google.firebase:firebase-analytics:17.4.2',
+                firebaseCrashLytics   : 'com.google.firebase:firebase-crashlytics:17.0.0',
+                coil                  : 'io.coil-kt:coil:0.9.5'
+        ]
+
+        testLibs = [
+                junit        : 'junit:junit:4.12',
+                mockitoKotlin: "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0",
+                mockitoInline: "org.mockito:mockito-inline:2.28.2",
+                koinTest     : 'org.koin:koin-test:2.1.1',
+                testShared   : project(':testShared')
+        ]
+
+        androidxTestLibs = [
+                archCoreTesting: 'androidx.arch.core:core-testing:2.1.0'
+        ]
+
+        androidTestLibs = [
+                testRunner   : 'androidx.test:runner:1.2.0',
+                espresso     : 'androidx.test.espresso:espresso-contrib:3.2.0',
+                rules        : 'androidx.test:rules:1.2.0',
+                extJunit     : 'androidx.test.ext:junit-ktx:1.1.1',
+                koinTest     : 'org.koin:koin-test:2.1.1',
+                mockWebServer: 'com.squareup.okhttp3:mockwebserver:4.2.1',
+                okhttpIdling : 'com.jakewharton.espresso:okhttp3-idling-resource:1.0.0'
+        ]
     }
 }
 
