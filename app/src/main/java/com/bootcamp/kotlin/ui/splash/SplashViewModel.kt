@@ -1,6 +1,5 @@
 package com.bootcamp.kotlin.ui.splash
 
-import android.os.Handler
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.bootcamp.kotlin.ui.common.ScopedViewModel
@@ -12,8 +11,8 @@ import kotlinx.coroutines.launch
  * Created by jhon on 6/04/2020
  */
 class SplashViewModel(
-    private val repository: AccountRepository,
-    uiDispatcher: CoroutineDispatcher
+    uiDispatcher: CoroutineDispatcher,
+    private val repository: AccountRepository
 ): ScopedViewModel(uiDispatcher) {
 
     private val _model = MutableLiveData<UiModel>()

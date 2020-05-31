@@ -1,5 +1,7 @@
 package com.bootcamp.kotlin.data.source
 
-interface SharedPreferencesDataSource {
+import com.movies.data.source.PreferencesDataSource
+
+class SharedPreferencesDataSource: PreferencesDataSource {
 
 }

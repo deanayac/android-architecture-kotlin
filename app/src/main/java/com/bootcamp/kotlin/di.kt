@@ -7,6 +7,7 @@ import com.bootcamp.kotlin.data.database.AppDatabase
 import com.bootcamp.kotlin.data.server.ApiClient
 import com.bootcamp.kotlin.data.source.RetrofitDataSource
 import com.bootcamp.kotlin.data.source.RoomDataSource
+import com.bootcamp.kotlin.data.source.SharedPreferencesDataSource
 import com.bootcamp.kotlin.ui.moviedetail.MovieDetailFragment
 import com.bootcamp.kotlin.ui.moviedetail.MovieDetailViewModel
 import com.bootcamp.kotlin.ui.movies.HomeFragment
@@ -15,6 +16,10 @@ import com.bootcamp.kotlin.ui.search.SearchContract
 import com.bootcamp.kotlin.ui.search.SearchFragment
 import com.bootcamp.kotlin.ui.search.SearchPresenter
 import com.bootcamp.kotlin.ui.search.SearchViewModel
+import com.bootcamp.kotlin.ui.splash.SplashActivity
+import com.bootcamp.kotlin.ui.splash.SplashViewModel
+import com.bootcamp.kotlin.util.AccountRepository
+import com.bootcamp.kotlin.util.AccountRepositoryImpl
 import com.movies.data.repository.InputSearchRepository
 import com.movies.data.repository.InputSearchRepositoryImpl
 import com.movies.data.repository.MovieRepository
@@ -55,9 +60,19 @@ private val appModule = module {
             apiKey = get(named("apiKey"))
         )
     }
+
+    factory<SharedPreferencesDataSource> {
+        SharedPreferencesDataSource()
+    }
 }
 
 val dataModule = module {
+    factory<AccountRepositoryImpl> {
+        AccountRepositoryImpl(
+            appCompatActivity = get()
+        )
+    }
+
     factory<InputSearchRepository> {
         InputSearchRepositoryImpl(
             dataBaseDataSource = get()
@@ -73,6 +88,11 @@ val dataModule = module {
 }
 
 private val scopesModule = module {
+    scope(named<SplashActivity>()) {
+        viewModel { SplashViewModel(get(), get()) }
+        scoped { AccountRepositoryImpl(get()) }
+    }
+
     scope(named<HomeFragment>()) {
         viewModel {
             MoviesViewModel(
@@ -110,6 +130,4 @@ private val scopesModule = module {
         scoped { GetSearchAutocomplete(get())}
         scoped { GetSearchMovies(movieRepository = get())}
     }
-
-
 }

@@ -1,6 +1,5 @@
 package com.bootcamp.kotlin.ui.search
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.bootcamp.kotlin.ui.common.ScopedViewModel
@@ -23,6 +22,7 @@ class SearchViewModel(
         data class SearchMovie(val movies: List<Movie>) : UiModel()
         data class Autocomplete(val inputs: List<String>) : UiModel()
     }
+
     companion object {
         private const val ERROR_MOVIES = "Fail List Movies"
     }
