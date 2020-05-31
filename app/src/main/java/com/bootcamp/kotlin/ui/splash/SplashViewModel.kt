@@ -27,10 +27,6 @@ class SplashViewModel(
         object Navigation : UiModel()
     }
 
-    init {
-        initScope()
-    }
-
     fun sleepScreen() {
         launch {
             repository.checkIfUserExists().apply {
@@ -43,8 +39,4 @@ class SplashViewModel(
         }
     }
 
-    override fun onCleared() {
-        destroyScope()
-        super.onCleared()
-    }
 }

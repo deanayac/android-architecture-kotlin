@@ -36,4 +36,7 @@ class SplashActivity : AppCompatActivity(), RegisterFragment.ActionListener {
         startActivity<MainActivity>()
         finish()
     }
+
+
+
 }

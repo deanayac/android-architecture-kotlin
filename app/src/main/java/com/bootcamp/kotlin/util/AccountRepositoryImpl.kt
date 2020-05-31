@@ -1,5 +1,7 @@
 package com.bootcamp.kotlin.util
 
+import android.app.Application
+import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import com.bootcamp.kotlin.ui.common.Constants
@@ -7,7 +9,7 @@ import com.bootcamp.kotlin.ui.common.Constants
 /**
  * Created by jhon on 8/04/2020
  */
-class AccountRepositoryImpl(private val appCompatActivity: AppCompatActivity) : AccountRepository {
+class AccountRepositoryImpl(private val appCompatActivity: Context) : AccountRepository {
 
     private val sharedPreferences: SharedPreferences by lazy {
         appCompatActivity.getSharedPreferences(Constants.PREF_NAME, Constants.PRIVATE_MODE)

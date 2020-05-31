@@ -1,5 +1,6 @@
 package com.bootcamp.kotlin.ui.register
 
+import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -34,7 +35,7 @@ class RegisterFragment : Fragment(), RegisterContract.View, View.OnClickListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = RegisterPresenter(this, AccountRepositoryImpl(activity as AppCompatActivity))
+        presenter = RegisterPresenter(this, AccountRepositoryImpl(activity as Application))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -3,6 +3,7 @@ package com.bootcamp.kotlin
 import FavoriteFragment
 import FavoriteViewModel
 import android.app.Application
+import androidx.appcompat.app.AppCompatActivity
 import com.bootcamp.kotlin.data.database.AppDatabase
 import com.bootcamp.kotlin.data.server.ApiClient
 import com.bootcamp.kotlin.data.source.RetrofitDataSource
@@ -61,13 +62,10 @@ private val appModule = module {
         )
     }
 
-    factory<SharedPreferencesDataSource> {
-        SharedPreferencesDataSource()
-    }
 }
 
 val dataModule = module {
-    factory<AccountRepositoryImpl> {
+    factory<AccountRepository> {
         AccountRepositoryImpl(
             appCompatActivity = get()
         )
@@ -88,6 +86,7 @@ val dataModule = module {
 }
 
 private val scopesModule = module {
+
     scope(named<SplashActivity>()) {
         viewModel { SplashViewModel(get(), get()) }
         scoped { AccountRepositoryImpl(get()) }
