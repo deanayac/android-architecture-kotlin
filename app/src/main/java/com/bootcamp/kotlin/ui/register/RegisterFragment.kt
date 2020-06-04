@@ -6,12 +6,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.bootcamp.kotlin.R
 import com.bootcamp.kotlin.databinding.FragmentRegisterBinding
 
-import com.bootcamp.kotlin.util.AccountRepositoryImpl
+import com.bootcamp.kotlin.data.source.PreferenceDataSource
 
 import com.bootcamp.kotlin.util.showMessage
 
@@ -35,7 +34,9 @@ class RegisterFragment : Fragment(), RegisterContract.View, View.OnClickListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = RegisterPresenter(this, AccountRepositoryImpl(activity as Application))
+        /*presenter = RegisterPresenter(this,
+            PreferenceDataSource(activity as Application)
+        )*/
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

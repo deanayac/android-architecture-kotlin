@@ -3,30 +3,23 @@ package com.bootcamp.kotlin
 import FavoriteFragment
 import FavoriteViewModel
 import android.app.Application
-import androidx.appcompat.app.AppCompatActivity
 import com.bootcamp.kotlin.data.database.AppDatabase
 import com.bootcamp.kotlin.data.server.ApiClient
 import com.bootcamp.kotlin.data.source.RetrofitDataSource
 import com.bootcamp.kotlin.data.source.RoomDataSource
-import com.bootcamp.kotlin.data.source.SharedPreferencesDataSource
 import com.bootcamp.kotlin.ui.moviedetail.MovieDetailFragment
 import com.bootcamp.kotlin.ui.moviedetail.MovieDetailViewModel
 import com.bootcamp.kotlin.ui.movies.HomeFragment
 import com.bootcamp.kotlin.ui.movies.MoviesViewModel
-import com.bootcamp.kotlin.ui.search.SearchContract
 import com.bootcamp.kotlin.ui.search.SearchFragment
-import com.bootcamp.kotlin.ui.search.SearchPresenter
 import com.bootcamp.kotlin.ui.search.SearchViewModel
 import com.bootcamp.kotlin.ui.splash.SplashActivity
 import com.bootcamp.kotlin.ui.splash.SplashViewModel
-import com.bootcamp.kotlin.util.AccountRepository
-import com.bootcamp.kotlin.util.AccountRepositoryImpl
-import com.movies.data.repository.InputSearchRepository
-import com.movies.data.repository.InputSearchRepositoryImpl
-import com.movies.data.repository.MovieRepository
-import com.movies.data.repository.MovieRepositoryImpl
+import com.bootcamp.kotlin.data.source.PreferenceDataSource
+import com.movies.data.repository.*
 import com.movies.data.source.DataBaseDataSource
 import com.movies.data.source.RemoteDataSource
+import com.movies.data.source.SharedPreferencesDataSource
 import com.movies.interactor.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -50,6 +43,7 @@ private val appModule = module {
     single { ApiClient.movieDbServices }
     single { AppDatabase.getInstance(get()) }
     single<CoroutineDispatcher> { Dispatchers.Main }
+    factory<SharedPreferencesDataSource> { PreferenceDataSource(get()) }
 
     factory<DataBaseDataSource> {
         RoomDataSource(appDatabase = get())
@@ -65,9 +59,9 @@ private val appModule = module {
 }
 
 val dataModule = module {
-    factory<AccountRepository> {
-        AccountRepositoryImpl(
-            appCompatActivity = get()
+    factory<SharedPreferencesRepository> {
+        SharedPreferencesRepositoryImpl(
+            sharedPreferencesDataSource = get()
         )
     }
 
@@ -89,7 +83,7 @@ private val scopesModule = module {
 
     scope(named<SplashActivity>()) {
         viewModel { SplashViewModel(get(), get()) }
-        scoped { AccountRepositoryImpl(get()) }
+        scoped { PreferenceDataSource(get()) }
     }
 
     scope(named<HomeFragment>()) {

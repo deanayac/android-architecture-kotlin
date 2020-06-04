@@ -3,7 +3,7 @@ package com.bootcamp.kotlin.ui.splash
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.bootcamp.kotlin.ui.common.ScopedViewModel
-import com.bootcamp.kotlin.util.AccountRepository
+import com.movies.interactor.GetSharedPreferences
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
@@ -12,31 +12,23 @@ import kotlinx.coroutines.launch
  */
 class SplashViewModel(
     uiDispatcher: CoroutineDispatcher,
-    private val repository: AccountRepository
+    private val getSharedPreferences: GetSharedPreferences
 ): ScopedViewModel(uiDispatcher) {
 
     private val _model = MutableLiveData<UiModel>()
     val model: LiveData<UiModel>
     get() {
-        if (_model.value == null) sleepScreen()
+        if (_model.value == null) checkPreferences()
         return _model
     }
 
     sealed class UiModel {
-        object SleepScreen : UiModel()
-        object Navigation : UiModel()
+        data class CheckPreferences(val getSharedPreferences: String) : UiModel()
     }
 
-    fun sleepScreen() {
+    private fun checkPreferences() {
         launch {
-            repository.checkIfUserExists().apply {
-                if (isEmpty()) {
-                    _model.value = UiModel.Navigation
-                    return@apply
-                }
-                _model.value = UiModel.SleepScreen
-            }
+            _model.value = UiModel.CheckPreferences(getSharedPreferences.invokeExists())
         }
     }
-
 }
