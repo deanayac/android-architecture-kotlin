@@ -83,7 +83,7 @@ private val scopesModule = module {
 
     scope(named<SplashActivity>()) {
         viewModel { SplashViewModel(get(), get()) }
-        scoped { PreferenceDataSource(get()) }
+        scoped { GetPreferencesExists(get()) }
     }
 
     scope(named<HomeFragment>()) {

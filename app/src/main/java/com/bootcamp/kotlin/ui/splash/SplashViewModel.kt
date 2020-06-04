@@ -3,7 +3,8 @@ package com.bootcamp.kotlin.ui.splash
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.bootcamp.kotlin.ui.common.ScopedViewModel
-import com.movies.interactor.GetSharedPreferences
+import com.movies.interactor.GetPreferencesExists
+import com.movies.interactor.GetPreferencesName
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
@@ -12,7 +13,7 @@ import kotlinx.coroutines.launch
  */
 class SplashViewModel(
     uiDispatcher: CoroutineDispatcher,
-    private val getSharedPreferences: GetSharedPreferences
+    private val getPreferencesExists: GetPreferencesExists
 ): ScopedViewModel(uiDispatcher) {
 
     private val _model = MutableLiveData<UiModel>()
@@ -28,7 +29,7 @@ class SplashViewModel(
 
     private fun checkPreferences() {
         launch {
-            _model.value = UiModel.CheckPreferences(getSharedPreferences.invokeExists())
+            _model.value = UiModel.CheckPreferences(getPreferencesExists.invoke())
         }
     }
 }

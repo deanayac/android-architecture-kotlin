@@ -1,15 +1,13 @@
 package com.bootcamp.kotlin.ui.register
 
-import com.bootcamp.kotlin.R
-import com.bootcamp.kotlin.util.AndroidHelper
-import com.movies.interactor.GetSharedPreferences
+import com.movies.interactor.GetPreferencesName
 
 /**
  * Created by jhon on 6/04/2020
  */
 class RegisterPresenter(
     private val view: RegisterContract.View?,
-    private val getSharedPreferences: GetSharedPreferences
+    private val getPreferencesName: GetPreferencesName
 ) : RegisterContract.Presenter {
 
     override fun saveUserName(userName: String) {
