@@ -65,7 +65,9 @@ class RegisterFragment : Fragment(), View.OnClickListener {
             context?.showMessage(getString(R.string.enter_user_name))
             return
         }
-        viewModel.saveUserName(binding.nameUserEditText.text.toString())
+        viewModel.saveUserName(binding.nameUserEditText.text.toString()).let {
+            context?.startActivity<MainActivity>()
+        }
     }
 
     override fun onAttach(context: Context) {
