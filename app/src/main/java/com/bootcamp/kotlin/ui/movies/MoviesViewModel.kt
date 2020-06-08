@@ -26,7 +26,6 @@ class MoviesViewModel(
             if (_model.value == null) {
                 loadMovies()
             }
-
             return _model
         }
 

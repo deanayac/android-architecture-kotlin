@@ -14,22 +14,20 @@ import kotlinx.coroutines.launch
 class SplashViewModel(
     uiDispatcher: CoroutineDispatcher,
     private val getPreferencesExists: GetPreferencesExists
-): ScopedViewModel(uiDispatcher) {
+) : ScopedViewModel(uiDispatcher) {
 
     private val _model = MutableLiveData<UiModel>()
     val model: LiveData<UiModel>
-    get() {
-        if (_model.value == null) checkPreferences()
-        return _model
-    }
+        get() {
+            if (_model.value == null) checkPreferences()
+            return _model
+        }
 
     sealed class UiModel {
         data class CheckPreferences(val getSharedPreferences: String) : UiModel()
     }
 
-    private fun checkPreferences() {
-        launch {
-            _model.value = UiModel.CheckPreferences(getPreferencesExists.invoke())
-        }
+    private fun checkPreferences() = launch {
+        _model.value = UiModel.CheckPreferences(getPreferencesExists.invoke())
     }
 }
