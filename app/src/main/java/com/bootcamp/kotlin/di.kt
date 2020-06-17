@@ -11,16 +11,17 @@ import com.bootcamp.kotlin.ui.moviedetail.MovieDetailFragment
 import com.bootcamp.kotlin.ui.moviedetail.MovieDetailViewModel
 import com.bootcamp.kotlin.ui.movies.HomeFragment
 import com.bootcamp.kotlin.ui.movies.MoviesViewModel
-import com.bootcamp.kotlin.ui.search.SearchContract
 import com.bootcamp.kotlin.ui.search.SearchFragment
-import com.bootcamp.kotlin.ui.search.SearchPresenter
 import com.bootcamp.kotlin.ui.search.SearchViewModel
-import com.movies.data.repository.InputSearchRepository
-import com.movies.data.repository.InputSearchRepositoryImpl
-import com.movies.data.repository.MovieRepository
-import com.movies.data.repository.MovieRepositoryImpl
+import com.bootcamp.kotlin.ui.splash.SplashActivity
+import com.bootcamp.kotlin.ui.splash.SplashViewModel
+import com.bootcamp.kotlin.data.source.PreferenceDataSource
+import com.bootcamp.kotlin.ui.register.RegisterFragment
+import com.bootcamp.kotlin.ui.register.RegisterViewModel
+import com.movies.data.repository.*
 import com.movies.data.source.DataBaseDataSource
 import com.movies.data.source.RemoteDataSource
+import com.movies.data.source.SharedPreferencesDataSource
 import com.movies.interactor.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -44,35 +45,29 @@ private val appModule = module {
     single { ApiClient.movieDbServices }
     single { AppDatabase.getInstance(get()) }
     single<CoroutineDispatcher> { Dispatchers.Main }
-
-    factory<DataBaseDataSource> {
-        RoomDataSource(appDatabase = get())
-    }
-
-    factory<RemoteDataSource> {
-        RetrofitDataSource(
-            movieDbServices = get(),
-            apiKey = get(named("apiKey"))
-        )
-    }
+    factory<SharedPreferencesDataSource> { PreferenceDataSource(get()) }
+    factory<DataBaseDataSource> { RoomDataSource(get()) }
+    factory<RemoteDataSource> { RetrofitDataSource(get(), get(named("apiKey"))) }
 }
 
 val dataModule = module {
-    factory<InputSearchRepository> {
-        InputSearchRepositoryImpl(
-            dataBaseDataSource = get()
-        )
-    }
-
-    factory<MovieRepository> {
-        MovieRepositoryImpl(
-            dataBaseDataSource = get(),
-            remoteDataSource = get()
-        )
-    }
+    factory<SharedPreferencesRepository> { SharedPreferencesRepositoryImpl(get()) }
+    factory<InputSearchRepository> { InputSearchRepositoryImpl(get()) }
+    factory<MovieRepository> { MovieRepositoryImpl(get(), get()) }
 }
 
 private val scopesModule = module {
+    scope(named<SplashActivity>()) {
+        viewModel { SplashViewModel(get(), get()) }
+        scoped { GetPreferencesExists(get()) }
+    }
+
+    scope(named<RegisterFragment>()) {
+        viewModel { RegisterViewModel(get(), get(), get()) }
+        scoped { GetPreferencesName(get()) }
+        scoped { GetPreferencesExists(get()) }
+    }
+
     scope(named<HomeFragment>()) {
         viewModel {
             MoviesViewModel(
@@ -110,6 +105,4 @@ private val scopesModule = module {
         scoped { GetSearchAutocomplete(get())}
         scoped { GetSearchMovies(movieRepository = get())}
     }
-
-
 }

@@ -7,17 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import com.bootcamp.kotlin.data.server.ApiClient
-import com.bootcamp.kotlin.data.source.RetrofitDataSource
-import com.bootcamp.kotlin.data.source.RoomDataSource
 import com.bootcamp.kotlin.databinding.FragmentHomeBinding
 import com.bootcamp.kotlin.databinding.ViewProgressBarBinding
 import com.bootcamp.kotlin.ui.common.PosterItemDecorator
-import com.bootcamp.kotlin.ui.movies.MovieUiModel.*
+import com.bootcamp.kotlin.ui.movies.MovieUiModel.Content
+import com.bootcamp.kotlin.ui.movies.MovieUiModel.Loading
 import com.bootcamp.kotlin.ui.movies.adapter.MoviesAdapter
-import com.movies.data.repository.MovieRepositoryImpl
-import com.movies.interactor.GetPopularMovies
 import kotlinx.android.synthetic.main.view_progress_bar.*
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.viewModel
@@ -81,7 +76,6 @@ class HomeFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
         if (context is Listener) {
             listener = context
         }
