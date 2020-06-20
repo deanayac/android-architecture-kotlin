@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.bootcamp.kotlin.ui.common.ScopedViewModel
 import com.movies.interactor.GetPreferencesExists
-import com.movies.interactor.GetPreferencesName
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 

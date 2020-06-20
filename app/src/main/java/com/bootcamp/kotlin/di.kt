@@ -64,7 +64,7 @@ private val scopesModule = module {
 
     scope(named<RegisterFragment>()) {
         viewModel { RegisterViewModel(get(), get(), get()) }
-        scoped { GetPreferencesName(get()) }
+        scoped { SetPreferencesName(get()) }
         scoped { GetPreferencesExists(get()) }
     }
 
