@@ -2,8 +2,6 @@ package com.bootcamp.kotlin
 
 import com.movies.data.repository.SharedPreferencesRepositoryImpl
 import com.movies.data.source.SharedPreferencesDataSource
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
@@ -23,6 +21,7 @@ class SharedPreferencesTest {
     @Mock
     lateinit var sharedPreferencesDataSource: SharedPreferencesDataSource
 
+    @Mock
     lateinit var sharedPreferencesRepositoryImpl: SharedPreferencesRepositoryImpl
 
     @Before
@@ -34,11 +33,13 @@ class SharedPreferencesTest {
     @Test
     fun `getSharedPreferences save user register, login information`() {
         runBlocking {
-            whenever(sharedPreferencesDataSource.saveUserName(any())).thenReturn(false)
+            val name = "jhon"
+            whenever(sharedPreferencesDataSource.checkIfUserExists()).thenReturn(name)
+            whenever(sharedPreferencesDataSource.saveUserName(name)).thenReturn(true)
 
-            sharedPreferencesRepositoryImpl.checkIfUserExists()
+            val result = sharedPreferencesDataSource.checkIfUserExists()
 
-            verify(sharedPreferencesDataSource).checkIfUserExists()
+            assertEquals(name, result)
         }
     }
 
