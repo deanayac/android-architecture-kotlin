@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.bootcamp.kotlin.ui.common.ScopeViewModel
 import com.movies.interactor.GetPreferencesExists
-import com.movies.interactor.GetPreferencesName
+import com.movies.interactor.SetPreferencesName
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
  */
 class RegisterViewModel(
     uiDispatcher: CoroutineDispatcher,
-    private val getPreferencesName: GetPreferencesName,
+    private val setPreferencesName: SetPreferencesName,
     private val getPreferencesExists: GetPreferencesExists
 ) : ScopeViewModel(uiDispatcher) {
 
@@ -29,7 +29,7 @@ class RegisterViewModel(
         }
 
     fun saveUserName(userName: String) = launch {
-        _model.value = RegisterUiModel.Content(getPreferencesName.invoke(userName))
+        _model.value = RegisterUiModel.Content(setPreferencesName.invoke(userName))
     }
 
     private fun navigateToHome() = launch{
