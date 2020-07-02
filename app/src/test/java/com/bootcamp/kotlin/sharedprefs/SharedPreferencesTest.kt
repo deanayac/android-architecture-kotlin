@@ -1,4 +1,4 @@
-package com.bootcamp.kotlin
+package com.bootcamp.kotlin.sharedprefs
 
 import com.movies.data.repository.SharedPreferencesRepositoryImpl
 import com.movies.data.source.SharedPreferencesDataSource

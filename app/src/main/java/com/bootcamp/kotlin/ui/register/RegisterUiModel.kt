@@ -6,6 +6,6 @@ package com.bootcamp.kotlin.ui.register
 sealed class RegisterUiModel {
     object Loading : RegisterUiModel()
     object Navigation : RegisterUiModel()
-    class Content(val userName: Boolean) : RegisterUiModel()
-    class CheckUser(val getPreferencesExists: String) : RegisterUiModel()
+    data class Content(val userName: Boolean) : RegisterUiModel()
+    data class CheckUser(val getPreferencesExists: String) : RegisterUiModel()
 }
