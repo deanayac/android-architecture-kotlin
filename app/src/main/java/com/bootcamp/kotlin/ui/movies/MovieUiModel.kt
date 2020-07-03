@@ -4,5 +4,5 @@ import com.movies.domain.Movie
 
 sealed class MovieUiModel {
     object Loading : MovieUiModel()
-    class Content(val movies: List<Movie>) : MovieUiModel()
+    data class Content(val movies: List<Movie>) : MovieUiModel()
 }
