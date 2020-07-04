@@ -1,21 +1,27 @@
 package com.bootcamp.kotlin.ui.search
 
-import com.bootcamp.kotlin.ui.common.Scope
+import com.bootcamp.kotlin.ui.common.ScopeViewModel
 import com.movies.data.common.Status
 import com.movies.domain.Movie
 import com.movies.interactor.GetSearchAutocomplete
 import com.movies.interactor.GetSearchMovies
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class SearchPresenter(
+    uiDispatcher: CoroutineDispatcher,
     private val view: SearchContract.View,
     private val getSearchAutocomplete: GetSearchAutocomplete,
     private val getSearchMovies: GetSearchMovies
-) : SearchContract.Presenter, Scope by Scope.Impl() {
+) : SearchContract.Presenter, ScopeViewModel(uiDispatcher) {
 
     companion object {
         private const val ERROR_MOVIES = "Fail List Movies"
+    }
+
+    init {
+        onCreateScope()
     }
 
     override fun onCreateScope() {

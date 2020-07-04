@@ -37,7 +37,6 @@
             android:configChanges="keyboardHidden"
             android:theme="@style/AppTheme.NoActionBar" />
 
-
         <provider
             android:name=".data.provider.AppContextProvider"
             android:authorities="${applicationId}.provider.applicationprovider"
@@ -47,5 +46,4 @@
             tools:ignore="UnusedAttribute" />
 
     </application>
-
 </manifest>
