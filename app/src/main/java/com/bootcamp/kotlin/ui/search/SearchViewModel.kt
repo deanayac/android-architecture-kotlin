@@ -19,6 +19,7 @@ class SearchViewModel(
 
     sealed class UiModel {
         object Loading : UiModel()
+        object showError : UiModel()
         data class SearchMovie(val movies: List<Movie>) : UiModel()
         data class Autocomplete(val inputs: List<String>) : UiModel()
     }
@@ -48,6 +49,7 @@ class SearchViewModel(
                     _model.value = UiModel.SearchMovie(filterMovies(movies.data ?: fail(ERROR_MOVIES)))
                 }
                 Status.ERROR -> {
+                    _model.value = UiModel.showError
                     Timber.e(movies.message)
                 }
             }
@@ -56,7 +58,9 @@ class SearchViewModel(
 
      fun getInputs(){
         launch {
-            _model.value = getSearchAutocomplete.invoke()?.let { UiModel.Autocomplete(it.map { v -> v.description }) }
+            _model.value = getSearchAutocomplete.invoke()?.let {
+                UiModel.Autocomplete(it.map { v -> v.description })
+            }
         }
     }
 

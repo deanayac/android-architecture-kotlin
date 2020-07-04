@@ -13,6 +13,8 @@ import androidx.lifecycle.Observer
 import com.bootcamp.kotlin.databinding.FragmentSearchBinding
 import com.bootcamp.kotlin.databinding.ViewProgressBarBinding
 import com.bootcamp.kotlin.ui.search.adapter.SearchAdapter
+import com.bootcamp.kotlin.util.AndroidHelper
+import com.bootcamp.kotlin.util.showMessage
 import com.movies.domain.Movie
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.viewModel
@@ -85,11 +87,13 @@ class SearchFragment : Fragment(){
 
     private fun updateUi(model:SearchViewModel.UiModel){
         loadingBinding.progress.visibility =
-            if (model is SearchViewModel.UiModel.SearchMovie) View.VISIBLE else View.GONE
+            if (model is SearchViewModel.UiModel.Loading) View.VISIBLE else View.GONE
 
         when(model){
             is SearchViewModel.UiModel.SearchMovie -> showMovies(model.movies)
             is SearchViewModel.UiModel.Autocomplete -> showInputs(model.inputs)
+            is SearchViewModel.UiModel.showError -> activity?.showMessage(AndroidHelper.getString(
+                com.bootcamp.kotlin.R.string.error_show_information))
         }
     }
 }
