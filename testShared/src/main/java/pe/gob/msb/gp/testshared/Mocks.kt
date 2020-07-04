@@ -1,7 +1,6 @@
 package pe.gob.msb.gp.testshared
 
-import com.movies.domain.Genre
-import com.movies.domain.Movie
+import com.movies.domain.*
 
 val mockedGenres = arrayListOf(Genre(12, "Terror"))
 
@@ -16,4 +15,30 @@ val mockedMovie = Movie(
     "Harry Potter and the Philosopher's Stone",
     false,
     7.9
+)
+
+val backdrops = Backdrops(
+    1.0,
+    "",
+    10,
+    "",
+    1.1,
+    2,
+    10
+)
+
+val posters = Posters(
+    1.0,
+    "",
+    10,
+    "",
+    1.1,
+    1,
+    10
+)
+
+val mockedMovieImages = MovieImages (
+    617,
+    arrayListOf(backdrops),
+    listOf(posters)
 )
