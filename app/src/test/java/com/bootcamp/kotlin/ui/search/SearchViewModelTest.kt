@@ -1,8 +1,7 @@
-package com.bootcamp.kotlin.search
+package com.bootcamp.kotlin.ui.search
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.bootcamp.kotlin.ui.search.SearchViewModel
 import com.bootcamp.kotlin.ui.search.SearchViewModel.UiModel
 import com.movies.data.common.Resource
 import com.movies.interactor.GetSearchAutocomplete
