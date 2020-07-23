@@ -16,16 +16,16 @@ object ApiClient {
         return interceptor
     }
 
-    private fun retrofit(): Retrofit {
-        val httpClient = OkHttpClient.Builder().addInterceptor(addInterceptor())
-            .connectTimeout(Constants.connectTimeout, TimeUnit.MINUTES)
-            .readTimeout(Constants.readTimeOut, TimeUnit.SECONDS)
-            .writeTimeout(Constants.writeTimeout, TimeUnit.SECONDS)
-            .build()
+    val okHttpClient = OkHttpClient.Builder().addInterceptor(addInterceptor())
+        .connectTimeout(Constants.connectTimeout, TimeUnit.MINUTES)
+        .readTimeout(Constants.readTimeOut, TimeUnit.SECONDS)
+        .writeTimeout(Constants.writeTimeout, TimeUnit.SECONDS)
+        .build()
 
+    private fun retrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
-            .client(httpClient)
+            .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

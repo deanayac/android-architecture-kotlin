@@ -61,6 +61,7 @@ dependencies {
     testImplementation testLibs.values()
     testImplementation androidxTestLibs.values()
     androidTestImplementation androidTestLibs.values()
+    debugImplementation androidTestLibs.values()
 }
 
 apply plugin: 'com.google.gms.google-services'
