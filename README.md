@@ -11,19 +11,19 @@ add key in "single(named("apiKey")) { "KEY" }" in class di.kt
 * `Presentation patterns`
   Currently the MVVM pattern is the most used by the communities and the one that best adapts to the android architecture components
    
-MVP : https://github.com/deanayac/android-architecture-kotlin/tree/MVP
-MVVM : master
-MVI : in process
+  - MVP : https://github.com/deanayac/android-architecture-kotlin/tree/MVP
+  - MVVM : master
+  - MVI : in process
 
 * `architecture`
-   - Modular
-   - Dynamic feature
+   - Modular. 
+   - Dynamic feature 
 
 * `testing`
    - Unit test
    - Integration test
    - UI Test
-   - Functional Test
+   - Functional Test. 
 
 * `code review`
   - Detekt
