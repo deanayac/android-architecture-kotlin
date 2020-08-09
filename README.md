@@ -30,8 +30,9 @@ MVI : in process
   - Sonnar
 
 * `software design`
-    -Adapter
-    -Builder
+   - Adapter
+   - Builder
+   - Flow Corrutinas
 
 * `jecpack`
     - Room
