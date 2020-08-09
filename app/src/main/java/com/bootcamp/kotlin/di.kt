@@ -41,7 +41,7 @@ fun Application.initDI() {
 }
 
 private val appModule = module {
-    single(named("apiKey")) { "5de961ca47ac20a3689205becc3c3b20" }
+    single(named("apiKey")) { "" }
     single { ApiClient.movieDbServices }
     single { AppDatabase.getInstance(get()) }
     single<CoroutineDispatcher> { Dispatchers.Main }
