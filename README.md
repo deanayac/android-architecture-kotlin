@@ -5,7 +5,7 @@ Project to apply good software architecture and various example of design patter
 
 Getting Started
 ---------------
-generate an api key to consume the api of. -> https://developers.themoviedb.org/
+Generate an api key to consume the api of. -> https://developers.themoviedb.org/
 add key in "single(named("apiKey")) { "KEY" }" in class di.kt
 
 * `Presentation patterns`
@@ -15,30 +15,30 @@ add key in "single(named("apiKey")) { "KEY" }" in class di.kt
   - MVVM : master
   - MVI : in process
 
-* `architecture`
+* `Architecture`
    - Modular. 
    - Dynamic feature 
 
-* `testing`
+* `Testing`
    - Unit test
    - Integration test
    - UI Test
    - Functional Test. 
 
-* `code review`
+* `Code review`
   - Detekt
   - Sonnar
 
-* `software design`
+* `Software design`
    - Adapter
    - Builder
    - Flow Corrutinas
 
-* `jecpack`
+* `Jetpack`
     - Room
     - Navigator
 
-* `dependency injection`
+* `Dependency injection`
    - Koin
    - DAGGER
    - HILT
